@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getClaims } from "@/lib/wave.functions";
 import { useLang } from "@/lib/i18n";
+import { shouldShowMapCount } from "@/lib/map-count";
 import { Hero } from "@/components/wave/Hero";
 import { BlockMap } from "@/components/wave/BlockMap";
 import { WaveDialog, type DialogState } from "@/components/wave/WaveDialog";
@@ -71,7 +72,7 @@ function Index() {
             </div>
             <div className="flex flex-wrap items-center gap-4 text-sm font-semibold">
               <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-coral" /> {t.map.open}</span>
-              <span className="flex items-center gap-2"><WaveHand className="h-6 w-6" /> {t.map.claimed} · {claimedCount}</span>
+              <span className="flex items-center gap-2"><WaveHand className="h-6 w-6" /> {t.map.claimed}{shouldShowMapCount(data.hostCount) && <> · {claimedCount}</>}</span>
             </div>
           </div>
           <BlockMap claimed={data.claimed} onPick={(b) => {

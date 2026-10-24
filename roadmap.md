@@ -1,4 +1,7 @@
 # Sunset Wave refinements
+- [ ] Restore normal cursors while dialogs are open.
+- [ ] Use sans serif fonts throughout.
+- [ ] Hide the map count until 20 hosts and verify the threshold.
 - [x] Replace handwritten accent font throughout.
 - [x] Remove The Count and simplify host support to headlines without the party address.
 - [x] Show full hosting photos with one headline each and no subtitle.
