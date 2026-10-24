@@ -48,11 +48,11 @@ function Index() {
 
 
       {/* Gathering photos */}
-      <section className="grain border-y-4 border-ink bg-ink">
-        <ul className="grid grid-cols-2 items-center gap-1 md:grid-cols-4">
+      <section className="grain bg-blush/40">
+        <ul className="mx-auto grid max-w-6xl grid-cols-2 items-center gap-5 px-5 py-12 sm:gap-8 md:grid-cols-4 md:py-16">
           {t.easy.steps.map((s, i) => (
-            <li key={i} className="overflow-hidden">
-              <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading={i < 2 ? "eager" : "lazy"} className="block h-auto w-full" />
+            <li key={i} className={`rounded-2xl border-2 border-ink bg-card p-2 shadow-poster sm:p-3 ${["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"][i]}`}>
+              <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading={i < 2 ? "eager" : "lazy"} className="block h-auto w-full rounded-lg" />
             </li>
           ))}
         </ul>
