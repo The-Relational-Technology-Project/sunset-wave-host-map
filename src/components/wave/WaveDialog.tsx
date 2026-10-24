@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -89,6 +90,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   const { t, lang } = useLang();
   const qc = useQueryClient();
   const send = useServerFn(submitHost);
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [stretch, setStretch] = useState("");
@@ -128,7 +130,8 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
         },
       });
       await qc.invalidateQueries({ queryKey: ["claims"] });
-      setDone(true);
+      onClose();
+      await navigate({ to: "/thanks" });
     } catch {
       setErrors({ form: t.host.errGeneric });
     } finally {
