@@ -15,3 +15,4 @@
 - Map columns support numbered avenues and named coastal streets; preserve existing avenue block ids when expanding the grid so saved host offers remain attached.
 - Public reads of host data go only through security-definer functions that return first names and block ids; offer/note tables are insert-only for visitors to keep contact details private.
 - Use the shared WaveHand asset for the title, map markers, cursor and favicon so the campaign mark stays consistent across surfaces.
+- Keep map count visibility in a tested presentation helper keyed to total host count, while the displayed number represents claimed blocks, so milestone logic stays independent of map generation.
