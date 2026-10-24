@@ -41,10 +41,10 @@ export const BLOCKS: Block[] = (() => {
     for (const a of AVENUES) {
       if (isGap(a, r)) continue;
       out.push({
-        id: `${a}-${STREETS[r].toLowerCase()}`,
+        id: `${a}-${STREETS[r]!.toLowerCase()}`,
         avenue: a,
-        north: STREETS[r],
-        south: STREETS[r + 1],
+        north: STREETS[r]!,
+        south: STREETS[r + 1]!,
         col: 48 - a,
         row: r,
       });

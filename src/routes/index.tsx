@@ -98,7 +98,7 @@ function Index() {
             {t.easy.steps.map((s, i) => (
               <li key={i} className={`rounded-2xl border-2 border-ink bg-card p-3 shadow-poster ${i % 2 ? "lg:translate-y-8 rotate-1" : "-rotate-1"}`}>
                 <div className="aspect-[4/3] overflow-hidden rounded-lg">
-                  <img src={STEP_PHOTOS[i].url} alt={s.t} loading="lazy" className="h-full w-full object-cover" />
+                  <img src={STEP_PHOTOS[i]!.url} alt={s.t} loading="lazy" className="h-full w-full object-cover" />
                 </div>
                 <div className="space-y-1 p-2 pt-4">
                   <p className="poster-title text-5xl text-coral">{i + 1}</p>

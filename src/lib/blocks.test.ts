@@ -8,7 +8,7 @@ describe("blocks", () => {
     expect(BLOCKS.length).toBeLessThanOrEqual(430);
     expect(Math.min(...BLOCKS.map((b) => b.avenue))).toBe(19);
     expect(Math.max(...BLOCKS.map((b) => b.avenue))).toBe(48);
-    expect(BLOCKS[0].north).toBe("Lincoln");
+    expect(BLOCKS[0]!.north).toBe("Lincoln");
     expect(BLOCKS.at(-1)!.south).toBe("Wawona");
   });
   it("has unique ids", () => {
