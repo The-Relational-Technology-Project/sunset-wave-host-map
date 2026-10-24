@@ -28,7 +28,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         wheel={{ step: 0.08, activationKeys: ["Control", "Meta"] }}
         panning={{ disabled: scale <= 1, velocityDisabled: true }}
         doubleClick={{ disabled: true }}
-        onTransformed={(_, s) => setScale(s.scale)}
+        onTransform={(_r: unknown, s: { scale: number }) => setScale(s.scale)}
       >
         {({ zoomIn, zoomOut, resetTransform }) => (
           <>

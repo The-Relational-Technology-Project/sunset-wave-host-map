@@ -59,7 +59,7 @@ function BlockInfo({ state, setState }: { state: Extract<DialogState, { mode: "b
   );
 }
 
-function Field({ id, label, error, children, hint }: { id: string; label: string; error?: string; hint?: string; children: React.ReactNode }) {
+function Field({ id, label, error, children, hint }: { id: string; label: string; error?: string | undefined; hint?: string | undefined; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
       <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
@@ -82,6 +82,7 @@ function Success({ title, body, onClose }: { title: string; body: string; onClos
   );
 }
 
+type Errs = Partial<Record<"name" | "contact" | "stretch" | "message" | "form", string>>;
 const inputCls = "h-12 border-2 border-ink/30 bg-background text-base focus-visible:border-ink";
 
 function HostForm({ block, onClose }: { block: Block | null; onClose: () => void }) {
@@ -95,7 +96,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   const [grant, setGrant] = useState(false);
   const [give, setGive] = useState(false);
   const [hp, setHp] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Errs>({});
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -105,7 +106,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    const errs: Record<string, string> = {};
+    const errs: Errs = {};
     if (!name.trim()) errs.name = t.host.errName;
     if (contact.trim().length < 3) errs.contact = t.host.errContact;
     if (stretch.trim().length < 2) errs.stretch = t.host.errStretch;
@@ -200,13 +201,13 @@ function NoteForm({ block, names, onClose }: { block: Block; names: string[]; on
   const [contact, setContact] = useState("");
   const [message, setMessage] = useState("");
   const [hp, setHp] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Errs>({});
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    const errs: Record<string, string> = {};
+    const errs: Errs = {};
     if (!name.trim()) errs.name = t.host.errName;
     if (contact.trim().length < 3) errs.contact = t.host.errContact;
     if (!message.trim()) errs.message = t.note.errMessage;
