@@ -58,10 +58,10 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pt-6 sm:px-6 sm:pt-10">
         <p className="font-hand text-2xl text-ocean-deep sm:text-3xl">{t.hero.kicker} · {t.hero.date}</p>
-        <h1 className="relative mt-2 text-ink" aria-label="The Sunset Wave">
-          <span aria-hidden className="poster-title block text-[16vw] sm:text-[12vw] lg:text-[9.5rem]">The</span>
-          <span aria-hidden className="poster-title block text-[30vw] text-coral [text-shadow:4px_4px_0_var(--color-ink)] sm:text-[24vw] lg:text-[19rem]">Sunset</span>
-          <span aria-hidden className="poster-title block text-[30vw] [text-shadow:4px_4px_0_var(--color-coral)] sm:text-[24vw] lg:text-[19rem]">Wave</span>
+        <h1 className="relative mt-2 w-fit text-ink" aria-label="The Sunset Wave">
+          <span aria-hidden className="poster-title block text-[min(16vw,11vh)]">The</span>
+          <span aria-hidden className="poster-title block text-[min(30vw,22vh)] text-coral [text-shadow:4px_4px_0_var(--color-ink)]">Sunset</span>
+          <span aria-hidden className="poster-title block text-[min(30vw,22vh)] [text-shadow:4px_4px_0_var(--color-coral)]">Wave</span>
           {HANDS.slice(0, shown).map((h, i) => (
             <span key={i} aria-hidden className="pointer-events-none absolute" style={{ top: `${h.top}%`, left: `${h.left}%`, width: `${h.s}%`, rotate: `${h.r}deg` }}>
               <WaveHand className="animate-wave-pop w-full drop-shadow-md" />
