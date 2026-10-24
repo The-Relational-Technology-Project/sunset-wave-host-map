@@ -1,4 +1,9 @@
 # Sunset Wave refinements
+- [x] Replace handwritten accent font throughout.
+- [x] Remove The Count and simplify host support to headlines without the party address.
+- [x] Show full hosting photos with one headline each and no subtitle.
+- [x] Add Great Hwy and La Playa to the map without changing existing block ids.
+- [x] Verify map selection, languages and page layouts.
 - [x] Remove header artwork and extra top branding; move inaugural date below title.
 - [x] Simplify monochrome waving hand and update cursor/favicon.
 - [x] Update invitation and hosting wording in all four languages.

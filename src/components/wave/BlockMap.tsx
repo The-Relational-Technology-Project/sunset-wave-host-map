@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Minus, Plus, RotateCcw } from "lucide-react";
-import { AVENUES, BLOCKS, STREETS, type Block } from "@/lib/blocks";
+import { MAP_COLUMNS, COASTAL_STREETS, BLOCKS, STREETS, type Block } from "@/lib/blocks";
 import { blockLabel, useLang } from "@/lib/i18n";
 import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
 const CW = 30; // column width
 const RH = 42; // row height
 const LEFT = 70; // ocean band
-const TOP = 56; // park band + labels
+const TOP = 100; // park band + rotated coastal labels
 const RIGHT = 80; // street labels
-const W = LEFT + AVENUES.length * CW + RIGHT;
+const W = LEFT + MAP_COLUMNS.length * CW + RIGHT;
 const H = TOP + (STREETS.length - 1) * RH + 30;
 
 const cx = (b: Block) => LEFT + b.col * CW + CW / 2;
@@ -58,8 +58,8 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
                 <text x={LEFT / 2 - 4} y={H / 2} fill="var(--color-ocean-deep)" fontSize="12" letterSpacing="0"
                   textAnchor="middle" transform={`rotate(-90 ${LEFT / 2 - 4} ${H / 2})`} className="uppercase">{t.map.ocean}</text>
                 {/* park */}
-                <rect x={LEFT - 8} y="0" width={W - LEFT + 8} height={TOP - 26} fill="var(--color-mint)" />
-                <text x={LEFT + 10} y={TOP - 36} fill="var(--color-park)" fontSize="12" letterSpacing="0" className="uppercase">{t.map.park}</text>
+                <rect x={LEFT - 8} y="0" width={W - LEFT + 8} height="30" fill="var(--color-mint)" />
+                <text x={LEFT + 10} y="20" fill="var(--color-park)" fontSize="12" letterSpacing="0" className="uppercase">{t.map.park}</text>
 
                 {/* streets */}
                 {STREETS.map((s, i) => (
@@ -69,17 +69,18 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
                   </g>
                 ))}
                 {/* avenues */}
-                {AVENUES.map((a) => {
-                  const x = LEFT + (48 - a) * CW + CW / 2;
+                {MAP_COLUMNS.map((a, col) => {
+                  const x = LEFT + col * CW + CW / 2;
                   return (
                     <g key={a}>
-                      <line x1={x} x2={x} y1={TOP} y2={TOP + (STREETS.length - 1) * RH} stroke="var(--color-ink)" strokeOpacity="0.1" />
-                      <text x={x} y={TOP - 8} fill="var(--color-ink)" fontSize="9" textAnchor="middle">{a}</text>
+                      <line x1={x} x2={x} y1={TOP} y2={TOP + (typeof a === "string" && a === "La Playa" ? 2 : STREETS.length - 1) * RH} stroke="var(--color-ink)" strokeOpacity="0.1" />
+                      <text x={x} y={TOP - 8} fill="var(--color-ink)" fontSize="9" textAnchor={typeof a === "string" ? "start" : "middle"}
+                        transform={typeof a === "string" ? `rotate(-90 ${x} ${TOP - 8})` : undefined}>{typeof a === "number" ? a : a === "Great Hwy" ? t.map.greatHwy : t.map.laPlaya}</text>
                     </g>
                   );
                 })}
                 {/* Sunset Blvd between 36th & 37th */}
-                <line x1={LEFT + 11.5 * CW + CW / 2} x2={LEFT + 11.5 * CW + CW / 2} y1={TOP - 22} y2={H - 10} stroke="var(--color-park)" strokeOpacity="0.3" strokeWidth="3" />
+                <line x1={LEFT + (11.5 + COASTAL_STREETS.length) * CW + CW / 2} x2={LEFT + (11.5 + COASTAL_STREETS.length) * CW + CW / 2} y1={TOP - 22} y2={H - 10} stroke="var(--color-park)" strokeOpacity="0.3" strokeWidth="3" />
 
                 {BLOCKS.map((b) => {
                   const names = claimed[b.id];

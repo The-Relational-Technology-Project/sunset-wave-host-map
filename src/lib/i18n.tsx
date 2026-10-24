@@ -40,6 +40,8 @@ const en = {
     reset: "Reset map",
     ocean: "Pacific Ocean",
     park: "Golden Gate Park",
+    greatHwy: "Great Hwy",
+    laPlaya: "La Playa",
     hint: "Pinch or scroll to zoom. Drag to move.",
     openTitle: "This block is open",
     openSub: "Be the one who says yes. Co-hosts welcome.",
@@ -65,7 +67,7 @@ const en = {
     title: "You won't do this alone",
     sub: "Say yes and you're part of a 400-person host network, facilitated by the Sunset Social Club.",
     items: [
-      { t: "Host party at 4114 Judah", w: "4 to 6 weeks before", b: "Meet the other hosts first. Food, a short walkthrough, and the hosts on your avenue." },
+      { t: "Host party", w: "4 to 6 weeks before", b: "Meet the other hosts first. Food, a short walkthrough, and the hosts on your avenue." },
       { t: "Host network", w: "From signup to the day", b: "A group thread by avenue, plus experienced block party hosts as friendly mentors." },
       { t: "Planning help", w: "Whenever you ask", b: "A one-page gathering recipe, a 20-minute call or walk-and-talk, help with permits if you want a street closure (most won't)." },
       { t: "Flyers by local artists", w: "6 weeks out", b: "Sunset artists design a flyer kit, remixed with your stretch and time, in English and Chinese. Print copies at Sunset Variety." },
@@ -201,6 +203,8 @@ const zh: Dict = {
     reset: "重置地图",
     ocean: "太平洋",
     park: "金门公园",
+    greatHwy: "Great Hwy",
+    laPlaya: "La Playa",
     hint: "双指或滚轮缩放，拖动移动。",
     openTitle: "这个街区还空着",
     openSub: "做那个说“好”的人吧。欢迎共同主持。",
@@ -226,7 +230,7 @@ const zh: Dict = {
     title: "你不是一个人",
     sub: "说“好”，你就加入了一个由日落社交俱乐部组织的 400 人主持人网络。",
     items: [
-      { t: "4114 Judah 主持人派对", w: "活动前 4 到 6 周", b: "先认识其他主持人。有吃的、简短的流程介绍，还能见到同一条大道的主持人。" },
+      { t: "主持人派对", w: "活动前 4 到 6 周", b: "先认识其他主持人。有吃的、简短的流程介绍，还能见到同一条大道的主持人。" },
       { t: "主持人网络", w: "从报名到当天", b: "按大道分组的群聊，还有有经验的街区派对主持人做你的友好导师。" },
       { t: "策划帮助", w: "随时可问", b: "一页纸的聚会指南、20 分钟的电话或散步聊天；如果想封街，我们帮你申请许可（大多数不需要）。" },
       { t: "本地艺术家设计的传单", w: "提前 6 周", b: "日落区艺术家设计传单套件，填上你的地点和时间，中英双语。可在 Sunset Variety 领取打印版。" },
@@ -360,6 +364,8 @@ const yue: Dict = {
     reset: "重設地圖",
     ocean: "太平洋",
     park: "金門公園",
+    greatHwy: "Great Hwy",
+    laPlaya: "La Playa",
     hint: "用兩隻手指或者碌輪縮放，拖動移動。",
     openTitle: "呢個街區仲未有人",
     openSub: "做嗰個話「好」嘅人啦。歡迎一齊主持。",
@@ -385,7 +391,7 @@ const yue: Dict = {
     title: "你唔會孤軍作戰",
     sub: "話「好」，你就加入咗一個由日落社交俱樂部組織嘅 400 人主持人網絡。",
     items: [
-      { t: "4114 Judah 主持人派對", w: "活動前 4 至 6 星期", b: "先識吓其他主持人。有嘢食、簡短講解，仲可以見到同一條大道嘅主持人。" },
+      { t: "主持人派對", w: "活動前 4 至 6 星期", b: "先識吓其他主持人。有嘢食、簡短講解，仲可以見到同一條大道嘅主持人。" },
       { t: "主持人網絡", w: "由報名到當日", b: "按大道分組嘅群組，仲有有經驗嘅街區派對主持人做你嘅導師。" },
       { t: "策劃幫手", w: "隨時問", b: "一頁紙嘅聚會貼士、20 分鐘電話或者行街傾偈；想封街嘅話我哋幫你申請許可（大部分都唔使）。" },
       { t: "本地藝術家設計嘅傳單", w: "提前 6 星期", b: "日落區藝術家設計傳單套裝，填上你嘅地點同時間，中英雙語。可以去 Sunset Variety 攞印好嘅。" },
@@ -519,6 +525,8 @@ const es: Dict = {
     reset: "Restablecer mapa",
     ocean: "Océano Pacífico",
     park: "Golden Gate Park",
+    greatHwy: "Great Hwy",
+    laPlaya: "La Playa",
     hint: "Pellizca o desplaza para acercar. Arrastra para moverte.",
     openTitle: "Esta cuadra está libre",
     openSub: "Sé quien dice que sí. Co-anfitriones bienvenidos.",
@@ -544,7 +552,7 @@ const es: Dict = {
     title: "No lo harás solo",
     sub: "Si dices que sí, formas parte de una red de 400 anfitriones, coordinada por el Sunset Social Club.",
     items: [
-      { t: "Fiesta de anfitriones en 4114 Judah", w: "4 a 6 semanas antes", b: "Conoce primero a los demás anfitriones. Comida, una breve explicación y los anfitriones de tu avenida." },
+      { t: "Fiesta de anfitriones", w: "4 a 6 semanas antes", b: "Conoce primero a los demás anfitriones. Comida, una breve explicación y los anfitriones de tu avenida." },
       { t: "Red de anfitriones", w: "Desde que te inscribes", b: "Un chat grupal por avenida, y anfitriones con experiencia como mentores amistosos." },
       { t: "Ayuda para planear", w: "Cuando la pidas", b: "Una receta de una página, una llamada o caminata de 20 minutos, y ayuda con permisos si quieres cerrar la calle (casi nadie lo necesita)." },
       { t: "Volantes de artistas locales", w: "6 semanas antes", b: "Artistas del Sunset diseñan un kit de volantes con tu tramo y horario, en inglés y chino. Copias impresas en Sunset Variety." },
@@ -649,7 +657,16 @@ const es: Dict = {
 
 export const DICTS: Record<Lang, Dict> = { en, zh, yue, es };
 
-export function blockLabel(lang: Lang, avenue: number, north: string, south: string) {
+export function blockLabel(lang: Lang, avenue: number | "Great Hwy" | "La Playa", north: string, south: string) {
+  if (typeof avenue === "string") {
+    const street = avenue === "Great Hwy" ? DICTS[lang].map.greatHwy : DICTS[lang].map.laPlaya;
+    switch (lang) {
+      case "zh": return `${street}（${north} 与 ${south} 之间）`;
+      case "yue": return `${street}（${north} 同 ${south} 之間）`;
+      case "es": return `${street} entre ${north} y ${south}`;
+      default: return `${street} between ${north} and ${south}`;
+    }
+  }
   switch (lang) {
     case "zh": return `${avenue} 街（${north} 与 ${south} 之间）`;
     case "yue": return `${avenue} 街（${north} 同 ${south} 之間）`;
