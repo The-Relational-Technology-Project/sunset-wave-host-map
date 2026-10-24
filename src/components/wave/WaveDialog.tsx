@@ -100,7 +100,6 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   const [hp, setHp] = useState("");
   const [errors, setErrors] = useState<Errs>({});
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(false);
 
   useEffect(() => {
     if (block) setStretch(blockLabel("en", block.avenue, block.north, block.south));
@@ -139,7 +138,6 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
     }
   }
 
-  if (done) return <Success title={t.host.okTitle} body={t.host.okBody} onClose={onClose} />;
 
   return (
     <form onSubmit={onSubmit} className="space-y-5 pt-6" noValidate>
