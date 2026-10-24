@@ -63,12 +63,13 @@ export const hostSchema = z.object({
   wantsMicrogrant: z.boolean(),
   canGive: z.boolean(),
   language: langSchema,
-  website: z.string().max(0).optional(), // honeypot
+  website: z.string().max(500).optional(), // honeypot: filled = bot
 });
 
 export const submitHost = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => hostSchema.parse(d))
   .handler(async ({ data }) => {
+    if (data.website) return { ok: true }; // bot: pretend success, store nothing
     if (limited(`h:${await clientKey()}`)) throw new Error("Too many submissions, try again later.");
     const { error } = await publicClient().from("host_offers").insert({
       block_id: data.blockId,
@@ -90,12 +91,13 @@ export const noteSchema = z.object({
   contact: z.string().trim().min(3).max(200),
   message: z.string().trim().min(1).max(1500),
   language: langSchema,
-  website: z.string().max(0).optional(),
+  website: z.string().max(500).optional(),
 });
 
 export const submitNote = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => noteSchema.parse(d))
   .handler(async ({ data }) => {
+    if (data.website) return { ok: true };
     if (limited(`n:${await clientKey()}`)) throw new Error("Too many submissions, try again later.");
     const { error } = await publicClient().from("host_notes").insert({
       block_id: data.blockId,
