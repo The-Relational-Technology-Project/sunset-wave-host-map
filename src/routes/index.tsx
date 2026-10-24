@@ -49,10 +49,10 @@ function Index() {
 
       {/* Gathering photos */}
       <section className="grain border-y-4 border-ink bg-ink">
-        <ul className="grid grid-cols-2 gap-1 md:grid-cols-4">
+        <ul className="grid grid-cols-2 items-center gap-1 md:grid-cols-4">
           {t.easy.steps.map((s, i) => (
             <li key={i} className="overflow-hidden">
-              <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading={i < 2 ? "eager" : "lazy"} className="block aspect-[4/5] h-full w-full object-cover" />
+              <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading={i < 2 ? "eager" : "lazy"} className="block h-auto w-full" />
             </li>
           ))}
         </ul>
