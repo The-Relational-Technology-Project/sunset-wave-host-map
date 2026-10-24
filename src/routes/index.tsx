@@ -93,16 +93,14 @@ function Index() {
       <section className="grain bg-blush/40">
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.easy.title}</h2>
-          <p className="mt-3 font-hand text-3xl text-ocean-deep">{t.easy.sub}</p>
-          <ul className="mt-12 grid gap-x-8 gap-y-12 md:grid-cols-2">
+          <ul className="mt-12 grid items-start gap-x-8 gap-y-12 md:grid-cols-2">
             {t.easy.steps.map((s, i) => (
               <li key={i} className={i % 2 ? "md:translate-y-8" : ""}>
-                <div className="aspect-[16/10] overflow-hidden border-y-8 border-ink bg-ink">
-                  <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading="lazy" className="h-full w-full object-cover" />
+                <div className="overflow-hidden border-y-8 border-ink bg-ink">
+                  <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading="lazy" className="block h-auto w-full" />
                 </div>
                 <div className="space-y-2 pt-5">
                   <h3 className="font-hand text-3xl text-ink">{s.t}</h3>
-                  <p className="text-muted-foreground">{s.b}</p>
                 </div>
               </li>
             ))}
@@ -124,36 +122,13 @@ function Index() {
       <section className="grain bg-park text-night-foreground">
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <h2 className="poster-title text-6xl sm:text-7xl">{t.gets.title}</h2>
-          <p className="mt-4 max-w-2xl text-lg opacity-90">{t.gets.sub}</p>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
             {t.gets.items.map((it) => (
-              <div key={it.t} className="rounded-2xl border-2 border-ink bg-card p-6 text-ink shadow-poster">
-                <p className="font-hand text-xl text-coral">{it.w}</p>
-                <h3 className="mt-1 text-xl font-bold">{it.t}</h3>
-                <p className="mt-2 text-muted-foreground">{it.b}</p>
-              </div>
+              <li key={it.t} className="border-t border-night-foreground/30 py-6">
+                <h3 className="font-hand text-2xl leading-snug">{it.t}</h3>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Goals */}
-      <section className="grain bg-mustard">
-        <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
-          <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.goals.title}</h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {t.goals.items.map((g) => (
-              <div key={g.n} className="border-t-4 border-ink pt-4">
-                <p className="poster-title text-[7rem] text-ink [text-shadow:4px_4px_0_var(--color-coral)]">{g.n}</p>
-                <p className="text-lg font-semibold text-ink">{g.l}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-10 max-w-2xl text-lg text-ink">{t.goals.note}</p>
-          <div className="mt-12 flex items-center gap-4 rounded-2xl bg-ink p-6 text-sand">
-            <WaveHand className="animate-wiggle h-14 w-14 shrink-0" />
-            <p className="font-hand text-2xl sm:text-3xl">{t.goals.annual}</p>
-          </div>
+          </ul>
         </div>
       </section>
 
