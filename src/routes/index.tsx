@@ -47,36 +47,33 @@ function Index() {
       <Hero hostCount={data.hostCount} onHost={() => setDialog({ mode: "host", block: null })} />
 
 
-      {/* Gathering photos */}
-      <section className="grain bg-blush/40">
-        <ul className="mx-auto grid max-w-6xl grid-cols-2 items-center gap-5 px-5 py-12 sm:gap-8 md:grid-cols-4 md:py-16">
-          {t.easy.steps.map((s, i) => (
-            <li key={i} className={`rounded-2xl border-2 border-ink bg-card p-2 shadow-poster sm:p-3 ${["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"][i]}`}>
-              <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading={i < 2 ? "eager" : "lazy"} className="block h-auto w-full rounded-lg" />
-            </li>
-          ))}
-        </ul>
-      </section>
-
       {/* Invitation */}
       <section className="grain bg-sand">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.2fr_1fr] md:items-center md:py-28">
-          <div className="space-y-6">
+        <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+          <div className="max-w-3xl space-y-6">
             <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.invite.title}</h2>
             <p className="text-lg leading-relaxed text-muted-foreground">{t.invite.p1}</p>
             <p className="text-lg leading-relaxed text-muted-foreground">{t.invite.p2}</p>
             <p className="font-hand text-3xl text-coral">{t.invite.p3}</p>
           </div>
-          <figure className="relative mx-auto w-full max-w-sm rotate-2 rounded-2xl border-2 border-ink bg-card p-3 shadow-poster">
-            <img src={aerial.url} alt={t.invite.photoAlt} width={615} height={766} loading="lazy" className="h-auto w-full rounded-lg" />
-            <WaveHand className="absolute -left-6 -top-6 h-16 w-16 -rotate-12" />
-          </figure>
+          <ul className="mt-14 grid grid-cols-2 items-center gap-5 sm:gap-8 md:grid-cols-4">
+            {t.easy.steps.map((s, i) => (
+              <li key={i} className={`rounded-2xl border-2 border-ink bg-card p-2 shadow-poster sm:p-3 ${["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"][i]}`}>
+                <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading="lazy" className="block h-auto w-full rounded-lg" />
+              </li>
+            ))}
+          </ul>
+
         </div>
       </section>
 
       {/* Map */}
       <section id="map" className="grain scroll-mt-4 bg-mint text-ink">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-5 md:py-24">
+          <figure className="relative mx-auto w-full mb-12 max-w-xs -rotate-2 sm:max-w-sm rounded-2xl border-2 border-ink bg-card p-3 shadow-poster">
+            <img src={aerial.url} alt={t.invite.photoAlt} width={615} height={766} loading="lazy" className="h-auto w-full rounded-lg" />
+            <WaveHand className="absolute -left-6 -top-6 h-16 w-16 -rotate-12" />
+          </figure>
           <div className="mb-8 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="min-w-0 space-y-3">
               <h2 className="poster-title text-6xl sm:text-7xl">{t.map.title}</h2>
