@@ -132,7 +132,28 @@
   font-family: var(--font-display);
   text-transform: uppercase;
   line-height: 0.82;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+}
+
+/* Printed type, without an illustrated backdrop. */
+.wave-header { min-height: min(780px, 92svh); border-bottom: 12px solid var(--coral); }
+.wave-title-the { font-size: 76px; }
+.wave-title-main { font-size: 172px; }
+@media (min-width: 640px) {
+  .wave-title-the { font-size: 96px; }
+  .wave-title-main { font-size: 210px; }
+}
+@media (min-width: 1024px) {
+  .wave-title-the { font-size: 104px; }
+  .wave-title-main { font-size: 238px; }
+}
+@media (max-width: 380px) {
+  .wave-title-the { font-size: 64px; }
+  .wave-title-main { font-size: 142px; }
+}
+@media (max-height: 740px) and (min-width: 640px) {
+  .wave-title-the { font-size: 68px; }
+  .wave-title-main { font-size: 158px; }
 }
 
 @utility shadow-poster {

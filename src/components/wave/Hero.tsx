@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import poster from "@/assets/sunset-poster.jpg";
 import { fill, useLang } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { LangSwitch } from "./LangSwitch";
@@ -38,30 +37,24 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
-    <header className="grain relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-mustard">
-      <img src={poster} alt={t.hero.alt} width={1920} height={1088} fetchPriority="high"
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-[60%_bottom]" />
-      <div className="absolute inset-x-0 top-0 -z-10 h-2/3 bg-gradient-to-b from-sand/70 via-sand/30 to-transparent" />
-      <div className="animate-fog pointer-events-none absolute inset-x-[-10%] bottom-[18%] -z-10 h-40 rounded-[50%] bg-fog/50 blur-3xl" />
+    <header className="grain wave-header relative isolate flex flex-col overflow-hidden bg-mustard">
 
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 pt-4 sm:px-6 sm:pt-6">
-        <a href="/" className="flex min-w-0 items-center gap-2">
-          <WaveHand className="h-12 w-12 shrink-0 drop-shadow sm:h-16 sm:w-16 animate-wiggle" alt="The Sunset Wave" />
-          <span className="hidden truncate font-hand text-2xl text-ink sm:inline">thesunsetwave.org</span>
-        </a>
+      <div className="mx-auto flex w-full max-w-7xl justify-end px-4 pt-4 sm:px-6 sm:pt-6">
         <LangSwitch />
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pt-6 sm:px-6 sm:pt-10">
-        <p className="font-hand text-2xl text-ocean-deep sm:text-3xl">{t.hero.kicker} · {t.hero.date}</p>
-        <h1 className="relative mt-2 w-fit text-ink" aria-label="The Sunset Wave">
-          <span aria-hidden className="poster-title block text-[min(16vw,11vh)]">The</span>
-          <span aria-hidden className="poster-title block text-[min(30vw,22vh)] text-coral [text-shadow:4px_4px_0_var(--color-ink)]">Sunset</span>
-          <span aria-hidden className="poster-title block text-[min(30vw,22vh)] [text-shadow:4px_4px_0_var(--color-coral)]">Wave</span>
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-4 sm:px-6 sm:pt-6">
+        <h1 className="wave-title relative w-fit text-ink" aria-label={t.hero.brand}>
+          <span aria-hidden className="poster-title wave-title-the block">{t.hero.the}</span>
+          <span aria-hidden className="poster-title wave-title-main block text-coral [text-shadow:4px_4px_0_var(--color-ink)]">{t.hero.sunset}</span>
+          <span aria-hidden className="poster-title wave-title-main block [text-shadow:4px_4px_0_var(--color-coral)]">{t.hero.wave}</span>
           {HANDS.slice(0, shown).map((h, i) => (
             <span key={i} aria-hidden className="pointer-events-none absolute" style={{ top: `${h.top}%`, left: `${h.left}%`, width: `${h.s}%`, rotate: `${h.r}deg` }}>
               <WaveHand className="animate-wave-pop w-full drop-shadow-md" />
@@ -69,8 +62,8 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
           ))}
         </h1>
 
-        <div className="mt-auto space-y-5 pb-10 sm:pb-14">
-          <p className="max-w-xl rounded-2xl bg-card/85 p-4 text-xl font-semibold text-ink shadow-poster-sm backdrop-blur sm:text-2xl">{t.hero.tagline}</p>
+        <div className="mt-auto space-y-5 pb-10 pt-8 sm:pb-12">
+          <p className="max-w-2xl font-hand text-2xl text-ink sm:text-3xl">{t.hero.kicker} - {t.hero.date}</p>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="poster" size="xl" onClick={onHost}>{t.hero.cta}</Button>
             <Button variant="posterAlt" size="xl" asChild><a href="#map">{t.hero.map}</a></Button>
