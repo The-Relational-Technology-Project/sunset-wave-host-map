@@ -10,21 +10,22 @@ export const LANGS: { code: Lang; label: string; html: string }[] = [
 ];
 
 const en = {
-  nav: { host: "Host your block", lang: "Language" },
+  nav: { host: "Host on your block", lang: "Language" },
   hero: {
-    kicker: "The inaugural Wave",
+    brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
+    kicker: "The Inaugural Wave",
     date: "Saturday, March 20, 2027",
     tagline: "400 blocks. One afternoon. Hosted by the neighbors.",
-    cta: "Host your block",
+    cta: "Host on your block",
     map: "See the map",
     count: "{n} neighbors have raised a hand",
     alt: "Painted row houses of the Sunset stepping down to the dunes and the ocean, pelicans overhead",
   },
   invite: {
     title: "A gathering on every block, on the same day.",
-    p1: "We think the Sunset can do something no neighborhood in San Francisco has done. Not a festival. A folding table on your sidewalk, a pot of something on your front steps, a tea in your garage.",
-    p2: "It's a chance to finally meet the neighbors you've been waving at for years.",
-    p3: "You host your block. We help with everything else.",
+    p1: "We're envisioning a day where Sunset neighbors come together. Folding tables and lawn chairs and outstretched hands. Good will in action on every street.",
+    p2: "It's a chance to finally meet your neighbors, and for them to meet each other.",
+    p3: "You host on your block. We help out and celebrate you.",
     photoAlt: "The Sunset from above, rows of houses running to the ocean",
   },
   map: {
@@ -42,7 +43,7 @@ const en = {
     hint: "Pinch or scroll to zoom. Drag to move.",
     openTitle: "This block is open",
     openSub: "Be the one who says yes. Co-hosts welcome.",
-    take: "Host this block",
+    take: "Host on this block",
     claimedTitle: "{names} raised a hand here",
     claimedSub: "Want to help, bring something, or just say hi? Send the host a note. Two hosts on a block is a feature, not a conflict.",
     sendNote: "Send a note to the host",
@@ -50,12 +51,12 @@ const en = {
   },
   easy: {
     title: "Hosting looks like this",
-    sub: "Four small steps. Do it your way.",
+    sub: "A little invitation. A little color. A place to come together.",
     steps: [
-      { t: "Print a simple flyer", b: "Slip it under doors or tape it to a pole. We'll have artist-made flyers with your block filled in." },
-      { t: "Chalk the sidewalk", b: "A few words and an arrow. Kids love this part." },
-      { t: "Put out a sign", b: "\"Neighbors gathering here.\" A cardboard box and a marker will do." },
-      { t: "Say hi", b: "Pull up a chair. Wave. That's the whole thing." },
+      { t: "The invitation", b: "A small flyer on a familiar street. Something good is happening here." },
+      { t: "A little sidewalk color", b: "Chalk-covered hands, bright colors, and kids making the street their own." },
+      { t: "A place to gather", b: "A homemade sign. An open garage. Room for one more chair." },
+      { t: "Neighbors, at last", b: "Folding chairs, shared snacks, and conversations that keep going." },
     ],
     ideasTitle: "Make it yours",
     ideas: ["Card games in the garage", "Potluck out front", "Coffee + donuts", "Chalk art and music", "Tea on the steps", "Kids' bike parade"],
@@ -96,7 +97,7 @@ const en = {
     ],
   },
   host: {
-    title: "Host your block",
+    title: "Host on your block",
     sub: "Under a minute. The date is set and the block is yours.",
     name: "Your name",
     contact: "Email or phone",
@@ -170,21 +171,22 @@ const en = {
 export type Dict = typeof en;
 
 const zh: Dict = {
-  nav: { host: "认领你的街区", lang: "语言" },
+  nav: { host: "在你的街区主持聚会", lang: "语言" },
   hero: {
+    brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
     kicker: "首届 The Sunset Wave",
     date: "2027 年 3 月 20 日，星期六",
     tagline: "400 个街区。同一个下午。由邻居们主持。",
-    cta: "认领你的街区",
+    cta: "在你的街区主持聚会",
     map: "查看地图",
     count: "已有 {n} 位邻居举手",
     alt: "日落区彩色的排屋一路延伸到沙丘和大海，鹈鹕从头顶飞过",
   },
   invite: {
     title: "同一天，每个街区都有一场聚会。",
-    p1: "我们相信日落区能做到旧金山任何一个社区都没做过的事。不是节庆活动，而是人行道上的一张折叠桌、门前台阶上的一锅好吃的、车库里的一壶茶。",
-    p2: "这是一个机会，终于认识那些你挥手打招呼好多年的邻居。",
-    p3: "你负责你的街区，其他的我们来帮忙。",
+    p1: "我们想象着这样一天：日落区的邻居们聚在一起。折叠桌、草坪椅，还有伸出来打招呼的手。每条街上，善意都化为行动。",
+    p2: "这是一个终于认识邻居、也让他们彼此认识的机会。",
+    p3: "你在自己的街区主持聚会。我们来帮忙，也为你喝彩。",
     photoAlt: "从空中俯瞰日落区，一排排房屋延伸到海边",
   },
   map: {
@@ -210,12 +212,12 @@ const zh: Dict = {
   },
   easy: {
     title: "主持聚会就是这么简单",
-    sub: "四个小步骤，用你自己的方式。",
+    sub: "一点邀请，一点色彩，一个相聚的地方。",
     steps: [
-      { t: "打印一张简单的传单", b: "塞进门缝或贴在电线杆上。我们会提供艺术家设计、填好你街区信息的传单。" },
-      { t: "在人行道上写粉笔字", b: "几个字加一个箭头。孩子们最喜欢这一步。" },
-      { t: "立一块牌子", b: "“邻居在这里聚会”。一个纸箱加一支马克笔就够了。" },
-      { t: "打个招呼", b: "搬把椅子坐下，挥挥手。就这么简单。" },
+      { t: "一份邀请", b: "熟悉的街上，一张小小的传单。这里将有好事发生。" },
+      { t: "人行道上的色彩", b: "沾满粉笔的小手、鲜艳的颜色，孩子们让街道充满生气。" },
+      { t: "相聚的地方", b: "一块手写牌子，一间敞开的车库，再多一把椅子的位置。" },
+      { t: "终于认识你", b: "折叠椅、分享的小吃，还有聊不完的话。" },
     ],
     ideasTitle: "用你的方式",
     ideas: ["车库里打牌", "门前百家宴", "咖啡加甜甜圈", "粉笔画和音乐", "台阶上喝茶", "小朋友单车巡游"],
@@ -256,7 +258,7 @@ const zh: Dict = {
     ],
   },
   host: {
-    title: "认领你的街区",
+    title: "在你的街区主持聚会",
     sub: "不到一分钟。日期已定，街区归你。",
     name: "你的名字",
     contact: "电子邮件或电话",
@@ -328,21 +330,22 @@ const zh: Dict = {
 };
 
 const yue: Dict = {
-  nav: { host: "認領你嘅街區", lang: "語言" },
+  nav: { host: "喺你嘅街區主持聚會", lang: "語言" },
   hero: {
+    brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
     kicker: "首屆 The Sunset Wave",
     date: "2027 年 3 月 20 日，星期六",
     tagline: "400 個街區。同一個下晝。由街坊主持。",
-    cta: "認領你嘅街區",
+    cta: "喺你嘅街區主持聚會",
     map: "睇地圖",
     count: "已經有 {n} 位街坊舉咗手",
     alt: "日落區色彩繽紛嘅排屋一路伸延到沙丘同大海，鵜鶘喺頭頂飛過",
   },
   invite: {
     title: "同一日，每個街區都有一個聚會。",
-    p1: "我哋相信日落區做得到三藩市冇一個社區做過嘅事。唔係嘉年華，而係行人路上一張摺枱、門口樓梯上一煲好嘢食、車房入面一壺茶。",
-    p2: "終於有機會識吓嗰啲你揮咗好多年手嘅街坊。",
-    p3: "你負責你嘅街區，其他嘢我哋幫手。",
+    p1: "我哋想像有一日，日落區嘅街坊聚埋一齊。摺枱、草地櫈，同伸出嚟打招呼嘅手。每條街都有善意化成行動。",
+    p2: "呢個係終於識吓你嘅街坊、亦俾佢哋互相認識嘅機會。",
+    p3: "你喺自己嘅街區主持聚會。我哋幫手，亦為你打氣。",
     photoAlt: "由高空望落日落區，一行行屋伸延到海邊",
   },
   map: {
@@ -368,12 +371,12 @@ const yue: Dict = {
   },
   easy: {
     title: "主持就係咁簡單",
-    sub: "四個小步驟，用你自己嘅方式。",
+    sub: "一個邀請、一啲色彩、一個聚埋嘅地方。",
     steps: [
-      { t: "印張簡單嘅傳單", b: "塞入門縫或者貼喺電燈柱。我哋會提供藝術家設計、填好你街區資料嘅傳單。" },
-      { t: "喺行人路寫粉筆字", b: "幾個字加個箭咀。細路最鍾意呢一步。" },
-      { t: "擺個牌", b: "「街坊喺度聚會」。一個紙皮箱同一枝箱頭筆就得。" },
-      { t: "打個招呼", b: "搬張櫈坐低，揮吓手。就係咁簡單。" },
+      { t: "一個邀請", b: "熟悉嘅街上一張小小嘅傳單。呢度就快有好嘢發生。" },
+      { t: "行人路上嘅色彩", b: "沾滿粉筆嘅手、鮮艷嘅顏色，細路令條街熱鬧起嚟。" },
+      { t: "聚埋嘅地方", b: "一塊手寫牌、打開嘅車房，仲放得落多張櫈。" },
+      { t: "終於識到你", b: "摺櫈、分享嘅小食，同傾唔完嘅偈。" },
     ],
     ideasTitle: "用你嘅方式",
     ideas: ["車房打牌", "門口百家宴", "咖啡加冬甩", "粉筆畫同音樂", "樓梯飲茶", "細路單車巡遊"],
@@ -414,7 +417,7 @@ const yue: Dict = {
     ],
   },
   host: {
-    title: "認領你嘅街區",
+    title: "喺你嘅街區主持聚會",
     sub: "唔使一分鐘。日子已經定咗，街區係你嘅。",
     name: "你嘅名",
     contact: "電郵或者電話",
@@ -488,6 +491,7 @@ const yue: Dict = {
 const es: Dict = {
   nav: { host: "Organiza en tu cuadra", lang: "Idioma" },
   hero: {
+    brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
     kicker: "La primera Wave",
     date: "Sábado, 20 de marzo de 2027",
     tagline: "400 cuadras. Una tarde. Organizadas por los vecinos.",
@@ -498,9 +502,9 @@ const es: Dict = {
   },
   invite: {
     title: "Una reunión en cada cuadra, el mismo día.",
-    p1: "Creemos que el Sunset puede hacer algo que ningún barrio de San Francisco ha hecho. No es un festival. Es una mesa plegable en tu banqueta, una olla de algo rico en tus escalones, un té en tu garaje.",
-    p2: "Es la oportunidad de por fin conocer a los vecinos que llevas años saludando con la mano.",
-    p3: "Tú organizas tu cuadra. Nosotros te ayudamos con todo lo demás.",
+    p1: "Imaginamos un día en que los vecinos del Sunset se reúnen. Mesas plegables, sillas de jardín y manos extendidas. Buena voluntad en acción en cada calle.",
+    p2: "Es una oportunidad de por fin conocer a tus vecinos, y de que ellos se conozcan entre sí.",
+    p3: "Tú organizas en tu cuadra. Nosotros te ayudamos y te celebramos.",
     photoAlt: "El Sunset desde el aire, filas de casas que llegan hasta el océano",
   },
   map: {
@@ -526,12 +530,12 @@ const es: Dict = {
   },
   easy: {
     title: "Así se ve organizar",
-    sub: "Cuatro pasos pequeños. A tu manera.",
+    sub: "Una invitación. Un poco de color. Un lugar para reunirnos.",
     steps: [
-      { t: "Imprime un volante sencillo", b: "Mételo bajo las puertas o pégalo en un poste. Tendremos volantes hechos por artistas con tu cuadra ya escrita." },
-      { t: "Escribe con gis en la banqueta", b: "Unas palabras y una flecha. A los niños les encanta esta parte." },
-      { t: "Pon un letrero", b: "\"Vecinos reunidos aquí.\" Basta con una caja de cartón y un marcador." },
-      { t: "Saluda", b: "Saca una silla. Saluda con la mano. Eso es todo." },
+      { t: "La invitación", b: "Un pequeño volante en una calle familiar. Algo bueno está pasando aquí." },
+      { t: "Color en la banqueta", b: "Manos llenas de gis, colores vivos y niños haciendo suya la calle." },
+      { t: "Un lugar para reunirnos", b: "Un letrero casero. Un garaje abierto. Espacio para una silla más." },
+      { t: "Vecinos, por fin", b: "Sillas plegables, bocadillos compartidos y conversaciones que siguen." },
     ],
     ideasTitle: "Hazlo a tu manera",
     ideas: ["Juegos de cartas en el garaje", "Potluck enfrente", "Café y donas", "Arte con gis y música", "Té en los escalones", "Desfile de bicis infantil"],
@@ -679,7 +683,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
   useEffect(() => {
-    document.documentElement.lang = LANGS.find((l) => l.code === lang)!.html;
+    document.documentElement.lang = (LANGS.find((l) => l.code === lang)?.html ?? "en");
   }, [lang]);
   const setLang = (l: Lang) => {
     setLangState(l);

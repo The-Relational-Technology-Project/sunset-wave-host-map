@@ -1,4 +1,4 @@
-import wave from "@/assets/wave-hand-sm.png";
+import wave from "@/assets/wave-hand-simple.png";
 
 export const WAVE_SRC = wave;
 
