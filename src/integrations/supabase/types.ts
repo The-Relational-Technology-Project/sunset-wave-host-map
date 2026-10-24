@@ -14,13 +14,88 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      host_notes: {
+        Row: {
+          block_id: string
+          contact: string
+          created_at: string
+          id: string
+          language: string
+          message: string
+          name: string
+        }
+        Insert: {
+          block_id: string
+          contact: string
+          created_at?: string
+          id?: string
+          language?: string
+          message: string
+          name: string
+        }
+        Update: {
+          block_id?: string
+          contact?: string
+          created_at?: string
+          id?: string
+          language?: string
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      host_offers: {
+        Row: {
+          block_id: string | null
+          can_give: boolean
+          cohosts: Json
+          contact: string
+          created_at: string
+          id: string
+          language: string
+          name: string
+          stretch_text: string
+          wants_microgrant: boolean
+        }
+        Insert: {
+          block_id?: string | null
+          can_give?: boolean
+          cohosts?: Json
+          contact: string
+          created_at?: string
+          id?: string
+          language?: string
+          name: string
+          stretch_text: string
+          wants_microgrant?: boolean
+        }
+        Update: {
+          block_id?: string | null
+          can_give?: boolean
+          cohosts?: Json
+          contact?: string
+          created_at?: string
+          id?: string
+          language?: string
+          name?: string
+          stretch_text?: string
+          wants_microgrant?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      count_hosts: { Args: never; Returns: number }
+      get_claimed_blocks: {
+        Args: never
+        Returns: {
+          block_id: string
+          first_names: string[]
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
