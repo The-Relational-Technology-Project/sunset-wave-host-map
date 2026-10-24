@@ -27,7 +27,7 @@ const Email = ({ name, contact, stretch, cohosts, wantsMicrogrant, canGive, lang
 
 export const template = {
   component: Email,
-  subject: (d: Record<string, any>) => `New Sunset Wave host: ${d.name ?? 'someone'}`,
+  subject: (d: Record<string, any>) => `New Sunset Wave host: ${d['name'] ?? 'someone'}`,
   displayName: 'New host alert (to Sunset Social Club)',
   to: 'oursunsetsocialclub@gmail.com',
   previewData: { name: 'Josh', contact: 'josh@example.com', stretch: '30th Ave between Judah and Kirkham', cohosts: [{ name: 'Ana', contact: '' }], wantsMicrogrant: true, canGive: false, language: 'en' },
