@@ -31,7 +31,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const p = window.scrollY / (window.innerHeight * 1.1);
+        const p = window.scrollY / (window.innerHeight * 0.35);
         setShown((prev) => Math.max(prev, Math.min(HANDS.length, 1 + Math.floor(p * HANDS.length))));
       });
     };
