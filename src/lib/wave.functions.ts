@@ -98,6 +98,16 @@ export const submitHost = createServerFn({ method: "POST" })
     });
     if (error) throw new Error("Could not save");
     await confirm("host-confirmation", data.contact, id, { name: data.name, stretch: data.stretch });
+    try {
+      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      await sendTemplateEmail("host-alert", REPLY_TO, {
+        templateData: { name: data.name, contact: data.contact, stretch: data.stretch, cohosts: data.cohosts, wantsMicrogrant: data.wantsMicrogrant, canGive: data.canGive, language: data.language },
+        idempotencyKey: `host-alert-${id}`,
+        ...(EMAIL_RE.test(data.contact) ? { replyTo: data.contact } : {}),
+      });
+    } catch (e) {
+      console.error("host alert email failed", e);
+    }
     return { ok: true };
   });
 
