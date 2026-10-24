@@ -37,6 +37,19 @@ async function clientKey() {
   }
 }
 
+const REPLY_TO = "oursunsetsocialclub@gmail.com";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+async function confirm(template: string, contact: string, id: string, data: Record<string, unknown>) {
+  if (!EMAIL_RE.test(contact)) return; // contact may be a phone number
+  try {
+    const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+    await sendTemplateEmail(template, contact, { templateData: data, idempotencyKey: `${template}-${id}`, replyTo: REPLY_TO });
+  } catch (e) {
+    console.error("confirmation email failed", e);
+  }
+}
+
 export type Claims = { claimed: Record<string, string[]>; hostCount: number };
 
 export const getClaims = createServerFn({ method: "GET" }).handler(async (): Promise<Claims> => {
@@ -71,7 +84,9 @@ export const submitHost = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (data.website) return { ok: true }; // bot: pretend success, store nothing
     if (limited(`h:${await clientKey()}`)) throw new Error("Too many submissions, try again later.");
+    const id = crypto.randomUUID();
     const { error } = await publicClient().from("host_offers").insert({
+      id,
       block_id: data.blockId,
       stretch_text: data.stretch,
       name: data.name,
@@ -82,6 +97,7 @@ export const submitHost = createServerFn({ method: "POST" })
       language: data.language,
     });
     if (error) throw new Error("Could not save");
+    await confirm("host-confirmation", data.contact, id, { name: data.name, stretch: data.stretch });
     return { ok: true };
   });
 
@@ -99,7 +115,9 @@ export const submitNote = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (data.website) return { ok: true };
     if (limited(`n:${await clientKey()}`)) throw new Error("Too many submissions, try again later.");
+    const id = crypto.randomUUID();
     const { error } = await publicClient().from("host_notes").insert({
+      id,
       block_id: data.blockId,
       name: data.name,
       contact: data.contact,
@@ -107,5 +125,6 @@ export const submitNote = createServerFn({ method: "POST" })
       language: data.language,
     });
     if (error) throw new Error("Could not save");
+    await confirm("note-confirmation", data.contact, id, { name: data.name });
     return { ok: true };
   });
