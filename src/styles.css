@@ -137,8 +137,8 @@
 
 /* Printed type, without an illustrated backdrop. */
 .wave-header { min-height: min(780px, 92svh); border-bottom: 12px solid var(--coral); }
-.wave-title-the { font-size: 76px; }
-.wave-title-main { font-size: 172px; }
+.wave-title-the { font-size: 68px; }
+.wave-title-main { font-size: 126px; }
 @media (min-width: 640px) {
   .wave-title-the { font-size: 96px; }
   .wave-title-main { font-size: 210px; }
@@ -148,8 +148,8 @@
   .wave-title-main { font-size: 238px; }
 }
 @media (max-width: 380px) {
-  .wave-title-the { font-size: 64px; }
-  .wave-title-main { font-size: 142px; }
+  .wave-title-the { font-size: 58px; }
+  .wave-title-main { font-size: 102px; }
 }
 @media (max-height: 740px) and (min-width: 640px) {
   .wave-title-the { font-size: 68px; }
