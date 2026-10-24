@@ -7,13 +7,15 @@ export const STREETS = [
 ] as const;
 
 export const AVENUES = Array.from({ length: 30 }, (_, i) => 19 + i); // 19..48
+export const COASTAL_STREETS = ["Great Hwy", "La Playa"] as const;
+export const MAP_COLUMNS = [...COASTAL_STREETS, ...AVENUES.toReversed()];
 
 export type Block = {
   id: string;
-  avenue: number;
+  avenue: number | (typeof COASTAL_STREETS)[number];
   north: string;
   south: string;
-  col: number; // 0 = 48th (west, ocean side)
+  col: number; // west to east, including coastal streets
   row: number; // 0 = Lincoln–Irving
 };
 
@@ -38,14 +40,22 @@ export function ordinal(n: number) {
 export const BLOCKS: Block[] = (() => {
   const out: Block[] = [];
   for (let r = 0; r < STREETS.length - 1; r++) {
+    const north = STREETS[r];
+    const south = STREETS[r + 1];
+    if (!north || !south) continue;
+    // Great Hwy denotes the neighborhood frontage, not the ocean-side park path.
+    for (const [col, street] of COASTAL_STREETS.entries()) {
+      if (street === "La Playa" && r > 1) continue;
+      out.push({ id: `${street === "Great Hwy" ? "great-hwy" : "la-playa"}-${north.toLowerCase()}`, avenue: street, north, south, col, row: r });
+    }
     for (const a of AVENUES) {
       if (isGap(a, r)) continue;
       out.push({
-        id: `${a}-${STREETS[r]!.toLowerCase()}`,
+        id: `${a}-${north.toLowerCase()}`,
         avenue: a,
-        north: STREETS[r]!,
-        south: STREETS[r + 1]!,
-        col: 48 - a,
+        north,
+        south,
+        col: 48 - a + COASTAL_STREETS.length,
         row: r,
       });
     }
