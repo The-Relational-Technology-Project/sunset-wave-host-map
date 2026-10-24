@@ -46,6 +46,18 @@ function Index() {
     <div className="overflow-x-clip">
       <Hero hostCount={data.hostCount} onHost={() => setDialog({ mode: "host", block: null })} />
 
+
+      {/* Gathering photos */}
+      <section className="grain border-y-4 border-ink bg-ink">
+        <ul className="grid grid-cols-2 items-center gap-1 md:grid-cols-4">
+          {t.easy.steps.map((s, i) => (
+            <li key={i} className="overflow-hidden">
+              <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading={i < 2 ? "eager" : "lazy"} className="block h-auto w-full" />
+            </li>
+          ))}
+        </ul>
+      </section>
+
       {/* Invitation */}
       <section className="grain bg-sand">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.2fr_1fr] md:items-center md:py-28">
@@ -92,21 +104,8 @@ function Index() {
 
       {/* How easy */}
       <section className="grain bg-blush/40">
-        <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-          <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.easy.title}</h2>
-          <ul className="mt-12 grid items-start gap-x-8 gap-y-12 md:grid-cols-2">
-            {t.easy.steps.map((s, i) => (
-              <li key={i} className={i % 2 ? "md:translate-y-8" : ""}>
-                <div className="overflow-hidden border-y-8 border-ink bg-ink">
-                  <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading="lazy" className="block h-auto w-full" />
-                </div>
-                <div className="space-y-2 pt-5">
-                  <h3 className="font-hand text-3xl text-ink">{s.t}</h3>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-20">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+          <div>
             <h3 className="poster-title text-4xl text-ink">{t.easy.ideasTitle}</h3>
             <ul className="mt-5 flex flex-wrap gap-3">
               {t.easy.ideas.map((idea, i) => (
