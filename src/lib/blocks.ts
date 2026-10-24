@@ -8,7 +8,7 @@ export const STREETS = [
 
 export const AVENUES = Array.from({ length: 30 }, (_, i) => 19 + i); // 19..48
 export const COASTAL_STREETS = ["Great Hwy", "La Playa"] as const;
-export const MAP_COLUMNS = [...COASTAL_STREETS, ...AVENUES.toReversed()];
+export const MAP_COLUMNS = [...COASTAL_STREETS, ...[...AVENUES].reverse()];
 
 export type Block = {
   id: string;
