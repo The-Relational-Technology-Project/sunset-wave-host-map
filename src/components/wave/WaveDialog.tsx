@@ -60,10 +60,10 @@ function BlockInfo({ state, setState }: { state: Extract<DialogState, { mode: "b
   );
 }
 
-function Field({ id, label, error, children, hint }: { id: string; label: string; error?: string | undefined; hint?: string | undefined; children: React.ReactNode }) {
+function Field({ id, label, error, children, hint, required }: { id: string; label: string; error?: string | undefined; hint?: string | undefined; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
+      <Label htmlFor={id} className="text-sm font-semibold">{label}{required && <span className="text-destructive" aria-hidden="true"> *</span>}</Label>
       {children}
       {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
       {error && <p className="text-sm font-medium text-destructive">{error}</p>}
@@ -145,14 +145,14 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
         <DialogTitle className="poster-title text-5xl">{t.host.title}</DialogTitle>
         <DialogDescription className="text-base">{t.host.sub}</DialogDescription>
       </DialogHeader>
-      <Field id="h-name" label={t.host.name} error={errors.name}>
-        <Input id="h-name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} className={inputCls} />
+      <Field required id="h-name" label={t.host.name} error={errors.name}>
+        <Input required aria-required="true" id="h-name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} className={inputCls} />
       </Field>
-      <Field id="h-contact" label={t.host.contact} error={errors.contact}>
-        <Input id="h-contact" autoComplete="email" value={contact} onChange={(e) => setContact(e.target.value)} maxLength={200} className={inputCls} />
+      <Field required id="h-contact" label={t.host.contact} error={errors.contact}>
+        <Input required aria-required="true" id="h-contact" autoComplete="email" value={contact} onChange={(e) => setContact(e.target.value)} maxLength={200} className={inputCls} />
       </Field>
-      <Field id="h-stretch" label={t.host.stretch} error={errors.stretch} hint={t.host.stretchHint}>
-        <Input id="h-stretch" value={stretch} placeholder={t.host.stretchPh} onChange={(e) => setStretch(e.target.value)} maxLength={200} className={inputCls} />
+      <Field required id="h-stretch" label={t.host.stretch} error={errors.stretch} hint={t.host.stretchHint}>
+        <Input required aria-required="true" id="h-stretch" value={stretch} placeholder={t.host.stretchPh} onChange={(e) => setStretch(e.target.value)} maxLength={200} className={inputCls} />
       </Field>
 
       <fieldset className="space-y-3">
@@ -184,6 +184,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
           <Checkbox checked={give} onCheckedChange={(v) => setGive(v === true)} className="mt-0.5" />
           <span>{t.host.give}</span>
         </label>
+        <p className="text-xs text-muted-foreground">{t.host.moneyNote}</p>
       </div>
 
       <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} className="absolute -left-[9999px] h-0 w-0 opacity-0" aria-hidden="true" />
