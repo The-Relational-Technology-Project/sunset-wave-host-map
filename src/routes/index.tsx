@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "The Sunset Wave — 400 neighbor gatherings, March 20, 2027" },
       { name: "description", content: "Host a gathering on your Sunset block on Saturday, March 20, 2027. 400 blocks, one afternoon, hosted by the neighbors." },
-      { property: "og:title", content: "The Sunset Wave — Host your block" },
+       { property: "og:title", content: "The Sunset Wave — Host on your block" },
       { property: "og:description", content: "400 neighbor gatherings on the same afternoon in San Francisco's Sunset. Raise your hand to host." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -62,7 +62,7 @@ function Index() {
       </section>
 
       {/* Map */}
-      <section id="map" className="grain scroll-mt-4 bg-ocean-deep text-night-foreground">
+      <section id="map" className="grain scroll-mt-4 bg-mint text-ink">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-5 md:py-24">
           <div className="mb-8 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="min-w-0 space-y-3">
@@ -70,7 +70,7 @@ function Index() {
               <p className="max-w-2xl text-lg opacity-90">{t.map.sub}</p>
             </div>
             <div className="flex flex-wrap items-center gap-4 text-sm font-semibold">
-              <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-mustard" /> {t.map.open}</span>
+              <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-coral" /> {t.map.open}</span>
               <span className="flex items-center gap-2"><WaveHand className="h-6 w-6" /> {t.map.claimed} · {claimedCount}</span>
             </div>
           </div>
@@ -79,7 +79,7 @@ function Index() {
             setDialog({ mode: "block", block: b, names: names ?? [] });
           }} />
           <p className="mt-3 text-sm opacity-70">{t.map.hint}</p>
-          <div className="mt-8 grid gap-4 rounded-2xl border-2 border-dashed border-fog/40 p-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div className="mt-8 grid gap-4 border-t-2 border-ink/20 pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
             <div className="min-w-0">
               <p className="poster-title text-3xl">{t.map.other}</p>
               <p className="mt-1 opacity-80">{t.map.otherSub}</p>
@@ -94,20 +94,19 @@ function Index() {
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.easy.title}</h2>
           <p className="mt-3 font-hand text-3xl text-ocean-deep">{t.easy.sub}</p>
-          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-12 grid gap-x-8 gap-y-12 md:grid-cols-2">
             {t.easy.steps.map((s, i) => (
-              <li key={i} className={`rounded-2xl border-2 border-ink bg-card p-3 shadow-poster ${i % 2 ? "lg:translate-y-8 rotate-1" : "-rotate-1"}`}>
-                <div className="aspect-[4/3] overflow-hidden rounded-lg">
-                  <img src={STEP_PHOTOS[i]!.url} alt={s.t} loading="lazy" className="h-full w-full object-cover" />
+              <li key={i} className={i % 2 ? "md:translate-y-8" : ""}>
+                <div className="aspect-[16/10] overflow-hidden border-y-8 border-ink bg-ink">
+                  <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading="lazy" className="h-full w-full object-cover" />
                 </div>
-                <div className="space-y-1 p-2 pt-4">
-                  <p className="poster-title text-5xl text-coral">{i + 1}</p>
-                  <h3 className="text-xl font-bold text-ink">{s.t}</h3>
+                <div className="space-y-2 pt-5">
+                  <h3 className="font-hand text-3xl text-ink">{s.t}</h3>
                   <p className="text-muted-foreground">{s.b}</p>
                 </div>
               </li>
             ))}
-          </ol>
+          </ul>
           <div className="mt-20">
             <h3 className="poster-title text-4xl text-ink">{t.easy.ideasTitle}</h3>
             <ul className="mt-5 flex flex-wrap gap-3">
