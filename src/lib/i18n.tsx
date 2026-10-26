@@ -25,7 +25,7 @@ const en = {
     title: "Gatherings on every block. On the same day.",
     p1: "We're envisioning a day where Sunset neighbors come together. Folding tables and lawn chairs and outstretched hands. Good will in action on every street.",
     p2: "It's a chance to finally meet your neighbors, and for them to meet each other.",
-    p3: "You host on your block. We support you with a host kit and opportunities to meet fellow hosts.",
+    p3: "You host on your block. We support you with a hosting kit and opportunities to meet fellow hosts.",
     photoAlt: "The Sunset from above, rows of houses running to the ocean",
   },
   map: {
