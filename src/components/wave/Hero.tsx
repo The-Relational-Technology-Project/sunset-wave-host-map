@@ -65,8 +65,8 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
         <div className="mt-auto space-y-5 pb-10 pt-8 sm:pb-12 lg:mt-10">
           <p className="poster-title text-4xl text-ink sm:text-6xl lg:text-7xl">{t.hero.date}</p>
           <div className="flex flex-wrap items-center gap-3">
-            <Button variant="poster" size="xl" onClick={onHost}>{t.hero.cta}</Button>
-            <Button variant="posterAlt" size="xl" asChild><a href="#map">{t.hero.map}</a></Button>
+            <Button variant="poster" size="xl" onClick={onHost} className="hidden md:inline-flex">{t.hero.cta}</Button>
+            <Button variant="posterAlt" size="xl" asChild className="hidden md:inline-flex"><a href="#map">{t.hero.map}</a></Button>
             {hostCount > 0 && (
               <span className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-sand">{fill(t.hero.count, { n: hostCount })}</span>
             )}
