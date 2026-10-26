@@ -15,6 +15,13 @@
       "when": 1792821676497,
       "tag": "0001_tighten_public_submission_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792986724743,
+      "tag": "0002_host_offers_sheltered",
+      "breakpoints": true
     }
   ]
 }
