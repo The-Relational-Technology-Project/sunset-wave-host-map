@@ -32,7 +32,7 @@ export const Route = createFileRoute("/steward")({
     const [data, claims, faq] = await Promise.all([getStewardData(), getClaims(), getFaq()]);
     return { unlocked: true as const, data, claims, faq };
   },
-  errorComponent: ({ error }) => <div role="alert" className="p-8">{error.message}</div>,
+  errorComponent: ({ error }) => <div role="alert" className="p-8">{error instanceof Error ? error.message : String(error)}</div>,
   notFoundComponent: () => <div className="p-8">Not found.</div>,
   component: Steward,
 });
@@ -261,7 +261,7 @@ function FaqEditor({ faq }: { faq: Awaited<ReturnType<typeof getFaq>> }) {
   const update = (i: number, k: keyof FaqItem, v: string) => set(items.map((it, j) => (j === i ? { ...it, [k]: v } : it)));
   const move = (i: number, dir: -1 | 1) => {
     const j = i + dir; if (j < 0 || j >= items.length) return;
-    const n = [...items]; [n[i], n[j]] = [n[j], n[i]]; set(n);
+    const n = [...items]; const a = n[i]!; n[i] = n[j]!; n[j] = a; set(n);
   };
   return (
     <div className="space-y-4">
