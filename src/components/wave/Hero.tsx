@@ -54,7 +54,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
         <h1 className="wave-title relative w-fit text-ink" aria-label={t.hero.brand}>
           <span aria-hidden className="poster-title wave-title-the block">{t.hero.the}</span>
           <span aria-hidden className="poster-title wave-title-main block text-coral [text-shadow:4px_4px_0_var(--color-ink)]">{t.hero.sunset}</span>
-          <span aria-hidden className="poster-title wave-title-main block [text-shadow:4px_4px_0_var(--color-coral)]">{t.hero.wave}</span>
+          <span aria-hidden className="poster-title wave-title-main block [text-shadow:4px_4px_0_var(--color-coral)]"><span className="animate-word-wiggle">{t.hero.wave}</span></span>
           {HANDS.slice(0, shown).map((h, i) => (
             <span key={i} aria-hidden className="pointer-events-none absolute" style={{ top: `${h.top}%`, left: `${h.left}%`, width: `${h.s}%`, rotate: `${h.r}deg` }}>
               <WaveHand className="animate-wave-pop w-full drop-shadow-md" />
@@ -63,7 +63,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
         </h1>
 
         <div className="mt-auto space-y-5 pb-10 pt-8 sm:pb-12">
-          <p className="max-w-2xl font-hand text-2xl text-ink sm:text-3xl">{t.hero.kicker} - {t.hero.date}</p>
+          <p className="poster-title text-4xl text-ink sm:text-6xl lg:text-7xl">{t.hero.date}</p>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="poster" size="xl" onClick={onHost}>{t.hero.cta}</Button>
             <Button variant="posterAlt" size="xl" asChild><a href="#map">{t.hero.map}</a></Button>
