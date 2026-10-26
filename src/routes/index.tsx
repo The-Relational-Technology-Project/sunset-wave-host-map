@@ -24,9 +24,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "The Sunset Wave — 400 neighbor gatherings, March 20, 2027" },
-      { name: "description", content: "Host a gathering on your Sunset block on Saturday, March 20, 2027. 400 blocks, one afternoon, hosted by the neighbors." },
+      { name: "description", content: "Host a gathering on your Sunset block on Saturday, March 20, 2027. 400 blocks, hosted by the neighbors." },
        { property: "og:title", content: "The Sunset Wave — Host on your block" },
-      { property: "og:description", content: "400 neighbor gatherings on the same afternoon in San Francisco's Sunset. Raise your hand to host." },
+      { property: "og:description", content: "400 neighbor gatherings on March 20, 2027 in San Francisco's Sunset. Raise your hand to host." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
