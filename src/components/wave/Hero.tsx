@@ -10,12 +10,8 @@ const HANDS = [
   { top: 30, left: -2, s: 8, r: 10 },
   { top: 22, left: 88, s: 10, r: 18 },
   { top: 56, left: 47, s: 8, r: -8 },
-  { top: 4, left: 70, s: 7, r: 24 },
   { top: 84, left: 12, s: 9, r: -20 },
-  { top: 62, left: 92, s: 8, r: 6 },
-  { top: 40, left: 30, s: 6, r: -4 },
   { top: 88, left: 64, s: 10, r: 14 },
-  { top: 46, left: 70, s: 7, r: -16 },
 ];
 
 export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => void }) {
@@ -50,7 +46,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
         <LangSwitch />
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-4 sm:px-6 sm:pt-6">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-4 sm:px-6 sm:pt-6 lg:pt-14">
         <h1 className="wave-title relative w-fit text-ink" aria-label={t.hero.brand}>
           <span aria-hidden className="poster-title wave-title-the block">{t.hero.the}</span>
           <span aria-hidden className="poster-title wave-title-main block text-coral [text-shadow:4px_4px_0_var(--color-ink)]">{t.hero.sunset}</span>
@@ -62,7 +58,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
           ))}
         </h1>
 
-        <div className="mt-auto space-y-5 pb-10 pt-8 sm:pb-12 lg:mt-10">
+        <div className="space-y-5 pb-10 pt-6 sm:pb-12 sm:pt-8 lg:mt-6 lg:pb-14">
           <p className="poster-title text-4xl text-ink sm:text-6xl lg:text-7xl">{t.hero.date}</p>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="poster" size="xl" onClick={onHost} className="hidden md:inline-flex">{t.hero.cta}</Button>
