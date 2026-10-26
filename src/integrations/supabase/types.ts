@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      faq_content: {
+        Row: {
+          items: Json
+          language: string
+          updated_at: string
+        }
+        Insert: {
+          items?: Json
+          language: string
+          updated_at?: string
+        }
+        Update: {
+          items?: Json
+          language?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       host_notes: {
         Row: {
           block_id: string
@@ -83,6 +101,30 @@ export type Database = {
           sheltered?: boolean
           stretch_text?: string
           wants_microgrant?: boolean
+        }
+        Relationships: []
+      }
+      page_views: {
+        Row: {
+          created_at: string
+          id: string
+          path: string
+          referrer: string | null
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          path: string
+          referrer?: string | null
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          path?: string
+          referrer?: string | null
+          visitor_id?: string
         }
         Relationships: []
       }
