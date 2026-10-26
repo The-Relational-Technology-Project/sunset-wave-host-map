@@ -1,7 +1,7 @@
 # Sunset Wave refinements
-- [ ] Add a prominent hosting invitation above the map and a sticky mobile hosting button.
-- [ ] Replace the grid with a real tile map and geographically placed block markers, preserving host references.
-- [ ] Verify direct hosting, map selection, languages, and mobile layout.
+- [x] Add a prominent hosting invitation above the map and a sticky mobile hosting button.
+- [x] Replace the grid with a real tile map and geographically placed block markers, preserving host references.
+- [x] Verify direct hosting, map selection, four-language copy, and mobile layout; no live submission sent for this presentation-only change.
 - [x] Restore normal cursors while dialogs are open.
 - [x] Use sans serif fonts throughout.
 - [x] Hide the map count until 20 hosts and verify the threshold.
