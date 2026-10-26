@@ -673,7 +673,10 @@ const es: Dict = {
 
 export const DICTS: Record<Lang, Dict> = { en, zh, yue, es };
 
-export function blockLabel(lang: Lang, avenue: number | "Great Hwy" | "La Playa", north: string, south: string) {
+export function blockLabel(lang: Lang, avenue: number | string, north: string, south: string) {
+  if (typeof avenue === "string" && avenue !== "Great Hwy" && avenue !== "La Playa") {
+    return `${avenue} · ${DICTS[lang].map.southSloat}`;
+  }
   if (typeof avenue === "string") {
     const street = avenue === "Great Hwy" ? DICTS[lang].map.greatHwy : DICTS[lang].map.laPlaya;
     switch (lang) {

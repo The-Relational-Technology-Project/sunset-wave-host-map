@@ -3,7 +3,7 @@
 
 export const STREETS = [
   "Lincoln", "Irving", "Judah", "Kirkham", "Lawton", "Moraga", "Noriega", "Ortega",
-  "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona",
+  "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona", "Sloat",
 ] as const;
 
 export const AVENUES = Array.from({ length: 30 }, (_, i) => 19 + i); // 19..48
@@ -12,12 +12,20 @@ export const MAP_COLUMNS = [...COASTAL_STREETS, ...[...AVENUES].reverse()];
 
 export type Block = {
   id: string;
-  avenue: number | (typeof COASTAL_STREETS)[number];
+  avenue: number | (typeof COASTAL_STREETS)[number] | string;
   north: string;
   south: string;
   col: number; // west to east, including coastal streets
   row: number; // 0 = Lincoln–Irving
+  south_of_sloat?: boolean;
 };
+
+export const SOUTH_SLOAT = [
+  "Lakeshore Dr", "Gellert Dr", "Clearfield Dr", "Morningside Dr", "Everglade Dr", "Springfield Dr",
+  "Riverton Dr", "Sylvan Dr", "Forest View Dr", "Inverness Dr", "26th Ave (S. of Sloat)",
+  "Country Club Dr", "Middlefield Dr", "Ocean Ave", "Paraiso Pl", "Eucalyptus Dr (west)", "Eucalyptus Dr (east)",
+  "25th Ave (S. of Sloat)", "24th Ave (S. of Sloat)", "22nd Ave (S. of Sloat)", "21st Ave (S. of Sloat)", "20th Ave (S. of Sloat)",
+] as const;
 
 // [avenue, northStreetIndex] pairs with no residential block
 const GAPS: Array<[number, number]> = [];
@@ -28,6 +36,7 @@ gap([19, 20, 21], [14]); // Stern Grove edge
 gap([28, 29], [4]); // Sunset Playground
 gap([19, 20], [13]); // Larsen Park
 gap([47, 48], [14]); // Sloat cut-off
+gap([19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,48], [15]); // Stern Grove / Pine Lake, Sloat curve
 gap([29, 30], [8]); // A.P. Giannini
 
 const isGap = (a: number, r: number) => GAPS.some(([ga, gr]) => ga === a && gr === r);
@@ -46,6 +55,7 @@ export const BLOCKS: Block[] = (() => {
     // Great Hwy denotes the neighborhood frontage, not the ocean-side park path.
     for (const [col, street] of COASTAL_STREETS.entries()) {
       if (street === "La Playa" && r > 1) continue;
+      if (r >= 14) continue; // coast below Vicente is zoo / Sloat
       out.push({ id: `${street === "Great Hwy" ? "great-hwy" : "la-playa"}-${north.toLowerCase()}`, avenue: street, north, south, col, row: r });
     }
     for (const a of AVENUES) {
@@ -60,7 +70,15 @@ export const BLOCKS: Block[] = (() => {
       });
     }
   }
+  // South of Sloat (D4): curved streets, placed approximately below the grid.
+  SOUTH_SLOAT.forEach((name, i) => {
+    const row = STREETS.length - 1 + Math.floor(i / 11);
+    const col = 12 + (i % 11) * 2 + (Math.floor(i / 11) % 2);
+    out.push({ id: `ss-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, avenue: name, north: "Sloat", south: "", col, row, south_of_sloat: true });
+  });
   return out;
 })();
+
+export const MAP_ROWS = STREETS.length - 1 + 2;
 
 export const BLOCK_BY_ID = new Map(BLOCKS.map((b) => [b.id, b]));
