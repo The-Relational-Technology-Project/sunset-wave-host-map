@@ -22,6 +22,13 @@
       "when": 1792986724743,
       "tag": "0002_host_offers_sheltered",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792988959464,
+      "tag": "0003_steward_tables",
+      "breakpoints": true
     }
   ]
 }
