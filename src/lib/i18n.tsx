@@ -30,7 +30,7 @@ const en = {
   },
   map: {
     title: "Find your block",
-    sub: "Gatherings across the Sunset, from Lincoln to the neighborhoods south of Sloat. A wave means a neighbor has raised their hand.",
+    sub: "Gatherings across the Sunset, from Lincoln to south of Sloat. A wave means a neighbor has raised their hand.",
     open: "Open block",
     claimed: "Someone's hosting",
     other: "Host a gathering",
