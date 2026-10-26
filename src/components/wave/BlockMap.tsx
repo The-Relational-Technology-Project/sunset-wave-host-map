@@ -29,7 +29,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
     void import("leaflet").then((L) => {
       if (disposed || !container.current) return;
       const instance = L.map(container.current, {
-        zoomControl: false, scrollWheelZoom: false, minZoom: 12, maxZoom: 19,
+        zoomControl: false, scrollWheelZoom: false, minZoom: 12, maxZoom: 19, zoomSnap: 0.25,
         attributionControl: true,
       });
       map.current = instance;
