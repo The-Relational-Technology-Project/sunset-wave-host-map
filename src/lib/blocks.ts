@@ -55,7 +55,7 @@ export const BLOCKS: Block[] = (() => {
     // Great Hwy denotes the neighborhood frontage, not the ocean-side park path.
     for (const [col, street] of COASTAL_STREETS.entries()) {
       if (street === "La Playa" && r > 1) continue;
-      if (r >= 14) continue; // coast below Vicente is zoo / Sloat
+      if (r >= 15) continue; // coast below Wawona is zoo / Sloat
       out.push({ id: `${street === "Great Hwy" ? "great-hwy" : "la-playa"}-${north.toLowerCase()}`, avenue: street, north, south, col, row: r });
     }
     for (const a of AVENUES) {

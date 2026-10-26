@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Minus, Plus, RotateCcw } from "lucide-react";
-import { MAP_COLUMNS, COASTAL_STREETS, BLOCKS, STREETS, type Block } from "@/lib/blocks";
+import { MAP_COLUMNS, COASTAL_STREETS, BLOCKS, STREETS, MAP_ROWS, type Block } from "@/lib/blocks";
 import { blockLabel, useLang } from "@/lib/i18n";
 import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ const LEFT = 70; // ocean band
 const TOP = 100; // park band + rotated coastal labels
 const RIGHT = 80; // street labels
 const W = LEFT + MAP_COLUMNS.length * CW + RIGHT;
-const H = TOP + (STREETS.length - 1) * RH + 30;
+const H = TOP + MAP_ROWS * RH + 30;
 
 const cx = (b: Block) => LEFT + b.col * CW + CW / 2;
 const cy = (b: Block) => TOP + b.row * RH + RH / 2;
@@ -68,6 +68,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
                     <text x={W - RIGHT + 12} y={TOP + i * RH + 4} fill="var(--color-ink)" fontSize="11" className="font-hand">{s}</text>
                   </g>
                 ))}
+                <text x={LEFT + 12 * CW} y={TOP + (STREETS.length - 1) * RH + 14} fill="var(--color-ink)" fontSize="11" fontWeight="700" className="uppercase">{t.map.southSloat}</text>
                 {/* avenues */}
                 {MAP_COLUMNS.map((a, col) => {
                   const x = LEFT + col * CW + CW / 2;
@@ -92,8 +93,8 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
                       <circle cx={cx(b)} cy={cy(b)} r={13} fill="transparent" />
                       {names ? (
                         <>
-                          <circle cx={cx(b)} cy={cy(b)} r={12} fill="var(--color-mustard)" opacity="0.35" />
-                          <image href={WAVE_SRC} x={cx(b) - 12} y={cy(b) - 12} width={24} height={24} />
+                          <circle cx={cx(b)} cy={cy(b)} r={13} fill="var(--color-claim)" stroke="var(--color-ink)" strokeWidth="1.5" />
+                          <image href={WAVE_SRC} x={cx(b) - 10} y={cy(b) - 10} width={20} height={20} />
                         </>
                       ) : (
                         <circle cx={cx(b)} cy={cy(b)} r={6} fill="var(--color-coral)" opacity="0.85"
