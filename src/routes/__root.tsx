@@ -69,7 +69,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "The Sunset Wave" },
-      { name: "description", content: "400 neighbor gatherings on one afternoon in San Francisco's Sunset." },
+      { name: "description", content: "400 neighbor gatherings on March 20, 2027 in San Francisco's Sunset." },
       { property: "og:site_name", content: "The Sunset Wave" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
