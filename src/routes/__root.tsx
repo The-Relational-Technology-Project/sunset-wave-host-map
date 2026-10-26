@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -104,6 +105,20 @@ function RootShell({ children }: { children: ReactNode }) {
       </body>
     </html>
   );
+}
+
+function VisitTracker() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  useEffect(() => {
+    if (path.startsWith("/steward")) return;
+    try {
+      let id = localStorage.getItem("wave-visitor");
+      if (!id) { id = crypto.randomUUID(); localStorage.setItem("wave-visitor", id); }
+      const ref = document.referrer && !document.referrer.startsWith(location.origin) ? document.referrer.slice(0, 300) : null;
+      void trackVisit({ data: { visitorId: id, path: path.slice(0, 200), referrer: ref } }).catch(() => {});
+    } catch { /* ignore */ }
+  }, [path]);
+  return null;
 }
 
 function RootComponent() {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getClaims } from "@/lib/wave.functions";
+import { getFaq } from "@/lib/site.functions";
 import { useLang } from "@/lib/i18n";
 import { shouldShowMapCount } from "@/lib/map-count";
 import { Hero } from "@/components/wave/Hero";
@@ -19,6 +20,7 @@ import sign from "@/assets/sign.jpeg.asset.json";
 import hangout from "@/assets/hangout.jpeg.asset.json";
 
 const claimsQuery = queryOptions({ queryKey: ["claims"], queryFn: () => getClaims(), staleTime: 30_000 });
+const faqQuery = queryOptions({ queryKey: ["faq"], queryFn: () => getFaq(), staleTime: 60_000 });
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,15 +33,17 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(claimsQuery),
+  loader: ({ context }) =>
+    Promise.all([context.queryClient.ensureQueryData(claimsQuery), context.queryClient.ensureQueryData(faqQuery)]),
   component: Index,
 });
 
 const STEP_PHOTOS = [flyer, chalk, sign, hangout];
 
 function Index() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { data } = useSuspenseQuery(claimsQuery);
+  const { data: faq } = useSuspenseQuery(faqQuery);
   const [dialog, setDialog] = useState<DialogState>({ mode: "closed" });
   const claimedCount = Object.keys(data.claimed).length;
 
@@ -129,7 +133,7 @@ function Index() {
         <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
           <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.faq.title}</h2>
           <Accordion type="single" collapsible className="mt-8">
-            {t.faq.items.map((f, i) => (
+            {(faq[lang] ?? t.faq.items).map((f, i) => (
               <AccordionItem key={i} value={`f${i}`} className="border-b-2 border-ink/20">
                 <AccordionTrigger className="text-left text-lg font-bold text-ink">{f.q}</AccordionTrigger>
                 <AccordionContent className="text-base text-muted-foreground">{f.a}</AccordionContent>

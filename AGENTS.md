@@ -17,3 +17,6 @@
 - Public reads of host data go only through security-definer functions that return first names and block ids; offer/note tables are insert-only for visitors to keep contact details private.
 - Use the shared WaveHand asset for the title, map markers, cursor and favicon so the campaign mark stays consistent across surfaces.
 - Keep map count visibility in a tested presentation helper keyed to total host count, while the displayed number represents claimed blocks, so milestone logic stays independent of map generation.
+- The /steward page is gated by a shared password (server-only secret + encrypted session cookie); every steward server function re-checks the session, since route gating alone does not protect RPCs. Steward copy is English-only by design (internal tool), an exception to the i18n rule.
+- FAQ items are editable per language in the `faq_content` table; the main site falls back to the i18n dictionary when a language has no saved row.
+- Site traffic is self-recorded in `page_views` (anonymous visitor id + referrer) because platform analytics aren't readable from app code.
