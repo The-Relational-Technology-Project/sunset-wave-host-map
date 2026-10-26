@@ -43,7 +43,11 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
       tiles.on("tileload", () => { if (!disposed) setFailed(false); });
       tiles.addTo(instance);
       markers.current = L.layerGroup().addTo(instance);
-      resize = new ResizeObserver(() => instance.invalidateSize());
+      let touched = false;
+      instance.on("dragstart zoomstart", () => { if (ready0) touched = true; });
+      let ready0 = false;
+      setTimeout(() => { ready0 = true; }, 800);
+      resize = new ResizeObserver(() => { instance.invalidateSize(); if (!touched) instance.fitBounds(BOUNDS, { padding: [4, 4] }); });
       resize.observe(container.current);
       setReady(true);
     }).catch(() => { if (!disposed) setFailed(true); });
