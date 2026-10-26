@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -227,3 +228,20 @@
   }
   html { scroll-behavior: auto; }
 }
+
+.mobile-host-action { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+@media (max-width: 767px) {
+  .mobile-host-page { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
+}
+.wave-tile-map { height: 640px; isolation: isolate; background: var(--fog); }
+@media (max-width: 767px) { .wave-tile-map { height: 520px; } }
+.wave-map-marker { background: transparent; border: none; }
+.wave-map-dot {
+  display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%;
+  background: var(--coral); border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--ink);
+}
+.wave-map-dot.is-claimed { background: var(--claim); border: 2px solid var(--ink); }
+.wave-map-dot img { width: 24px; height: 24px; }
+.wave-map-marker:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 50%; }
+.wave-tile-map .leaflet-control-attribution { background: var(--card); color: var(--ink); font-family: var(--font-sans); }
+.wave-tile-map .leaflet-control-attribution a { color: var(--ocean-deep); }

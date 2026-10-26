@@ -6,6 +6,7 @@ import { useLang } from "@/lib/i18n";
 import { shouldShowMapCount } from "@/lib/map-count";
 import { Hero } from "@/components/wave/Hero";
 import { BlockMap } from "@/components/wave/BlockMap";
+import { HostingInvitation, MobileHostAction } from "@/components/wave/HostingInvitation";
 import { WaveDialog, type DialogState } from "@/components/wave/WaveDialog";
 import { WaveHand } from "@/components/wave/WaveHand";
 import { Footer } from "@/components/wave/Footer";
@@ -43,7 +44,7 @@ function Index() {
   const claimedCount = Object.keys(data.claimed).length;
 
   return (
-    <div className="overflow-x-clip">
+    <div className="mobile-host-page overflow-x-clip">
       <Hero hostCount={data.hostCount} onHost={() => setDialog({ mode: "host", block: null })} />
 
 
@@ -74,6 +75,7 @@ function Index() {
             <img src={aerial.url} alt={t.invite.photoAlt} width={615} height={766} loading="lazy" className="h-auto w-full rounded-lg" />
             <WaveHand className="absolute -left-6 -top-6 h-16 w-16 -rotate-12" />
           </figure>
+          <HostingInvitation onHost={() => setDialog({ mode: "host", block: null })} />
           <div className="mb-8 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="min-w-0 space-y-3">
               <h2 className="poster-title text-6xl sm:text-7xl">{t.map.title}</h2>
@@ -88,14 +90,7 @@ function Index() {
             const names = data.claimed[b.id];
             setDialog({ mode: "block", block: b, names: names ?? [] });
           }} />
-          <p className="mt-3 text-sm opacity-70">{t.map.hint} {t.map.blankNote}</p>
-          <div className="mt-8 grid gap-4 border-t-2 border-ink/20 pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
-            <div className="min-w-0">
-              <p className="poster-title text-3xl">{t.map.other}</p>
-              <p className="mt-1 opacity-80">{t.map.otherSub}</p>
-            </div>
-            <Button variant="poster" size="xl" onClick={() => setDialog({ mode: "host", block: null })}>{t.nav.host}</Button>
-          </div>
+          <p className="mt-3 text-sm opacity-70">{t.map.blankNote}</p>
         </div>
       </section>
 
@@ -151,6 +146,7 @@ function Index() {
 
       <Footer />
       <WaveDialog state={dialog} setState={setDialog} />
+      <MobileHostAction hidden={dialog.mode !== "closed"} onHost={() => setDialog({ mode: "host", block: null })} />
     </div>
   );
 }
