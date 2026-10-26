@@ -19,6 +19,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const [zoom, setZoom] = useState(13);
 
   useEffect(() => {
     let disposed = false;
@@ -33,6 +34,8 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
       });
       map.current = instance;
       instance.fitBounds(BOUNDS, { padding: [24, 24] });
+      setZoom(instance.getZoom());
+      instance.on("zoomend", () => setZoom(instance.getZoom()));
       const tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>',
       });
@@ -66,7 +69,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         const names = claimed[b.id];
         const isClaimed = Boolean(names?.length);
         const label = `${blockLabel(lang, b.avenue, b.north, b.south)} – ${isClaimed ? t.map.claimed : t.map.open}`;
-        const size = isClaimed ? 34 : 16;
+        const size = isClaimed ? (zoom < 14 ? 24 : 34) : zoom < 14 ? 6 : zoom < 15 ? 10 : 16;
         const marker = L.marker(position, {
           title: label, alt: label, keyboard: true, riseOnHover: true,
           zIndexOffset: isClaimed ? 1000 : 0,
@@ -77,10 +80,17 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         });
         marker.on("click", () => pick.current(b));
         marker.addTo(layer);
+        marker.getElement()?.addEventListener("keydown", (event) => {
+          if (event.key === " " || event.key === "Enter") {
+            event.preventDefault();
+            event.stopPropagation();
+            pick.current(b);
+          }
+        });
       }
     });
     return () => { disposed = true; };
-  }, [ready, claimed, lang, t]);
+  }, [ready, claimed, lang, t, zoom]);
 
   return (
     <div className="relative overflow-hidden rounded-lg border-2 border-ink bg-card shadow-poster">

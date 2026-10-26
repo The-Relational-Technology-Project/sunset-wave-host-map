@@ -241,7 +241,7 @@
   background: var(--coral); border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--ink);
 }
 .wave-map-dot.is-claimed { background: var(--claim); border: 2px solid var(--ink); }
-.wave-map-dot img { width: 24px; height: 24px; }
+.wave-map-dot img { width: 80%; height: 80%; }
 .wave-map-marker:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 50%; }
 .wave-tile-map .leaflet-control-attribution { background: var(--card); color: var(--ink); font-family: var(--font-sans); }
 .wave-tile-map .leaflet-control-attribution a { color: var(--ocean-deep); }
