@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as StewardRouteImport } from './routes/steward'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ThanksRouteImport } from './routes/thanks'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -29,6 +30,11 @@ const ContactRoute = ContactRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StewardRoute = StewardRouteImport.update({
+  id: '/steward',
+  path: '/steward',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/privacy': typeof PrivacyRoute
+  '/steward': typeof StewardRoute
   '/terms': typeof TermsRoute
   '/thanks': typeof ThanksRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/privacy': typeof PrivacyRoute
+  '/steward': typeof StewardRoute
   '/terms': typeof TermsRoute
   '/thanks': typeof ThanksRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/privacy': typeof PrivacyRoute
+  '/steward': typeof StewardRoute
   '/terms': typeof TermsRoute
   '/thanks': typeof ThanksRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/privacy'
+    | '/steward'
     | '/terms'
     | '/thanks'
     | '/lovable/email/transactional/preview'
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/privacy'
+    | '/steward'
     | '/terms'
     | '/thanks'
     | '/lovable/email/transactional/preview'
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/privacy'
+    | '/steward'
     | '/terms'
     | '/thanks'
     | '/lovable/email/transactional/preview'
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   PrivacyRoute: typeof PrivacyRoute
+  StewardRoute: typeof StewardRoute
   TermsRoute: typeof TermsRoute
   ThanksRoute: typeof ThanksRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -130,6 +143,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/steward': {
+      id: '/steward'
+      path: '/steward'
+      fullPath: '/steward'
+      preLoaderRoute: typeof StewardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   PrivacyRoute: PrivacyRoute,
+  StewardRoute: StewardRoute,
   TermsRoute: TermsRoute,
   ThanksRoute: ThanksRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
