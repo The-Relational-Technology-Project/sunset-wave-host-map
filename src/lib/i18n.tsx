@@ -34,7 +34,7 @@ const en = {
     open: "Open block",
     claimed: "Someone's hosting",
     other: "Host a gathering",
-    otherSub: "Your block, a courtyard, or around the corner. Tell us your stretch — there's room for you.",
+    otherSub: "In someone's driveway, in a parklet, or on the corner. Tell us your stretch so we know you're in!",
     loading: "Loading the neighborhood…",
     unavailable: "The map couldn't load.",
     retry: "Try again",
