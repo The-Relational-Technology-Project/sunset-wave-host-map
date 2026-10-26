@@ -7,7 +7,7 @@ import { blockLabel, useLang } from "@/lib/i18n";
 import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
 
-const BOUNDS: [[number, number], [number, number]] = [[37.713, -122.5115], [37.766, -122.473]];
+const BOUNDS: [[number, number], [number, number]] = [[37.716, -122.5095], [37.764, -122.4745]];
 
 export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]>; onPick: (b: Block) => void }) {
   const { t, lang } = useLang();
@@ -33,7 +33,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         attributionControl: true,
       });
       map.current = instance;
-      instance.fitBounds(BOUNDS, { padding: [24, 24] });
+      instance.fitBounds(BOUNDS, { padding: [4, 4] });
       setZoom(instance.getZoom());
       instance.on("zoomend", () => setZoom(instance.getZoom()));
       const tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -99,7 +99,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         {[
           { run: () => map.current?.zoomIn(), Icon: Plus, label: t.map.zoomIn },
           { run: () => map.current?.zoomOut(), Icon: Minus, label: t.map.zoomOut },
-          { run: () => map.current?.fitBounds(BOUNDS, { padding: [24, 24] }), Icon: RotateCcw, label: t.map.reset },
+          { run: () => map.current?.fitBounds(BOUNDS, { padding: [4, 4] }), Icon: RotateCcw, label: t.map.reset },
         ].map(({ run, Icon, label }) => (
           <Button key={label} type="button" variant="posterAlt" size="icon" onClick={run} aria-label={label} title={label} disabled={!ready}
             className="h-11 w-11 border-2 border-ink bg-card text-ink"><Icon className="h-4 w-4" /></Button>

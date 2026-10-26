@@ -145,7 +145,7 @@
 }
 
 /* Printed type, without an illustrated backdrop. */
-.wave-header { min-height: min(780px, 92svh); border-bottom: 12px solid var(--coral); }
+.wave-header { border-bottom: 12px solid var(--coral); }
 .wave-title-the { font-size: 68px; }
 .wave-title-main { font-size: 126px; }
 @media (min-width: 640px) {
@@ -166,7 +166,6 @@
 }
 /* Desktop: one long poster line. */
 @media (min-width: 1024px) {
-  .wave-header { min-height: min(620px, 80svh); }
   .wave-title { display: flex; align-items: baseline; gap: 0.18em; width: 100%; white-space: nowrap; }
   .wave-title-the, .wave-title-main { font-size: 14.5vw; }
   .wave-title-the { font-size: 14.5vw; }
@@ -234,6 +233,7 @@
   .mobile-host-page { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
 }
 .wave-tile-map { height: 640px; isolation: isolate; background: var(--fog); }
+.wave-tile-map .leaflet-tile-pane { filter: grayscale(0.85) sepia(0.15) contrast(0.85) brightness(1.08); opacity: 0.7; }
 @media (max-width: 767px) { .wave-tile-map { height: 520px; } }
 .wave-map-marker { background: transparent; border: none; }
 .wave-map-dot {
