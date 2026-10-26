@@ -44,7 +44,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
   }, []);
 
   return (
-    <header className="grain wave-header relative isolate flex flex-col overflow-hidden bg-mustard">
+    <header className="grain wave-header relative isolate flex flex-col lg:min-h-0 overflow-hidden bg-mustard">
 
       <div className="mx-auto flex w-full max-w-7xl justify-end px-4 pt-4 sm:px-6 sm:pt-6">
         <LangSwitch />
@@ -62,7 +62,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
           ))}
         </h1>
 
-        <div className="mt-auto space-y-5 pb-10 pt-8 sm:pb-12">
+        <div className="mt-auto space-y-5 pb-10 pt-8 sm:pb-12 lg:mt-10">
           <p className="poster-title text-4xl text-ink sm:text-6xl lg:text-7xl">{t.hero.date}</p>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="poster" size="xl" onClick={onHost}>{t.hero.cta}</Button>
