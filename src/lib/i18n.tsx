@@ -93,7 +93,7 @@ const en = {
   faq: {
     title: "Questions",
     items: [
-      { q: "What do I actually have to do?", a: "Pick a spot on your block, invite your neighbors, and show up on March 20 with whatever you need to carry out your plan. We're suggesting 11:00 am - 1:00 pm, but it's up to you! How long you host, how much you plan, and what you serve is completely flexible." },
+      { q: "What do I actually have to do?", a: "Pick a spot on your block, invite your neighbors, and show up on March 20th with whatever you need to carry out your plan. We're suggesting 11:00 am - 1:00 pm, but it's up to you! How long you host, how much you plan, and what you serve is completely flexible." },
       { q: "Do I need a permit?", a: "Most gatherings on a sidewalk, front steps or garage don't. If you want to close the street, we'll help you with the permit." },
       { q: "Someone already took my block. Now what?", a: "Wonderful. Send them a note and co-host, or host anywhere nearby: around the corner, a courtyard, your own driveway. Choose \"Host on your block\" and tell us your stretch. You don't need to know anyone there." },
       { q: "Is there any financial support for hosting?", a: "Let us know you could use support when you sign up. We will provide support where possible!" },
