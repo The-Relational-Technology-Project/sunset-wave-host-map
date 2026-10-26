@@ -69,7 +69,7 @@ const en = {
     ideas: ["Card games in the garage", "Potluck out front", "Coffee + donuts", "Chalk art and music", "Tea on the steps", "Kids' bike parade", "You decide!"],
   },
   gets: {
-    title: "You won't do this alone",
+    title: "HOST WITH SUPPORT",
     sub: "Say yes and you're part of a 400-person host network, facilitated by the Sunset Social Club.",
     items: [
       { t: "Host party", w: "4 to 6 weeks before", b: "Meet the other hosts first. Food, a short walkthrough, and the hosts on your avenue." },
