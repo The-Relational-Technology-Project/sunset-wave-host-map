@@ -7,7 +7,7 @@ import { blockLabel, useLang } from "@/lib/i18n";
 import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
 
-const BOUNDS: [[number, number], [number, number]] = [[37.716, -122.5095], [37.764, -122.4745]];
+const BOUNDS: [[number, number], [number, number]] = [[37.7325, -122.5105], [37.7645, -122.4745]];
 
 export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]>; onPick: (b: Block) => void }) {
   const { t, lang } = useLang();
