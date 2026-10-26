@@ -72,7 +72,7 @@ const en = {
     title: "HOST WITH SUPPORT",
     sub: "Say yes and you're part of a 400-person host network, facilitated by the Sunset Social Club.",
     items: [
-      { t: "Host party", w: "4 to 6 weeks before", b: "Meet the other hosts first. Food, a short walkthrough, and the hosts on your avenue." },
+      { t: "A party for hosts", w: "4 to 6 weeks before", b: "Meet the other hosts first. Food, a short walkthrough, and the hosts on your avenue." },
       { t: "Host network", w: "From signup to the day", b: "A group thread by avenue, plus experienced block party hosts as friendly mentors." },
       { t: "Planning help", w: "Whenever you ask", b: "A one-page gathering recipe, a 20-minute call or walk-and-talk, help with permits if you want a street closure (most won't)." },
       { t: "Flyers by local artists", w: "6 weeks out", b: "Sunset artists design a flyer kit, remixed with your stretch and time, in English and Chinese. Print copies at Sunset Variety." },
