@@ -73,7 +73,7 @@ export const BLOCKS: Block[] = (() => {
   // South of Sloat (D4): curved streets, placed approximately below the grid.
   SOUTH_SLOAT.forEach((name, i) => {
     const row = STREETS.length - 1 + Math.floor(i / 11);
-    const col = 12 + (i % 11) * 2 + (Math.floor(i / 11) % 2);
+    const col = 10 + (i % 11) * 2 + (Math.floor(i / 11) % 2);
     out.push({ id: `ss-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, avenue: name, north: "Sloat", south: "", col, row, south_of_sloat: true });
   });
   return out;

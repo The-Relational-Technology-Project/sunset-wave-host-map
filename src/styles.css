@@ -165,6 +165,7 @@
 }
 /* Desktop: one long poster line. */
 @media (min-width: 1024px) {
+  .wave-header { min-height: min(620px, 80svh); }
   .wave-title { display: flex; align-items: baseline; gap: 0.18em; width: 100%; white-space: nowrap; }
   .wave-title-the, .wave-title-main { font-size: 14.5vw; }
   .wave-title-the { font-size: 14.5vw; }

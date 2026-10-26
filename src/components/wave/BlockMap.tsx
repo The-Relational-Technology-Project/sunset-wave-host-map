@@ -68,7 +68,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
                     <text x={W - RIGHT + 12} y={TOP + i * RH + 4} fill="var(--color-ink)" fontSize="11" className="font-hand">{s}</text>
                   </g>
                 ))}
-                <text x={LEFT + 12 * CW} y={TOP + (STREETS.length - 1) * RH + 14} fill="var(--color-ink)" fontSize="11" fontWeight="700" className="uppercase">{t.map.southSloat}</text>
+                <text x={LEFT + 2 * CW} y={TOP + (STREETS.length - 1) * RH + 26} fill="var(--color-ink)" fontSize="11" fontWeight="700" className="uppercase">{t.map.southSloat}</text>
                 {/* avenues */}
                 {MAP_COLUMNS.map((a, col) => {
                   const x = LEFT + col * CW + CW / 2;
