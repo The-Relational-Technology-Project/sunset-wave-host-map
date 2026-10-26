@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
 const STEP_PHOTOS = [flyer, chalk, sign, hangout];
 
 function Index() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { data } = useSuspenseQuery(claimsQuery);
   const { data: faq } = useSuspenseQuery(faqQuery);
   const [dialog, setDialog] = useState<DialogState>({ mode: "closed" });
