@@ -1,0 +1,1 @@
+ALTER TABLE public.host_offers ADD COLUMN IF NOT EXISTS sheltered boolean NOT NULL DEFAULT false;

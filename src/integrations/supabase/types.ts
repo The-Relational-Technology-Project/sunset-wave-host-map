@@ -54,6 +54,7 @@ export type Database = {
           id: string
           language: string
           name: string
+          sheltered: boolean
           stretch_text: string
           wants_microgrant: boolean
         }
@@ -66,6 +67,7 @@ export type Database = {
           id?: string
           language?: string
           name: string
+          sheltered?: boolean
           stretch_text: string
           wants_microgrant?: boolean
         }
@@ -78,6 +80,7 @@ export type Database = {
           id?: string
           language?: string
           name?: string
+          sheltered?: boolean
           stretch_text?: string
           wants_microgrant?: boolean
         }

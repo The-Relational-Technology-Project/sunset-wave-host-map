@@ -41,6 +41,7 @@
 
   --color-coral: var(--coral);
   --color-mustard: var(--mustard);
+  --color-claim: var(--claim);
   --color-mint: var(--mint);
   --color-blush: var(--blush);
   --color-ocean: var(--ocean);
@@ -61,6 +62,7 @@
   --ink: oklch(0.22 0.02 50);
   --coral: oklch(0.68 0.18 38);
   --mustard: oklch(0.82 0.15 85);
+  --claim: oklch(0.72 0.13 230);
   --mint: oklch(0.85 0.07 165);
   --blush: oklch(0.82 0.08 15);
   --ocean: oklch(0.55 0.08 220);
@@ -157,9 +159,29 @@
   .wave-title-the { font-size: 58px; }
   .wave-title-main { font-size: 102px; }
 }
-@media (max-height: 740px) and (min-width: 640px) {
+@media (max-height: 740px) and (min-width: 640px) and (max-width: 1023px) {
   .wave-title-the { font-size: 68px; }
   .wave-title-main { font-size: 158px; }
+}
+/* Desktop: one long poster line. */
+@media (min-width: 1024px) {
+  .wave-header { min-height: min(620px, 80svh); }
+  .wave-title { display: flex; align-items: baseline; gap: 0.18em; width: 100%; white-space: nowrap; }
+  .wave-title-the, .wave-title-main { font-size: 14.5vw; }
+  .wave-title-the { font-size: 14.5vw; }
+}
+@media (min-width: 1440px) {
+  .wave-title-the, .wave-title-main { font-size: 210px; }
+}
+@keyframes word-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+@utility animate-word-wiggle {
+  display: inline-block;
+  animation: word-wiggle 2.4s ease-in-out infinite;
+  transform-origin: 50% 85%;
 }
 
 @utility shadow-poster {
@@ -200,7 +222,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-wave-pop, .animate-wiggle, .animate-fog {
+  .animate-wave-pop, .animate-wiggle, .animate-fog, .animate-word-wiggle {
     animation: none !important;
   }
   html { scroll-behavior: auto; }

@@ -10,10 +10,11 @@ interface Props {
   cohosts?: { name: string; contact: string }[]
   wantsMicrogrant?: boolean
   canGive?: boolean
+  sheltered?: boolean
   language?: string
 }
 
-const Email = ({ name, contact, stretch, cohosts, wantsMicrogrant, canGive, language }: Props) => (
+const Email = ({ name, contact, stretch, cohosts, wantsMicrogrant, canGive, sheltered, language }: Props) => (
   <Layout preview={`New host: ${name ?? 'someone'} on ${stretch ?? 'a block'}`} title="A neighbor raised their hand!">
     <Text style={p}><strong>Name:</strong> {name ?? '—'}</Text>
     <Text style={p}><strong>Contact:</strong> {contact ?? '—'}</Text>
@@ -21,6 +22,7 @@ const Email = ({ name, contact, stretch, cohosts, wantsMicrogrant, canGive, lang
     <Text style={p}><strong>Co-hosts:</strong> {cohosts && cohosts.length ? cohosts.map((c) => `${c.name}${c.contact ? ` (${c.contact})` : ''}`).join(', ') : 'None'}</Text>
     <Text style={p}><strong>Wants microgrant:</strong> {wantsMicrogrant ? 'Yes' : 'No'}</Text>
     <Text style={p}><strong>Can give:</strong> {canGive ? 'Yes' : 'No'}</Text>
+    <Text style={p}><strong>Sheltered from rain:</strong> {sheltered ? 'Yes' : 'No'}</Text>
     <Text style={p}><strong>Language:</strong> {language ?? 'en'}</Text>
   </Layout>
 )

@@ -81,14 +81,14 @@ function Index() {
             </div>
             <div className="flex flex-wrap items-center gap-4 text-sm font-semibold">
               <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-coral" /> {t.map.open}</span>
-              <span className="flex items-center gap-2"><WaveHand className="h-6 w-6" /> {t.map.claimed}{shouldShowMapCount(data.hostCount) && <> · {claimedCount}</>}</span>
+              <span className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-full border border-ink bg-claim"><WaveHand className="h-5 w-5" /></span> {t.map.claimed}{shouldShowMapCount(data.hostCount) && <> · {claimedCount}</>}</span>
             </div>
           </div>
           <BlockMap claimed={data.claimed} onPick={(b) => {
             const names = data.claimed[b.id];
             setDialog({ mode: "block", block: b, names: names ?? [] });
           }} />
-          <p className="mt-3 text-sm opacity-70">{t.map.hint}</p>
+          <p className="mt-3 text-sm opacity-70">{t.map.hint} {t.map.blankNote}</p>
           <div className="mt-8 grid gap-4 border-t-2 border-ink/20 pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
             <div className="min-w-0">
               <p className="poster-title text-3xl">{t.map.other}</p>

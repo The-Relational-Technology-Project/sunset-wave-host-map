@@ -6,11 +6,16 @@ describe("blocks", () => {
   it("covers roughly 400 avenue blocks from 19th Ave to 48th, Lincoln to Wawona", () => {
     const avenues = BLOCKS.filter((b) => typeof b.avenue === "number");
     expect(avenues.length).toBeGreaterThanOrEqual(400);
-    expect(avenues.length).toBeLessThanOrEqual(430);
+    expect(avenues.length).toBeLessThanOrEqual(450);
     expect(Math.min(...avenues.map((b) => Number(b.avenue)))).toBe(19);
     expect(Math.max(...avenues.map((b) => Number(b.avenue)))).toBe(48);
     expect(avenues[0]?.north).toBe("Lincoln");
-    expect(avenues.at(-1)?.south).toBe("Wawona");
+    expect(avenues.at(-1)?.south).toBe("Sloat");
+  });
+  it("extends to D4 below Sloat west of Stern Grove", () => {
+    expect(BLOCK_BY_ID.get("40-wawona")).toMatchObject({ north: "Wawona", south: "Sloat" });
+    expect(BLOCK_BY_ID.has("25-wawona")).toBe(false);
+    expect(BLOCKS.filter((b) => b.south_of_sloat).length).toBeGreaterThanOrEqual(20);
   });
   it("has unique ids", () => {
     expect(new Set(BLOCKS.map((b) => b.id)).size).toBe(BLOCKS.length);

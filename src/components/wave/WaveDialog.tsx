@@ -97,6 +97,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   const [cohosts, setCohosts] = useState<{ name: string; contact: string }[]>([]);
   const [grant, setGrant] = useState(false);
   const [give, setGive] = useState(false);
+  const [sheltered, setSheltered] = useState(false);
   const [hp, setHp] = useState("");
   const [errors, setErrors] = useState<Errs>({});
   const [busy, setBusy] = useState(false);
@@ -124,6 +125,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
           cohosts: cohosts.filter((c) => c.name.trim()),
           wantsMicrogrant: grant,
           canGive: give,
+          sheltered,
           language: lang,
           ...(hp ? { website: hp } : {}),
         },
@@ -186,6 +188,10 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
         </label>
         <p className="text-xs text-muted-foreground">{t.host.moneyNote}</p>
       </div>
+      <label className="flex items-start gap-3 px-4 text-sm">
+        <Checkbox checked={sheltered} onCheckedChange={(v) => setSheltered(v === true)} className="mt-0.5" />
+        <span>{t.host.sheltered}</span>
+      </label>
 
       <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} className="absolute -left-[9999px] h-0 w-0 opacity-0" aria-hidden="true" />
       {errors.form && <p className="text-sm font-medium text-destructive">{errors.form}</p>}
