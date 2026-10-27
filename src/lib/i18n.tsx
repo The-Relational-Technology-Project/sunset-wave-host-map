@@ -143,7 +143,7 @@ const en = {
     errMessage: "Please write a short note.",
   },
   footer: {
-    supported: "The Sunset Wave is supported by the Sunset Social Club as a way for more of us to meet our neighbors, and a moment for us to come together as a neighborhood.",
+    supported: "The Sunset Wave is supported by the Sunset Social Club as a way for more of us to meet our neighbors. This is a moment for us to come together as a neighborhood.",
     privacy: "Privacy",
     terms: "Terms",
     contact: "Contact",
