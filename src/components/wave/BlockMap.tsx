@@ -7,7 +7,8 @@ import { blockLabel, useLang } from "@/lib/i18n";
 import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
 
-const BOUNDS: [[number, number], [number, number]] = [[37.7325, -122.5105], [37.7645, -122.4745]];
+const INITIAL_CENTER: [number, number] = [37.7485, -122.4925];
+const INITIAL_ZOOM = 16;
 
 export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]>; onPick: (b: Block) => void }) {
   const { t, lang } = useLang();
@@ -19,7 +20,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  const [zoom, setZoom] = useState(13);
+  const [zoom, setZoom] = useState(INITIAL_ZOOM);
 
   useEffect(() => {
     let disposed = false;
@@ -33,7 +34,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         attributionControl: true,
       });
       map.current = instance;
-      instance.fitBounds(BOUNDS, { padding: [4, 4] });
+      instance.setView(INITIAL_CENTER, INITIAL_ZOOM);
       setZoom(instance.getZoom());
       instance.on("zoomend", () => setZoom(instance.getZoom()));
       const tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -47,7 +48,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
       instance.on("dragstart zoomstart", () => { if (ready0) touched = true; });
       let ready0 = false;
       setTimeout(() => { ready0 = true; }, 800);
-      resize = new ResizeObserver(() => { instance.invalidateSize(); if (!touched) instance.fitBounds(BOUNDS, { padding: [4, 4] }); });
+      resize = new ResizeObserver(() => { instance.invalidateSize(); if (!touched) instance.setView(INITIAL_CENTER, INITIAL_ZOOM); });
       resize.observe(container.current);
       setReady(true);
     }).catch(() => { if (!disposed) setFailed(true); });
@@ -103,7 +104,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         {[
           { run: () => map.current?.zoomIn(), Icon: Plus, label: t.map.zoomIn },
           { run: () => map.current?.zoomOut(), Icon: Minus, label: t.map.zoomOut },
-          { run: () => map.current?.fitBounds(BOUNDS, { padding: [4, 4] }), Icon: RotateCcw, label: t.map.reset },
+          { run: () => map.current?.setView(INITIAL_CENTER, INITIAL_ZOOM), Icon: RotateCcw, label: t.map.reset },
         ].map(({ run, Icon, label }) => (
           <Button key={label} type="button" variant="posterAlt" size="icon" onClick={run} aria-label={label} title={label} disabled={!ready}
             className="h-11 w-11 border-2 border-ink bg-card text-ink"><Icon className="h-4 w-4" /></Button>
