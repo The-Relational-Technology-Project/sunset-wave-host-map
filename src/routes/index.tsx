@@ -67,7 +67,7 @@ function Index() {
               </li>
             ))}
           </ul>
-          <p className="mt-10 max-w-3xl font-hand text-3xl text-coral">{t.invite.p3}</p>
+          <p className="mt-10 max-w-3xl font-hand text-3xl text-ocean">{t.invite.p3}</p>
         </div>
       </section>
 
@@ -104,7 +104,7 @@ function Index() {
             <h3 className="poster-title text-4xl text-ink">{t.easy.ideasTitle}</h3>
             <ul className="mt-5 flex flex-wrap gap-3">
               {t.easy.ideas.map((idea, i) => (
-                <li key={idea} className={`rounded-full border-2 border-ink px-5 py-2 text-lg font-semibold text-ink shadow-poster-sm ${["bg-mustard", "bg-mint", "bg-card", "bg-coral text-primary-foreground", "bg-fog", "bg-blush"][i % 6]}`}>
+                <li key={idea} className={`rounded-full border-2 border-ink px-5 py-2 text-lg font-semibold text-ink shadow-poster-sm ${["bg-mustard", "bg-sky", "bg-card", "bg-mustard", "bg-fog", "bg-blush"][i % 6]}`}>
                   {idea}
                 </li>
               ))}

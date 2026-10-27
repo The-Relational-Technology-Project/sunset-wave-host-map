@@ -7,7 +7,7 @@
 
 /*
  * The Sunset Wave design system.
- * Sunset orange, sand, sky blue and cypress, with house-pastel accents.
+ * Spring sky and ocean blues, sunny yellow, and restrained house-pastel accents.
  */
 
 @theme inline {
@@ -60,40 +60,40 @@
 :root {
   --radius: 0.75rem;
 
-  --sand: oklch(0.965 0.012 90);
-  --fog: oklch(0.94 0.016 240);
-  --ink: oklch(0.22 0.014 145);
-  --sky: oklch(0.82 0.085 245);
-  --hero: oklch(0.91 0.027 126);
-  --coral: oklch(0.57 0.17 43);
-  --mustard: oklch(0.9 0.075 85);
-  --claim: oklch(0.65 0.14 250);
-  --mint: oklch(0.925 0.023 145);
-  --blush: oklch(0.92 0.035 40);
-  --ocean: oklch(0.49 0.08 240);
-  --ocean-deep: oklch(0.31 0.055 240);
-  --park: oklch(0.37 0.055 135);
-  --night: oklch(0.23 0.025 140);
-  --night-foreground: oklch(0.97 0.01 95);
+  --sand: oklch(0.985 0.008 95);
+  --fog: oklch(0.965 0.018 235);
+  --ink: oklch(0.29 0.065 240);
+  --sky: oklch(0.87 0.055 235);
+  --hero: oklch(0.93 0.035 235);
+  --coral: oklch(0.59 0.16 45);
+  --mustard: oklch(0.9 0.135 92);
+  --claim: oklch(0.56 0.11 240);
+  --mint: oklch(0.95 0.025 235);
+  --blush: oklch(0.95 0.028 45);
+  --ocean: oklch(0.43 0.095 240);
+  --ocean-deep: oklch(0.32 0.07 240);
+  --park: var(--ocean);
+  --night: var(--ocean-deep);
+  --night-foreground: var(--sand);
 
   --background: var(--sand);
   --foreground: var(--ink);
-  --card: oklch(0.985 0.006 95);
+  --card: oklch(0.995 0.003 235);
   --card-foreground: var(--ink);
   --popover: var(--card);
   --popover-foreground: var(--ink);
-  --primary: var(--coral);
-  --primary-foreground: var(--card);
+  --primary: var(--mustard);
+  --primary-foreground: var(--ink);
   --secondary: var(--mustard);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.94 0.015 135);
-  --muted-foreground: oklch(0.42 0.02 145);
+  --muted: var(--mint);
+  --muted-foreground: oklch(0.44 0.045 240);
   --accent: var(--mint);
   --accent-foreground: var(--ink);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.22 0.014 145 / 18%);
-  --input: oklch(0.22 0.014 145 / 25%);
+  --border: oklch(0.29 0.065 240 / 22%);
+  --input: oklch(0.29 0.065 240 / 35%);
   --ring: var(--ocean);
 
   --shadow-poster: 6px 6px 0 0 var(--ink);

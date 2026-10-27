@@ -49,8 +49,8 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-4 sm:px-6 sm:pt-6 lg:pt-14">
         <h1 className="wave-title relative w-fit text-ink" aria-label={t.hero.brand}>
           <span aria-hidden className="poster-title wave-title-the block">{t.hero.the}</span>
-          <span aria-hidden className="poster-title wave-title-main block text-coral [text-shadow:4px_4px_0_var(--color-ink)]">{t.hero.sunset}</span>
-          <span aria-hidden className="poster-title wave-title-main block [text-shadow:4px_4px_0_var(--color-coral)]"><span className="animate-word-wiggle">{t.hero.wave}</span></span>
+          <span aria-hidden className="poster-title wave-title-main block text-ocean [text-shadow:4px_4px_0_var(--color-mustard)]">{t.hero.sunset}</span>
+          <span aria-hidden className="poster-title wave-title-main block [text-shadow:4px_4px_0_var(--color-mustard)]"><span className="animate-word-wiggle">{t.hero.wave}</span></span>
           {HANDS.slice(0, shown).map((h, i) => (
             <span key={i} aria-hidden className="pointer-events-none absolute" style={{ top: `${h.top}%`, left: `${h.left}%`, width: `${h.s}%`, rotate: `${h.r}deg` }}>
               <WaveHand className="animate-wave-pop w-full drop-shadow-md" />
