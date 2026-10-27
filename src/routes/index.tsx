@@ -62,7 +62,7 @@ function Index() {
           </div>
           <ul className="mt-14 grid grid-cols-2 items-center gap-5 sm:gap-8 md:grid-cols-4">
             {t.easy.steps.map((s, i) => (
-              <li key={i} className={`rounded-2xl border-2 border-ink bg-card p-2 shadow-poster sm:p-3 ${["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"][i]}`}>
+              <li key={i} className={`rounded-2xl border-2 border-ink p-2 shadow-poster sm:p-3 ${i % 2 === 0 ? "bg-blush" : "bg-card"} ${["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"][i]}`}>
                 <img src={STEP_PHOTOS[i]?.url} alt={s.t} loading="lazy" className="block h-auto w-full rounded-lg" />
               </li>
             ))}
@@ -104,7 +104,7 @@ function Index() {
             <h3 className="poster-title text-4xl text-ink">{t.easy.ideasTitle}</h3>
             <ul className="mt-5 flex flex-wrap gap-3">
               {t.easy.ideas.map((idea, i) => (
-                <li key={idea} className={`rounded-full border-2 border-ink px-5 py-2 text-lg font-semibold text-ink shadow-poster-sm ${["bg-mustard", "bg-sky", "bg-card", "bg-mustard", "bg-fog", "bg-blush"][i % 6]}`}>
+                <li key={idea} className={`rounded-full border-2 border-ink px-5 py-2 text-lg font-semibold text-ink shadow-poster-sm ${["bg-mustard", "bg-sky", "bg-blush", "bg-mustard", "bg-fog", "bg-blush"][i % 6]}`}>
                   {idea}
                 </li>
               ))}
