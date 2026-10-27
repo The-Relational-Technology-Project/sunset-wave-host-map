@@ -53,7 +53,7 @@ function Index() {
 
 
       {/* Invitation */}
-      <section className="grain bg-sand">
+      <section className="grain bg-hero">
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <div className="max-w-3xl space-y-6">
             <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.invite.title}</h2>
@@ -72,7 +72,7 @@ function Index() {
       </section>
 
       {/* Map */}
-      <section id="map" className="grain scroll-mt-4 bg-mint text-ink">
+      <section id="map" className="grain scroll-mt-4 bg-fog text-ink">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-5 md:py-24">
           <figure className="relative mx-auto w-full mb-12 max-w-xs -rotate-2 sm:max-w-sm rounded-2xl border-2 border-ink bg-card p-3 shadow-poster">
             <img src={aerial.url} alt={t.invite.photoAlt} width={615} height={766} loading="lazy" className="h-auto w-full rounded-lg" />
@@ -98,7 +98,7 @@ function Index() {
       </section>
 
       {/* How easy */}
-      <section className="grain bg-blush/40">
+      <section className="grain bg-sand">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
           <div>
             <h3 className="poster-title text-4xl text-ink">{t.easy.ideasTitle}</h3>

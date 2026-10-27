@@ -5,7 +5,7 @@ import { WaveHand } from "./WaveHand";
 export function HostingInvitation({ onHost }: { onHost: () => void }) {
   const { t } = useLang();
   return (
-    <div className="mb-12 grid gap-5 rounded-lg border-2 border-ink bg-mustard p-6 shadow-poster sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-8">
+    <div className="mb-12 grid gap-5 rounded-lg border-2 border-ink bg-card p-6 shadow-poster sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-8">
       <div className="min-w-0 space-y-3">
         <h3 className="poster-title text-4xl leading-tight text-ink">{t.map.other}</h3>
         <p className="max-w-xl text-base text-ink">{t.map.otherSub}</p>

@@ -60,16 +60,16 @@
 :root {
   --radius: 0.75rem;
 
-  --sand: oklch(0.95 0.03 85);
-  --fog: oklch(0.92 0.018 240);
+  --sand: oklch(0.965 0.012 90);
+  --fog: oklch(0.94 0.016 240);
   --ink: oklch(0.22 0.014 145);
   --sky: oklch(0.82 0.085 245);
   --hero: oklch(0.91 0.027 126);
   --coral: oklch(0.57 0.17 43);
   --mustard: oklch(0.9 0.075 85);
   --claim: oklch(0.65 0.14 250);
-  --mint: oklch(0.87 0.045 130);
-  --blush: oklch(0.9 0.055 40);
+  --mint: oklch(0.925 0.023 145);
+  --blush: oklch(0.92 0.035 40);
   --ocean: oklch(0.49 0.08 240);
   --ocean-deep: oklch(0.31 0.055 240);
   --park: oklch(0.37 0.055 135);
@@ -86,7 +86,7 @@
   --primary-foreground: var(--card);
   --secondary: var(--mustard);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.92 0.018 130);
+  --muted: oklch(0.94 0.015 135);
   --muted-foreground: oklch(0.42 0.02 145);
   --accent: var(--mint);
   --accent-foreground: var(--ink);
@@ -149,7 +149,7 @@
 }
 
 /* Printed type, without an illustrated backdrop. */
-.wave-header { border-bottom: 12px solid var(--coral); }
+.wave-header { border-bottom: none; }
 .wave-title-the { font-size: 68px; }
 .wave-title-main { font-size: 126px; }
 @media (min-width: 640px) {
