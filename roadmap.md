@@ -1,5 +1,5 @@
 # Sunset Wave refinements
-- [ ] Coordinate springtime blues and sunny accents across the page, map and forms; verify desktop and mobile.
+- [x] Coordinate springtime blues and sunny accents across the page, map and forms; verify desktop and mobile.
 - [x] Add a prominent hosting invitation above the map and a sticky mobile hosting button.
 - [x] Replace the grid with a real tile map and geographically placed block markers, preserving host references.
 - [x] Verify direct hosting, map selection, four-language copy, and mobile layout; no live submission sent for this presentation-only change.
