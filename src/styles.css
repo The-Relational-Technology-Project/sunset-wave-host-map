@@ -7,7 +7,7 @@
 
 /*
  * The Sunset Wave design system.
- * Fog + sand base, painted-house accents, ocean, park green.
+ * Sunset sky, cypress, ice plant, flower yellow and coastal fog.
  */
 
 @theme inline {
@@ -41,6 +41,7 @@
   --color-ring: var(--ring);
 
   --color-coral: var(--coral);
+  --color-sky: var(--sky);
   --color-mustard: var(--mustard);
   --color-claim: var(--claim);
   --color-mint: var(--mint);
@@ -58,38 +59,39 @@
 :root {
   --radius: 0.75rem;
 
-  --sand: oklch(0.94 0.035 85);
-  --fog: oklch(0.9 0.012 230);
-  --ink: oklch(0.22 0.02 50);
-  --coral: oklch(0.68 0.18 38);
-  --mustard: oklch(0.82 0.15 85);
-  --claim: oklch(0.72 0.13 230);
-  --mint: oklch(0.85 0.07 165);
-  --blush: oklch(0.82 0.08 15);
-  --ocean: oklch(0.55 0.08 220);
-  --ocean-deep: oklch(0.32 0.06 230);
-  --park: oklch(0.45 0.09 145);
-  --night: oklch(0.2 0.02 250);
-  --night-foreground: oklch(0.95 0.02 85);
+  --sand: oklch(0.96 0.012 95);
+  --fog: oklch(0.92 0.018 240);
+  --ink: oklch(0.22 0.014 145);
+  --sky: oklch(0.82 0.085 245);
+  --coral: oklch(0.49 0.145 355);
+  --mustard: oklch(0.87 0.14 100);
+  --claim: oklch(0.65 0.14 250);
+  --mint: oklch(0.87 0.045 130);
+  --blush: oklch(0.85 0.065 355);
+  --ocean: oklch(0.49 0.08 240);
+  --ocean-deep: oklch(0.31 0.055 240);
+  --park: oklch(0.37 0.055 135);
+  --night: oklch(0.23 0.025 140);
+  --night-foreground: oklch(0.97 0.01 95);
 
   --background: var(--sand);
   --foreground: var(--ink);
-  --card: oklch(0.97 0.02 85);
+  --card: oklch(0.985 0.006 95);
   --card-foreground: var(--ink);
-  --popover: oklch(0.97 0.02 85);
+  --popover: var(--card);
   --popover-foreground: var(--ink);
   --primary: var(--coral);
-  --primary-foreground: oklch(0.99 0.01 85);
+  --primary-foreground: var(--card);
   --secondary: var(--mustard);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.9 0.03 85);
-  --muted-foreground: oklch(0.42 0.03 55);
+  --muted: oklch(0.92 0.018 130);
+  --muted-foreground: oklch(0.42 0.02 145);
   --accent: var(--mint);
   --accent-foreground: var(--ink);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.22 0.02 50 / 18%);
-  --input: oklch(0.22 0.02 50 / 25%);
+  --border: oklch(0.22 0.014 145 / 18%);
+  --input: oklch(0.22 0.014 145 / 25%);
   --ring: var(--ocean);
 
   --shadow-poster: 6px 6px 0 0 var(--ink);

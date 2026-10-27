@@ -40,7 +40,7 @@ export function Hero({ hostCount, onHost }: { hostCount: number; onHost: () => v
   }, []);
 
   return (
-    <header className="grain wave-header relative isolate flex flex-col lg:min-h-0 overflow-hidden bg-mustard">
+    <header className="grain wave-header relative isolate flex flex-col lg:min-h-0 overflow-hidden bg-sky">
 
       <div className="mx-auto flex w-full max-w-7xl justify-end px-4 pt-4 sm:px-6 sm:pt-6">
         <LangSwitch />
