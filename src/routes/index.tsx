@@ -59,7 +59,6 @@ function Index() {
             <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.invite.title}</h2>
             <p className="text-lg leading-relaxed text-muted-foreground">{t.invite.p1}</p>
             <p className="text-lg leading-relaxed text-muted-foreground">{t.invite.p2}</p>
-            <p className="font-hand text-3xl text-coral">{t.invite.p3}</p>
           </div>
           <ul className="mt-14 grid grid-cols-2 items-center gap-5 sm:gap-8 md:grid-cols-4">
             {t.easy.steps.map((s, i) => (
@@ -68,7 +67,7 @@ function Index() {
               </li>
             ))}
           </ul>
-
+          <p className="mt-10 max-w-3xl font-hand text-3xl text-coral">{t.invite.p3}</p>
         </div>
       </section>
 
