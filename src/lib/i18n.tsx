@@ -10,7 +10,7 @@ export const LANGS: { code: Lang; label: string; html: string }[] = [
 ];
 
 const en = {
-  support: {"title": "Support the Wave", "businessTitle": "Local business? Join the Wave.", "businessBody": "Sponsor a gathering or get involved in bringing Sunset neighbors together. We’d love to hear from you.", "contact": "Contact us", "donateTitle": "Give a little. Bring neighbors together.", "donateBody": "Help support neighborhood gatherings with a tax-deductible donation.", "donate": "Donate"},
+  support: {"title": "Support the Wave", "businessTitle": "Local business? Join the Wave.", "businessBody": "Sponsor a gathering or get involved in bringing Sunset neighbors together. We’d love to hear from you.", "contact": "Contact us", "donateTitle": "Donate and help bring neighbors together.", "donateBody": "Support neighborhood gatherings with a tax-deductible donation.", "donate": "Donate"},
   contactForm: {"name": "Your name", "email": "Your email", "organization": "Business / organization (optional)", "message": "Your message", "submit": "Send message", "success": "Thanks for reaching out! Your message has been received.", "error": "We couldn’t save your message. Please try again.", "invalid": "Please add your name, a valid email address and a message.", "privacy": "Your details stay private and are used to respond to your inquiry."},
   nav: { host: "Host on your block", lang: "Language" },
   hero: {
