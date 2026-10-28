@@ -1,6 +1,7 @@
 import { template as hostConfirmation } from './host-confirmation'
 import { template as noteConfirmation } from './note-confirmation'
 import { template as hostAlert } from './host-alert'
+import { template as contactAlert } from './contact-alert'
 import type { ComponentType } from 'react'
 
 export interface TemplateEntry {
@@ -21,6 +22,7 @@ export interface TemplateEntry {
  *   // then add to TEMPLATES: 'welcome': welcomeTemplate
  */
 export const TEMPLATES: Record<string, TemplateEntry> = {
+  'contact-alert': contactAlert,
   'host-confirmation': hostConfirmation,
   'note-confirmation': noteConfirmation,
   'host-alert': hostAlert,
