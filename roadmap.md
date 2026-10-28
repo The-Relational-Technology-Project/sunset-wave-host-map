@@ -1,4 +1,7 @@
 # Sunset Wave refinements
+- [ ] Add business and donation invitations before FAQs in all four languages.
+- [ ] Add a validated contact form, stored submissions and owner email alerts.
+- [ ] Verify contact delivery, steward access and page layouts.
 - [x] Coordinate springtime blues and sunny accents across the page, map and forms; verify desktop and mobile.
 - [x] Add a prominent hosting invitation above the map and a sticky mobile hosting button.
 - [x] Replace the grid with a real tile map and geographically placed block markers, preserving host references.
