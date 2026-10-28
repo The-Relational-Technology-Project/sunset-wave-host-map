@@ -59,6 +59,7 @@ export type HostRow = {
   cohosts: { name: string; contact: string }[]; wants_microgrant: boolean; can_give: boolean; sheltered: boolean; language: string;
 };
 export type NoteRow = { id: string; created_at: string; block_id: string; name: string; contact: string; message: string; language: string };
+export type ContactRow = { id: string; created_at: string; name: string; email: string; organization: string; message: string; language: string };
 export type Traffic = {
   visitors: number; views: number;
   daily: { day: string; visitors: number; views: number }[];
@@ -80,10 +81,11 @@ export const getStewardData = createServerFn({ method: "GET" }).handler(async ()
   await requireSteward();
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const since = new Date(Date.now() - 7 * 864e5).toISOString();
-  const [hosts, notes, views] = await Promise.all([
+  const [hosts, notes, views, contacts] = await Promise.all([
     supabaseAdmin.from("host_offers").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("host_notes").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("page_views").select("visitor_id, referrer, created_at").gte("created_at", since).limit(50000),
+    supabaseAdmin.from("contact_submissions").select("*").order("created_at", { ascending: false }),
   ]);
   const v = views.data ?? [];
   const days = new Map<string, { v: Set<string>; n: number }>();
@@ -105,6 +107,7 @@ export const getStewardData = createServerFn({ method: "GET" }).handler(async ()
   return {
     hosts: (hosts.data ?? []) as unknown as HostRow[],
     notes: (notes.data ?? []) as NoteRow[],
+    contacts: (contacts.data ?? []) as ContactRow[],
     traffic,
   };
 });

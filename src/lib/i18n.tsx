@@ -10,6 +10,8 @@ export const LANGS: { code: Lang; label: string; html: string }[] = [
 ];
 
 const en = {
+  support: {"title": "Support the Wave", "businessTitle": "Local business? Join the Wave.", "businessBody": "Sponsor a gathering or get involved in bringing Sunset neighbors together. We’d love to hear from you.", "contact": "Contact us", "donateTitle": "Give a little. Bring neighbors together.", "donateBody": "Help support neighborhood gatherings with a tax-deductible donation.", "donate": "Donate"},
+  contactForm: {"name": "Your name", "email": "Your email", "organization": "Business / organization (optional)", "message": "Your message", "submit": "Send message", "success": "Thanks for reaching out! Your message has been received.", "error": "We couldn’t save your message. Please try again.", "invalid": "Please add your name, a valid email address and a message.", "privacy": "Your details stay private and are used to respond to your inquiry."},
   nav: { host: "Host on your block", lang: "Language" },
   hero: {
     brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
@@ -180,6 +182,8 @@ const en = {
 export type Dict = typeof en;
 
 const zh: Dict = {
+  support: {"title": "支持 The Sunset Wave", "businessTitle": "本地商家，一起加入吧！", "businessBody": "赞助邻里聚会，或一起帮助日落区邻居相聚。我们期待听到你的想法。", "contact": "联系我们", "donateTitle": "一点支持，让邻居相聚。", "donateBody": "通过可抵税的捐款，支持邻里聚会。", "donate": "捐款"},
+  contactForm: {"name": "你的名字", "email": "你的电子邮件", "organization": "商家／组织（可选）", "message": "你的留言", "submit": "发送留言", "success": "谢谢联系！我们已收到你的留言。", "error": "未能保存留言，请再试一次。", "invalid": "请填写姓名、有效的电子邮件地址和留言。", "privacy": "你的资料会保密，仅用于回复你的咨询。"},
   nav: { host: "在你的街区主持聚会", lang: "语言" },
   hero: {
     brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
@@ -348,6 +352,8 @@ const zh: Dict = {
 };
 
 const yue: Dict = {
+  support: {"title": "支持 The Sunset Wave", "businessTitle": "本地商戶，一齊加入啦！", "businessBody": "贊助街坊聚會，或者一齊幫日落區街坊聚埋一齊。我哋好想聽吓你嘅諗法。", "contact": "聯絡我哋", "donateTitle": "少少支持，令街坊聚埋。", "donateBody": "透過可扣稅嘅捐款，支持街坊聚會。", "donate": "捐款"},
+  contactForm: {"name": "你嘅名", "email": "你嘅電郵", "organization": "商戶／組織（可選）", "message": "你嘅留言", "submit": "傳送留言", "success": "多謝聯絡！我哋收到你嘅留言喇。", "error": "儲存唔到留言，請再試一次。", "invalid": "請填你嘅名、有效嘅電郵地址同留言。", "privacy": "你嘅資料會保密，只用嚟回覆你嘅查詢。"},
   nav: { host: "喺你嘅街區主持聚會", lang: "語言" },
   hero: {
     brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",
@@ -516,6 +522,8 @@ const yue: Dict = {
 };
 
 const es: Dict = {
+  support: {"title": "Apoya la Wave", "businessTitle": "¿Un negocio local? Súmate a la Wave.", "businessBody": "Patrocina una reunión o participa para unir a los vecinos del Sunset. Nos encantaría saber de ti.", "contact": "Contáctanos", "donateTitle": "Un pequeño aporte une a los vecinos.", "donateBody": "Apoya las reuniones del barrio con una donación deducible de impuestos.", "donate": "Donar"},
+  contactForm: {"name": "Tu nombre", "email": "Tu correo electrónico", "organization": "Negocio / organización (opcional)", "message": "Tu mensaje", "submit": "Enviar mensaje", "success": "¡Gracias por contactarnos! Hemos recibido tu mensaje.", "error": "No pudimos guardar tu mensaje. Inténtalo de nuevo.", "invalid": "Escribe tu nombre, un correo válido y un mensaje.", "privacy": "Tus datos se mantienen privados y solo se usan para responder a tu consulta."},
   nav: { host: "Organiza en tu cuadra", lang: "Idioma" },
   hero: {
     brand: "The Sunset Wave", the: "The", sunset: "Sunset", wave: "Wave",

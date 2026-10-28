@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "@/lib/i18n";
 import { EmailLink, SimplePage } from "@/components/wave/SimplePage";
+import { ContactForm } from "@/components/wave/ContactForm";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -21,6 +22,7 @@ function Contact() {
   return (
     <SimplePage title={t.pages.contactTitle}>
       <p>{t.pages.contactBody} <EmailLink />.</p>
+      <ContactForm />
     </SimplePage>
   );
 }
