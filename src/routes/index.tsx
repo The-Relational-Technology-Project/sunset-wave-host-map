@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight, Heart, Store } from "lucide-react";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq } from "@/lib/site.functions";
@@ -124,6 +125,26 @@ function Index() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="grain bg-hero text-ink">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+          <h2 className="poster-title text-5xl sm:text-6xl">{t.support.title}</h2>
+          <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-16">
+            <div className="space-y-5 border-t-2 border-ink/20 pt-6">
+              <Store className="h-8 w-8 text-ocean" aria-hidden="true" />
+              <h3 className="font-hand text-2xl font-bold">{t.support.businessTitle}</h3>
+              <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{t.support.businessBody}</p>
+              <Button asChild variant="posterAlt" className="h-auto min-h-12 whitespace-normal"><Link to="/contact">{t.support.contact}<ArrowUpRight className="h-5 w-5 shrink-0" /></Link></Button>
+            </div>
+            <div className="space-y-5 border-t-2 border-ink/20 pt-6">
+              <Heart className="h-8 w-8 text-coral" aria-hidden="true" />
+              <h3 className="font-hand text-2xl font-bold">{t.support.donateTitle}</h3>
+              <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{t.support.donateBody}</p>
+              <Button asChild variant="poster" className="h-auto min-h-12 whitespace-normal"><a href="https://opencollective.com/relational-tech-project/projects/sunset-gatherings-fund/contribute/fund-neighborhood-gatherings-106284?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAcGRvZgJzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAad7MBnKerLjed5TgaL-QkFC4c5JA4Ib-Bpj60wDbMs4dAF5iFwm4cSWHeVb5g_aem_CLjW-wciy4hzbo6QH8g1uA" target="_blank" rel="noopener noreferrer">{t.support.donate}<ArrowUpRight className="h-5 w-5 shrink-0" /></a></Button>
+            </div>
+          </div>
         </div>
       </section>
 

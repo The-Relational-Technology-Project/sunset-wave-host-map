@@ -97,12 +97,21 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
           <TabsList className="flex-wrap h-auto">
             <TabsTrigger value="hosts">Hosts ({data.hosts.length})</TabsTrigger>
             <TabsTrigger value="notes">Notes ({data.notes.length})</TabsTrigger>
+            <TabsTrigger value="contacts">Contact ({data.contacts.length})</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="traffic">Traffic</TabsTrigger>
             <TabsTrigger value="faq">FAQ</TabsTrigger>
           </TabsList>
           <TabsContent value="hosts"><Hosts hosts={data.hosts} /></TabsContent>
           <TabsContent value="notes"><Notes notes={data.notes} /></TabsContent>
+          <TabsContent value="contacts">
+            <div className="overflow-x-auto rounded-lg border-2 border-ink bg-card">
+              <Table>
+                <TableHeader><TableRow><TableHead>Date</TableHead><TableHead>Name</TableHead><TableHead>Email</TableHead><TableHead>Organization</TableHead><TableHead>Message</TableHead><TableHead>Language</TableHead></TableRow></TableHeader>
+                <TableBody>{data.contacts.map(c => <TableRow key={c.id}><TableCell className="whitespace-nowrap">{new Date(c.created_at).toLocaleDateString()}</TableCell><TableCell>{c.name}</TableCell><TableCell>{c.email}</TableCell><TableCell>{c.organization}</TableCell><TableCell className="min-w-64 whitespace-pre-wrap">{c.message}</TableCell><TableCell>{c.language}</TableCell></TableRow>)}{!data.contacts.length && <TableRow><TableCell colSpan={6} className="text-center text-muted-foreground">No contact inquiries yet.</TableCell></TableRow>}</TableBody>
+              </Table>
+            </div>
+          </TabsContent>
           <TabsContent value="map">
             <p className="mb-3 text-sm text-muted-foreground">{claims.hostCount} hosts · {Object.keys(claims.claimed).length} blocks claimed</p>
             <BlockMap claimed={claims.claimed} onPick={() => {}} />
