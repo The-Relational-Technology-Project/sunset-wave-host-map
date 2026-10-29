@@ -1,4 +1,7 @@
 # Sunset Wave refinements
+- [ ] Hide host names in map details and remove the map co-host action.
+- [ ] Alert the Social Club to new notes and add steward-approved forwarding to a selected host email.
+- [ ] Verify note review, privacy, delivery safeguards and the visitor flow.
 - [x] Add business and donation invitations before FAQs in all four languages.
 - [x] Add a validated contact form, stored submissions and owner email alerts.
 - [x] Verify contact delivery, steward access and page layouts.
