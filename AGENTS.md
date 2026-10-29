@@ -15,7 +15,8 @@
 - Block dots are generated in `src/lib/blocks.ts` (not stored in the database); host offers reference them by block id string, so the grid can be tuned without migrations.
 - Map columns support numbered avenues and named coastal streets; preserve existing avenue block ids when expanding the grid so saved host offers remain attached.
 - Render the map with Leaflet loaded inside an effect using OpenStreetMap raster tiles; keep block midpoint coordinates in a browser-safe static data module derived from public street centerlines, so geography is independent of saved host IDs and SSR never imports Leaflet.
-- Public reads of host data go only through security-definer functions that return first names and block ids; offer/note tables are insert-only for visitors to keep contact details private.
+- Public reads of host data go only through security-definer functions returning block occupancy without names; offer/note tables are insert-only for visitors to keep identities and contact details private.
+- Neighbor-note forwarding is a session-gated steward action to one server-validated host on the same block; persist moderation state with atomic claims and stable email idempotency keys, never an email queue, to prevent unreviewed or duplicate sends.
 - Use the shared WaveHand asset for the title, map markers, cursor and favicon so the campaign mark stays consistent across surfaces.
 - Keep map count visibility in a tested presentation helper keyed to total host count, while the displayed number represents claimed blocks, so milestone logic stays independent of map generation.
 - The /steward page is gated by a shared password (server-only secret + encrypted session cookie); every steward server function re-checks the session, since route gating alone does not protect RPCs. Steward copy is English-only by design (internal tool), an exception to the i18n rule.

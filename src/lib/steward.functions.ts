@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { canReviewNote, forwardingKey, STEWARD_REPLY_TO, validateNoteHost, type ReviewStatus } from "./note-review";
 
 type StewardSession = { unlocked?: boolean };
 
@@ -58,7 +59,7 @@ export type HostRow = {
   id: string; created_at: string; block_id: string | null; stretch_text: string; name: string; contact: string;
   cohosts: { name: string; contact: string }[]; wants_microgrant: boolean; can_give: boolean; sheltered: boolean; language: string;
 };
-export type NoteRow = { id: string; created_at: string; block_id: string; name: string; contact: string; message: string; language: string };
+export type NoteRow = { id: string; created_at: string; block_id: string; name: string; contact: string; message: string; language: string; review_status: ReviewStatus; reviewed_host_id: string | null; review_started_at: string | null; forwarded_at: string | null };
 export type ContactRow = { id: string; created_at: string; name: string; email: string; organization: string; message: string; language: string };
 export type Traffic = {
   visitors: number; views: number;
@@ -116,6 +117,44 @@ const faqSchema = z.object({
   language: z.enum(["en", "zh", "yue", "es"]),
   items: z.array(z.object({ q: z.string().trim().min(1).max(300), a: z.string().trim().min(1).max(3000) })).max(40),
 });
+
+export const approveNote = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ noteId: z.string().uuid(), hostId: z.string().uuid() }).parse(d))
+  .handler(async ({ data }) => {
+    await requireSteward();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [{ data: row, error: noteError }, { data: host, error: hostError }] = await Promise.all([
+      supabaseAdmin.from("host_notes").select("*").eq("id", data.noteId).single(),
+      supabaseAdmin.from("host_offers").select("id, block_id, contact, name, stretch_text, language").eq("id", data.hostId).single(),
+    ]);
+    if (noteError || hostError || !row || !host) throw new Error("Note or host not found.");
+    const note = row as NoteRow;
+    const recipient = validateNoteHost(note, host);
+    if (!canReviewNote(note)) throw new Error("This note is already sent, blocked, or being processed. Wait five minutes before retrying.");
+    const started = new Date().toISOString();
+    let claim = supabaseAdmin.from("host_notes").update({ review_status: "sending", reviewed_host_id: host.id, review_started_at: started })
+      .eq("id", note.id).eq("review_status", note.review_status);
+    claim = note.review_started_at ? claim.eq("review_started_at", note.review_started_at) : claim.is("review_started_at", null);
+    const { data: claimed, error: claimError } = await claim.select("id").maybeSingle();
+    if (claimError || !claimed) throw new Error("Another steward is processing this note. Refresh to see its status.");
+    let status: ReviewStatus;
+    try {
+      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      const result = await sendTemplateEmail("note-forward", recipient, {
+        templateData: { hostName: host.name, name: note.name, contact: note.contact, message: note.message, stretch: host.stretch_text, language: host.language },
+        idempotencyKey: forwardingKey(note.id), replyTo: STEWARD_REPLY_TO,
+      });
+      status = result.sent ? "sent" : "suppressed";
+    } catch {
+      await supabaseAdmin.from("host_notes").update({ review_status: "failed" }).eq("id", note.id).eq("review_started_at", started);
+      throw new Error("Email sending could not be confirmed. The note is saved. Wait five minutes, then retry with the same host.");
+    }
+    const { error: saveError } = await supabaseAdmin.from("host_notes")
+      .update({ review_status: status, forwarded_at: status === "sent" ? new Date().toISOString() : null })
+      .eq("id", note.id).eq("review_started_at", started);
+    if (saveError) throw new Error("Email was processed but its status could not be saved. Refresh and retry after five minutes if needed.");
+    return { status };
+  });
 
 export const saveFaq = createServerFn({ method: "POST" })
   .inputValidator((d) => faqSchema.parse(d))

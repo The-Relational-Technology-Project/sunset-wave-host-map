@@ -10,6 +10,7 @@ export const LANGS: { code: Lang; label: string; html: string }[] = [
 ];
 
 const en = {
+  noteForward: { title: "A note from your neighbor", hello: "Hi", intro: "The Sunset Social Club reviewed this neighbor's note about your gathering on", name: "Neighbor", contact: "Email and/or phone", encourage: "Please get in touch with your neighbor directly using the email or phone above. It's a lovely chance to connect and make plans together.", reply: "Replies to this email go to oursunsetsocialclub@gmail.com, not to your neighbor." },
   support: {"title": "Support the Wave", "businessTitle": "Local business? Join the Wave.", "businessBody": "Sponsor a gathering or get involved in bringing Sunset neighbors together. We’d love to hear from you.", "contact": "Contact us", "donateTitle": "Donate and help bring neighbors together.", "donateBody": "Support neighborhood gatherings with a tax-deductible donation.", "donate": "Donate"},
   contactForm: {"name": "Your name", "email": "Your email", "organization": "Business / organization (optional)", "message": "Your message", "submit": "Send message", "success": "Thanks for reaching out! Your message has been received.", "error": "We couldn’t save your message. Please try again.", "invalid": "Please add your name, a valid email address and a message.", "privacy": "Your details stay private and are used to respond to your inquiry."},
   nav: { host: "Host on your block", lang: "Language" },
@@ -53,8 +54,8 @@ const en = {
     openTitle: "This block is open",
     openSub: "Be the one who says yes. Co-hosts welcome.",
     take: "Host on this block",
-    claimedTitle: "{names} raised a hand here",
-    claimedSub: "Want to help, bring something, or just say hi? Send the host a note. Two hosts on a block is a feature, not a conflict.",
+    claimedTitle: "A neighbor raised a hand here",
+    claimedSub: "Want to help, bring something, or just say hi? Send the host a note.",
     sendNote: "Send a note to the host",
     cohost: "I'd like to co-host",
   },
@@ -134,7 +135,7 @@ const en = {
   },
   note: {
     title: "Send a note to the host",
-    sub: "We'll pass it along. The host's contact info stays private.",
+    sub: "Our stewards will review your note before passing it and your email or phone to the host. The host's contact info stays private.",
     name: "Your name",
     contact: "Email or phone",
     message: "Your note",
@@ -158,7 +159,7 @@ const en = {
       "We don't sell or share your data.",
       "We don't use tracking cookies.",
       "If you offer to host or send a note to a host, we'll only use your contact info for that: reaching you about the Wave, or passing your note along.",
-      "Only a host's first name appears on the map. Contact details are never shown publicly.",
+      "Host names and contact details are never shown publicly on the map. Stewards review neighbor notes before sharing the note and the neighbor's contact details with a host.",
       "You can ask us to delete your information at any time.",
       "This site is intended for people 14 and older.",
     ],
@@ -182,6 +183,7 @@ const en = {
 export type Dict = typeof en;
 
 const zh: Dict = {
+  noteForward: { title: "邻居给你的留言", hello: "你好", intro: "日落社交俱乐部已审核这位邻居关于你举办的聚会的留言：", name: "邻居", contact: "电子邮件和／或电话", encourage: "请通过上面的电子邮件或电话直接联系你的邻居。这是互相认识、一起安排聚会的好机会。", reply: "回复这封邮件会发送至 oursunsetsocialclub@gmail.com，而不是你的邻居。" },
   support: {"title": "支持 The Sunset Wave", "businessTitle": "本地商家，一起加入吧！", "businessBody": "赞助邻里聚会，或一起帮助日落区邻居相聚。我们期待听到你的想法。", "contact": "联系我们", "donateTitle": "一点支持，让邻居相聚。", "donateBody": "通过可抵税的捐款，支持邻里聚会。", "donate": "捐款"},
   contactForm: {"name": "你的名字", "email": "你的电子邮件", "organization": "商家／组织（可选）", "message": "你的留言", "submit": "发送留言", "success": "谢谢联系！我们已收到你的留言。", "error": "未能保存留言，请再试一次。", "invalid": "请填写姓名、有效的电子邮件地址和留言。", "privacy": "你的资料会保密，仅用于回复你的咨询。"},
   nav: { host: "在你的街区主持聚会", lang: "语言" },
@@ -225,8 +227,8 @@ const zh: Dict = {
     openTitle: "这个街区还空着",
     openSub: "做那个说“好”的人吧。欢迎共同主持。",
     take: "主持这个街区",
-    claimedTitle: "{names} 已在这里举手",
-    claimedSub: "想帮忙、带点东西，或者只是打个招呼？给主持人留言吧。一个街区有两位主持人是好事，不是冲突。",
+    claimedTitle: "一位邻居已在这里举手",
+    claimedSub: "想帮忙、带点东西，或者只是打个招呼？给主持人留言吧。",
     sendNote: "给主持人留言",
     cohost: "我想共同主持",
   },
@@ -306,7 +308,7 @@ const zh: Dict = {
   },
   note: {
     title: "给主持人留言",
-    sub: "我们会帮你转达。主持人的联系方式保密。",
+    sub: "我们的协调员会先审核留言，再将留言和你的电子邮件或电话转给主持人。主持人的联系方式保密。",
     name: "你的名字",
     contact: "电子邮件或电话",
     message: "你的留言",
@@ -330,7 +332,7 @@ const zh: Dict = {
       "我们不出售或分享你的数据。",
       "我们不使用追踪 Cookie。",
       "如果你报名主持或给主持人留言，我们只会把你的联系方式用于这些用途：就 Wave 联系你，或转达你的留言。",
-      "地图上只显示主持人的名字（不含姓）。联系方式从不公开显示。",
+      "地图上不公开主持人的姓名或联系方式。协调员会先审核邻居留言，再将留言和邻居的联系方式分享给主持人。",
       "你可以随时要求我们删除你的信息。",
       "本网站面向 14 岁及以上人士。",
     ],
@@ -352,6 +354,7 @@ const zh: Dict = {
 };
 
 const yue: Dict = {
+  noteForward: { title: "街坊俾你嘅口訊", hello: "你好", intro: "日落社交俱樂部已睇過呢位街坊關於你搞嘅聚會嘅口訊：", name: "街坊", contact: "電郵同／或電話", encourage: "請用上面嘅電郵或者電話直接聯絡你嘅街坊。呢個係互相認識、一起安排聚會嘅好機會。", reply: "回覆呢封電郵會寄去 oursunsetsocialclub@gmail.com，唔係你嘅街坊。" },
   support: {"title": "支持 The Sunset Wave", "businessTitle": "本地商戶，一齊加入啦！", "businessBody": "贊助街坊聚會，或者一齊幫日落區街坊聚埋一齊。我哋好想聽吓你嘅諗法。", "contact": "聯絡我哋", "donateTitle": "少少支持，令街坊聚埋。", "donateBody": "透過可扣稅嘅捐款，支持街坊聚會。", "donate": "捐款"},
   contactForm: {"name": "你嘅名", "email": "你嘅電郵", "organization": "商戶／組織（可選）", "message": "你嘅留言", "submit": "傳送留言", "success": "多謝聯絡！我哋收到你嘅留言喇。", "error": "儲存唔到留言，請再試一次。", "invalid": "請填你嘅名、有效嘅電郵地址同留言。", "privacy": "你嘅資料會保密，只用嚟回覆你嘅查詢。"},
   nav: { host: "喺你嘅街區主持聚會", lang: "語言" },
@@ -395,8 +398,8 @@ const yue: Dict = {
     openTitle: "呢個街區仲未有人",
     openSub: "做嗰個話「好」嘅人啦。歡迎一齊主持。",
     take: "主持呢個街區",
-    claimedTitle: "{names} 喺度舉咗手",
-    claimedSub: "想幫手、帶啲嘢，或者淨係想打個招呼？留個口訊俾主持人啦。一個街區有兩個主持人係好事，唔係撞咗。",
+    claimedTitle: "有位街坊喺度舉咗手",
+    claimedSub: "想幫手、帶啲嘢，或者淨係想打個招呼？留個口訊俾主持人啦。",
     sendNote: "留口訊俾主持人",
     cohost: "我想一齊主持",
   },
@@ -476,7 +479,7 @@ const yue: Dict = {
   },
   note: {
     title: "留口訊俾主持人",
-    sub: "我哋會幫你轉交。主持人嘅聯絡資料唔會公開。",
+    sub: "我哋嘅協調員會先睇過口訊，再將口訊同你嘅電郵或者電話轉交俾主持人。主持人嘅聯絡資料唔會公開。",
     name: "你嘅名",
     contact: "電郵或者電話",
     message: "你嘅口訊",
@@ -500,7 +503,7 @@ const yue: Dict = {
       "我哋唔會出售或者分享你嘅資料。",
       "我哋唔用追蹤 Cookie。",
       "如果你報名主持或者留口訊俾主持人，我哋只會用你嘅聯絡資料做呢啲用途：就 Wave 聯絡你，或者轉交你嘅口訊。",
-      "地圖上只會顯示主持人嘅名（唔包括姓）。聯絡資料永遠唔會公開。",
+      "地圖唔會公開主持人嘅姓名或者聯絡資料。協調員會先睇過街坊口訊，再將口訊同街坊嘅聯絡資料轉交俾主持人。",
       "你可以隨時要求我哋刪除你嘅資料。",
       "本網站適合 14 歲或以上人士使用。",
     ],
@@ -522,6 +525,7 @@ const yue: Dict = {
 };
 
 const es: Dict = {
+  noteForward: { title: "Una nota de tu vecino", hello: "Hola", intro: "Sunset Social Club revisó esta nota de un vecino sobre tu reunión en", name: "Vecino", contact: "Correo y/o teléfono", encourage: "Comunícate directamente con tu vecino usando el correo o teléfono de arriba. Es una buena oportunidad para conocerse y hacer planes juntos.", reply: "Las respuestas a este correo llegan a oursunsetsocialclub@gmail.com, no a tu vecino." },
   support: {"title": "Apoya la Wave", "businessTitle": "¿Un negocio local? Súmate a la Wave.", "businessBody": "Patrocina una reunión o participa para unir a los vecinos del Sunset. Nos encantaría saber de ti.", "contact": "Contáctanos", "donateTitle": "Un pequeño aporte une a los vecinos.", "donateBody": "Apoya las reuniones del barrio con una donación deducible de impuestos.", "donate": "Donar"},
   contactForm: {"name": "Tu nombre", "email": "Tu correo electrónico", "organization": "Negocio / organización (opcional)", "message": "Tu mensaje", "submit": "Enviar mensaje", "success": "¡Gracias por contactarnos! Hemos recibido tu mensaje.", "error": "No pudimos guardar tu mensaje. Inténtalo de nuevo.", "invalid": "Escribe tu nombre, un correo válido y un mensaje.", "privacy": "Tus datos se mantienen privados y solo se usan para responder a tu consulta."},
   nav: { host: "Organiza en tu cuadra", lang: "Idioma" },
@@ -565,8 +569,8 @@ const es: Dict = {
     openTitle: "Esta cuadra está libre",
     openSub: "Sé quien dice que sí. Co-anfitriones bienvenidos.",
     take: "Organizar en esta cuadra",
-    claimedTitle: "{names} levantó la mano aquí",
-    claimedSub: "¿Quieres ayudar, traer algo o solo saludar? Mándale una nota al anfitrión. Dos anfitriones en una cuadra es algo bueno, no un conflicto.",
+    claimedTitle: "Un vecino levantó la mano aquí",
+    claimedSub: "¿Quieres ayudar, traer algo o solo saludar? Mándale una nota al anfitrión.",
     sendNote: "Mandar una nota al anfitrión",
     cohost: "Quiero ser co-anfitrión",
   },
@@ -646,7 +650,7 @@ const es: Dict = {
   },
   note: {
     title: "Mandar una nota al anfitrión",
-    sub: "Nosotros se la pasamos. Los datos del anfitrión se mantienen privados.",
+    sub: "Nuestros coordinadores revisarán tu nota antes de pasarla, junto con tu correo o teléfono, al anfitrión. Sus datos se mantienen privados.",
     name: "Tu nombre",
     contact: "Correo o teléfono",
     message: "Tu nota",
@@ -670,7 +674,7 @@ const es: Dict = {
       "No vendemos ni compartimos tus datos.",
       "No usamos cookies de rastreo.",
       "Si te ofreces como anfitrión o mandas una nota, solo usaremos tus datos para eso: contactarte sobre la Wave o pasar tu nota.",
-      "En el mapa solo aparece el primer nombre del anfitrión. Los datos de contacto nunca se muestran públicamente.",
+      "El mapa no muestra públicamente nombres ni datos de contacto de anfitriones. Los coordinadores revisan las notas antes de compartirlas y los datos de contacto del vecino con un anfitrión.",
       "Puedes pedirnos que borremos tu información en cualquier momento.",
       "Este sitio es para personas de 14 años o más.",
     ],

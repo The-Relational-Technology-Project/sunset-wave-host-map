@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { blockLabel, fill, joinNames, useLang } from "@/lib/i18n";
+import { blockLabel, useLang } from "@/lib/i18n";
 import type { Block } from "@/lib/blocks";
 import { submitHost, submitNote } from "@/lib/wave.functions";
 import { WaveHand } from "./WaveHand";
@@ -41,7 +41,7 @@ function BlockInfo({ state, setState }: { state: Extract<DialogState, { mode: "b
       <p className="font-hand text-2xl text-ocean">{blockLabel(lang, block.avenue, block.north, block.south)}</p>
       <DialogHeader>
         <DialogTitle className="poster-title text-4xl">
-          {claimed ? fill(t.map.claimedTitle, { names: joinNames(lang, names) }) : t.map.openTitle}
+          {claimed ? t.map.claimedTitle : t.map.openTitle}
         </DialogTitle>
         <DialogDescription className="text-base text-muted-foreground">{claimed ? t.map.claimedSub : t.map.openSub}</DialogDescription>
       </DialogHeader>
@@ -50,7 +50,6 @@ function BlockInfo({ state, setState }: { state: Extract<DialogState, { mode: "b
         {claimed ? (
           <>
             <Button variant="poster" size="xl" onClick={() => setState({ mode: "note", block, names })}>{t.map.sendNote}</Button>
-            <Button variant="posterAlt" size="xl" onClick={() => setState({ mode: "host", block })}>{t.map.cohost}</Button>
           </>
         ) : (
           <Button variant="poster" size="xl" onClick={() => setState({ mode: "host", block })}>{t.map.take}</Button>
@@ -201,7 +200,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   );
 }
 
-function NoteForm({ block, names, onClose }: { block: Block; names: string[]; onClose: () => void }) {
+function NoteForm({ block, onClose }: { block: Block; names: string[]; onClose: () => void }) {
   const { t, lang } = useLang();
   const send = useServerFn(submitNote);
   const [name, setName] = useState("");
@@ -236,7 +235,7 @@ function NoteForm({ block, names, onClose }: { block: Block; names: string[]; on
   return (
     <form onSubmit={onSubmit} className="space-y-5 pt-6" noValidate>
       <p className="font-hand text-2xl text-ocean">
-        {blockLabel(lang, block.avenue, block.north, block.south)} · {joinNames(lang, names)}
+        {blockLabel(lang, block.avenue, block.north, block.south)}
       </p>
       <DialogHeader>
         <DialogTitle className="poster-title text-4xl">{t.note.title}</DialogTitle>
