@@ -67,30 +67,50 @@ export type Database = {
           block_id: string
           contact: string
           created_at: string
+          forwarded_at: string | null
           id: string
           language: string
           message: string
           name: string
+          review_started_at: string | null
+          review_status: string
+          reviewed_host_id: string | null
         }
         Insert: {
           block_id: string
           contact: string
           created_at?: string
+          forwarded_at?: string | null
           id?: string
           language?: string
           message: string
           name: string
+          review_started_at?: string | null
+          review_status?: string
+          reviewed_host_id?: string | null
         }
         Update: {
           block_id?: string
           contact?: string
           created_at?: string
+          forwarded_at?: string | null
           id?: string
           language?: string
           message?: string
           name?: string
+          review_started_at?: string | null
+          review_status?: string
+          reviewed_host_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "host_notes_reviewed_host_id_fkey"
+            columns: ["reviewed_host_id"]
+            isOneToOne: false
+            referencedRelation: "host_offers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       host_offers: {
         Row: {
