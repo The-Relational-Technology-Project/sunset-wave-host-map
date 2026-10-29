@@ -138,5 +138,14 @@ export const submitNote = createServerFn({ method: "POST" })
     });
     if (error) throw new Error("Could not save");
     await confirm("note-confirmation", data.contact, id, { name: data.name });
+    try {
+      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      await sendTemplateEmail("note-alert", REPLY_TO, {
+        templateData: { name: data.name, contact: data.contact, message: data.message, blockId: data.blockId },
+        idempotencyKey: `note-alert-${id}`, replyTo: REPLY_TO,
+      });
+    } catch {
+      console.error("neighbor note alert failed; note remains available for steward review");
+    }
     return { ok: true };
   });
