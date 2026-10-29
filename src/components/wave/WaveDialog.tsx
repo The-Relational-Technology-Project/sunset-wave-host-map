@@ -145,7 +145,6 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
     <form onSubmit={onSubmit} className="space-y-5 pt-6" noValidate>
       <DialogHeader>
         <DialogTitle className="poster-title text-5xl">{t.host.title}</DialogTitle>
-        <DialogDescription className="text-base">{t.host.sub}</DialogDescription>
       </DialogHeader>
       <Field required id="h-name" label={t.host.name} error={errors.name}>
         <Input required aria-required="true" id="h-name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} className={inputCls} />
