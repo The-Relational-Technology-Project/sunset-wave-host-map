@@ -4,7 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
-import { getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { approveNote, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { hostEmail } from "@/lib/note-review";
 import { DICTS, LANGS, type Lang } from "@/lib/i18n";
 import { BlockMap } from "@/components/wave/BlockMap";
 import { Button } from "@/components/ui/button";
@@ -103,7 +104,7 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
             <TabsTrigger value="faq">FAQ</TabsTrigger>
           </TabsList>
           <TabsContent value="hosts"><Hosts hosts={data.hosts} /></TabsContent>
-          <TabsContent value="notes"><Notes notes={data.notes} /></TabsContent>
+          <TabsContent value="notes"><Notes notes={data.notes} hosts={data.hosts} /></TabsContent>
           <TabsContent value="contacts">
             <div className="overflow-x-auto rounded-lg border-2 border-ink bg-card">
               <Table>
@@ -204,22 +205,49 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
   );
 }
 
-function Notes({ notes }: { notes: Data["notes"] }) {
+function Notes({ notes, hosts }: { notes: Data["notes"]; hosts: HostRow[] }) {
+  const router = useRouter();
+  const approve = useServerFn(approveNote);
+  const [selected, setSelected] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState<string | null>(null);
   return (
     <div className="space-y-3">
       <Button size="sm" variant="outline" onClick={() => download("notes.csv", csv([["Sent", "Block id", "Name", "Contact", "Message", "Language"], ...notes.map((n) => [n.created_at, n.block_id, n.name, n.contact, n.message, n.language])]))}>Export notes</Button>
       <div className="overflow-x-auto rounded-xl border-2 border-ink bg-card">
         <Table>
-          <TableHeader><TableRow><TableHead>Date</TableHead><TableHead>Block</TableHead><TableHead>From</TableHead><TableHead>Contact</TableHead><TableHead>Message</TableHead></TableRow></TableHeader>
+          <TableHeader><TableRow><TableHead>Date</TableHead><TableHead>Block</TableHead><TableHead>From</TableHead><TableHead>Contact</TableHead><TableHead>Message</TableHead><TableHead>Review</TableHead></TableRow></TableHeader>
           <TableBody>
             {notes.map((n) => (
               <TableRow key={n.id}>
                 <TableCell className="whitespace-nowrap">{new Date(n.created_at).toLocaleDateString()}</TableCell>
                 <TableCell>{n.block_id}</TableCell><TableCell>{n.name}</TableCell><TableCell>{n.contact}</TableCell>
                 <TableCell className="min-w-64">{n.message}</TableCell>
+                <TableCell className="min-w-64 space-y-2">
+                  <p className="text-sm font-semibold">{n.review_status === "sent" ? "Sent to host" : n.review_status === "suppressed" ? "Recipient blocked — contact manually" : n.review_status === "sending" ? "Sending / awaiting confirmation" : n.review_status === "failed" ? "Send not confirmed — retry after five minutes" : "Awaiting review"}</p>
+                  {n.review_status !== "sent" && n.review_status !== "suppressed" && <>
+                    <select aria-label={`Host recipient for ${n.name}`} className="h-10 w-full rounded-md border bg-card px-2 text-sm" value={n.reviewed_host_id ?? selected[n.id] ?? ""} disabled={Boolean(n.reviewed_host_id)} onChange={e => setSelected(s => ({ ...s, [n.id]: e.target.value }))}>
+                      <option value="">Choose host to receive note</option>
+                      {hosts.filter(h => h.block_id === n.block_id).map(h => <option key={h.id} value={h.id} disabled={!hostEmail(h.contact)}>{h.name} — {h.contact}{!hostEmail(h.contact) ? " (manual contact only)" : ""}</option>)}
+                    </select>
+                    {!hosts.some(h => h.block_id === n.block_id && hostEmail(h.contact)) && <p className="text-xs text-muted-foreground">No host email available. Pass this note along manually.</p>}
+                    <Button size="sm" variant="poster" disabled={busy !== null || !(n.reviewed_host_id ?? selected[n.id])} onClick={async () => {
+                      const hostId = n.reviewed_host_id ?? selected[n.id];
+                      const host = hosts.find(h => h.id === hostId);
+                      if (!hostId || !host) return;
+                      if (!window.confirm(`Approve and email this note, including ${n.name}'s message and contact details, to ${host.name} (${host.contact})?`)) return;
+                      setBusy(n.id);
+                      try {
+                        const result = await approve({ data: { noteId: n.id, hostId } });
+                        if (result.status === "sent") toast.success("Note sent to host");
+                        else toast.error("This recipient cannot receive app emails. Please contact them manually.");
+                      } catch (e) { toast.error(e instanceof Error ? e.message : "Could not send note."); }
+                      finally { setBusy(null); await router.invalidate(); }
+                    }}>{busy === n.id ? "Sending…" : n.review_status === "pending" ? "Approve & send" : "Retry approved send"}</Button>
+                  </>}
+                </TableCell>
               </TableRow>
             ))}
-            {!notes.length && <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground">No notes yet.</TableCell></TableRow>}
+            {!notes.length && <TableRow><TableCell colSpan={6} className="text-center text-muted-foreground">No notes yet.</TableCell></TableRow>}
           </TableBody>
         </Table>
       </div>
