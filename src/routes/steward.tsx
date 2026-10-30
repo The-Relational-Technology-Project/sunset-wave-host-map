@@ -4,7 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
-import { approveNote, assignHostLocation, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { duplicateGroups } from "@/lib/host-duplicates";
+import { approveNote, assignHostLocation, mergeHosts, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
 import { hostEmail } from "@/lib/note-review";
 import { blockLabel, DICTS, LANGS, type Lang } from "@/lib/i18n";
 import { HOSTING_LOCATIONS, LOCATION_BY_ID, resolveStretch } from "@/lib/hosting-locations";
@@ -97,14 +98,14 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
         </div>
         <Tabs defaultValue="hosts" className="mt-6">
           <TabsList className="flex-wrap h-auto">
-            <TabsTrigger value="hosts">Hosts ({data.hosts.length})</TabsTrigger>
+            <TabsTrigger value="hosts">Hosts ({data.hosts.filter((h) => !h.merged_into).length})</TabsTrigger>
             <TabsTrigger value="notes">Notes ({data.notes.length})</TabsTrigger>
             <TabsTrigger value="contacts">Contact ({data.contacts.length})</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="traffic">Traffic</TabsTrigger>
             <TabsTrigger value="faq">FAQ</TabsTrigger>
           </TabsList>
-          <TabsContent value="hosts"><Hosts hosts={data.hosts} /></TabsContent>
+          <TabsContent value="hosts"><Duplicates hosts={data.hosts} /><Hosts hosts={data.hosts.filter((h) => !h.merged_into)} /></TabsContent>
           <TabsContent value="notes"><Notes notes={data.notes} hosts={data.hosts} /></TabsContent>
           <TabsContent value="contacts">
             <div className="overflow-x-auto rounded-lg border-2 border-ink bg-card">
@@ -123,6 +124,35 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
         </Tabs>
       </div>
     </main>
+  );
+}
+
+function Duplicates({ hosts }: { hosts: HostRow[] }) {
+  const router = useRouter();
+  const merge = useServerFn(mergeHosts);
+  const groups = useMemo(() => duplicateGroups(hosts), [hosts]);
+  const [busy, setBusy] = useState<string | null>(null);
+  const merged = hosts.filter((h) => h.merged_into).length;
+  if (!groups.length) return merged ? <p className="mb-4 text-sm text-muted-foreground">{merged} duplicate signup(s) merged. Originals are kept in the records.</p> : null;
+  return (
+    <div className="mb-6 space-y-3 rounded-xl border-2 border-ink bg-card p-4">
+      <h2 className="text-lg font-bold">Possible duplicates ({groups.length})</h2>
+      <p className="text-sm text-muted-foreground">Merging keeps the longest name, the newest location, and every contact method. Each original signup and stretch is saved.</p>
+      {groups.map((g) => (
+        <div key={g[0]!.id} className="flex flex-wrap items-start justify-between gap-3 border-t pt-3">
+          <ul className="space-y-1 text-sm">
+            {g.map((h, i) => <li key={h.id}><span className="font-semibold">{h.name}</span> · {h.contact} · {h.stretch_text} <span className="text-muted-foreground">({new Date(h.created_at).toLocaleDateString()}{i === 0 ? ", newest" : ""})</span></li>)}
+          </ul>
+          <Button size="sm" variant="outline" disabled={busy !== null} onClick={async () => {
+            if (!window.confirm(`Merge ${g.length} signups into one?`)) return;
+            setBusy(g[0]!.id);
+            try { await merge({ data: { hostIds: g.map((h) => h.id) } }); toast.success("Merged"); await router.invalidate(); }
+            catch (e) { toast.error(e instanceof Error ? e.message : "Could not merge"); }
+            finally { setBusy(null); }
+          }}>Merge</Button>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -257,7 +287,7 @@ function Notes({ notes, hosts }: { notes: Data["notes"]; hosts: HostRow[] }) {
                   {n.review_status !== "sent" && n.review_status !== "suppressed" && <>
                     <select aria-label={`Host recipient for ${n.name}`} className="h-10 w-full rounded-md border bg-card px-2 text-sm" value={n.reviewed_host_id ?? selected[n.id] ?? ""} disabled={Boolean(n.reviewed_host_id)} onChange={e => setSelected(s => ({ ...s, [n.id]: e.target.value }))}>
                       <option value="">Choose host to receive note</option>
-                      {hosts.filter(h => h.block_id === n.block_id).map(h => <option key={h.id} value={h.id} disabled={!hostEmail(h.contact)}>{h.name} — {h.contact}{!hostEmail(h.contact) ? " (manual contact only)" : ""}</option>)}
+                      {hosts.filter(h => h.block_id === n.block_id && !h.merged_into).map(h => <option key={h.id} value={h.id} disabled={!hostEmail(h.contact)}>{h.name} — {h.contact}{!hostEmail(h.contact) ? " (manual contact only)" : ""}</option>)}
                     </select>
                     {!hosts.some(h => h.block_id === n.block_id && hostEmail(h.contact)) && <p className="text-xs text-muted-foreground">No host email available. Pass this note along manually.</p>}
                     <Button size="sm" variant="poster" disabled={busy !== null || !(n.reviewed_host_id ?? selected[n.id])} onClick={async () => {
