@@ -17,7 +17,7 @@ export const LOCATION_BY_ID = new Map(HOSTING_LOCATIONS.map((b) => [b.id, b]));
 
 export function normalizeStretch(text: string) {
   return text.normalize("NFKC").toLowerCase()
-    .replace(/(\d+)\s*(st|nd|rd|th|街|大道)\b?/g, "$1")
+    .replace(/(\d+)\s*(st|nd|rd|th|街|大道)/g, "$1")
     .replace(/\b(avenue|ave|street|st|boulevard|blvd|drive|dr|highway|hwy)\b/g, "")
     .replace(/[^a-z0-9\u3400-\u9fff]+/g, " ").trim();
 }
