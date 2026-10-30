@@ -721,8 +721,14 @@ const es: Dict = {
 
 export const DICTS: Record<Lang, Dict> = { en, zh, yue, es };
 
+/** "37Th Ave" -> "37th"; named streets stay as-is. */
+export function shortEndpoint(s: string) {
+  return s.replace(/^(\d+)\s*(st|nd|rd|th)\s*(ave(nue)?)?$/i, (_, n: string, suf: string) => `${n}${suf.toLowerCase()}`);
+}
+
 export function blockLabel(lang: Lang, avenue: number | string, north: string, south: string) {
   if (typeof avenue === "string" && /Ave|Blvd|Playa|Hwy/.test(north) && avenue !== "Great Hwy" && avenue !== "La Playa") {
+    north = shortEndpoint(north); south = shortEndpoint(south);
     if (!south) return `${avenue} & ${north}`;
     return lang === "zh" ? `${avenue}（${north} 与 ${south} 之间）` : lang === "yue" ? `${avenue}（${north} 同 ${south} 之間）` : lang === "es" ? `${avenue} entre ${north} y ${south}` : `${avenue} between ${north} and ${south}`;
   }
