@@ -75,10 +75,6 @@ function Index() {
       {/* Map */}
       <section id="map" className="grain scroll-mt-4 bg-fog text-ink">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-5 md:py-24">
-          <figure className="relative mx-auto w-full mb-12 max-w-xs -rotate-2 sm:max-w-sm rounded-2xl border-2 border-ink bg-card p-3 shadow-poster">
-            <img src={aerial.url} alt={t.invite.photoAlt} width={615} height={766} loading="lazy" className="h-auto w-full rounded-lg" />
-            <WaveHand className="absolute -left-6 -top-6 h-16 w-16 -rotate-12" />
-          </figure>
           <HostingInvitation onHost={() => setDialog({ mode: "host", block: null })} />
           <div className="mb-8 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="min-w-0 space-y-3">
