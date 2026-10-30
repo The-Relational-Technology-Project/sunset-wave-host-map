@@ -4,9 +4,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
-import { approveNote, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { approveNote, assignHostLocation, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
 import { hostEmail } from "@/lib/note-review";
-import { DICTS, LANGS, type Lang } from "@/lib/i18n";
+import { blockLabel, DICTS, LANGS, type Lang } from "@/lib/i18n";
+import { HOSTING_LOCATIONS, LOCATION_BY_ID, resolveStretch } from "@/lib/hosting-locations";
 import { BlockMap } from "@/components/wave/BlockMap";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -129,10 +130,11 @@ function yn(b: boolean) { return b ? "Yes" : ""; }
 
 function Hosts({ hosts }: { hosts: HostRow[] }) {
   const [q, setQ] = useState("");
-  const [flag, setFlag] = useState<"all" | "microgrant" | "give" | "sheltered" | "cohosts">("all");
+  const [flag, setFlag] = useState<"all" | "microgrant" | "give" | "sheltered" | "cohosts" | "unmapped">("all");
   const rows = useMemo(() => {
     const s = q.trim().toLowerCase();
     return hosts.filter((h) => {
+      if (flag === "unmapped" && h.block_id) return false;
       if (flag === "microgrant" && !h.wants_microgrant) return false;
       if (flag === "give" && !h.can_give) return false;
       if (flag === "sheltered" && !h.sheltered) return false;
@@ -163,6 +165,7 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
         <Input className="max-w-xs bg-card" placeholder="Search name, contact, street…" value={q} onChange={(e) => setQ(e.target.value)} />
         <select className="h-10 rounded-md border bg-card px-3 text-sm" value={flag} onChange={(e) => setFlag(e.target.value as typeof flag)}>
           <option value="all">All hosts</option>
+          <option value="unmapped">Needs map location</option>
           <option value="cohosts">Has co-hosts</option>
           <option value="microgrant">Wants support</option>
           <option value="give">Can give</option>
@@ -179,7 +182,7 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Date</TableHead><TableHead>Name</TableHead><TableHead>Contact</TableHead><TableHead>Stretch</TableHead>
+              <TableHead>Date</TableHead><TableHead>Name</TableHead><TableHead>Contact</TableHead><TableHead>Stretch / map location</TableHead>
               <TableHead>Co-hosts</TableHead><TableHead>Support</TableHead><TableHead>Give</TableHead><TableHead>Sheltered</TableHead><TableHead>Lang</TableHead>
             </TableRow>
           </TableHeader>
@@ -189,7 +192,7 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
                 <TableCell className="whitespace-nowrap">{date(h.created_at)}</TableCell>
                 <TableCell className="font-semibold">{h.name}</TableCell>
                 <TableCell>{h.contact}</TableCell>
-                <TableCell className="min-w-48">{h.stretch_text}</TableCell>
+                <TableCell className="min-w-64"><p>{h.stretch_text}</p><HostLocationReview host={h} /></TableCell>
                 <TableCell className="min-w-40">{(h.cohosts ?? []).map((c) => `${c.name}${c.contact ? ` (${c.contact})` : ""}`).join(", ")}</TableCell>
                 <TableCell>{yn(h.wants_microgrant)}</TableCell>
                 <TableCell>{yn(h.can_give)}</TableCell>
@@ -203,6 +206,33 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
       </div>
     </div>
   );
+}
+
+function HostLocationReview({ host }: { host: HostRow }) {
+  const router = useRouter();
+  const save = useServerFn(assignHostLocation);
+  const match = useMemo(() => resolveStretch(host.stretch_text), [host.stretch_text]);
+  const [id, setId] = useState(match.candidates[0]?.id ?? "");
+  const [search, setSearch] = useState("");
+  const [busy, setBusy] = useState(false);
+  const assigned = host.block_id ? LOCATION_BY_ID.get(host.block_id) : undefined;
+  if (host.block_id) return <p className="mt-1 text-xs text-ocean">Mapped · {assigned ? blockLabel("en", assigned.avenue, assigned.north, assigned.south) : host.block_id}</p>;
+  const options = HOSTING_LOCATIONS.filter((b) => b.id === id || blockLabel("en", b.avenue, b.north, b.south).toLowerCase().includes(search.toLowerCase()));
+  return <div className="mt-2 space-y-2">
+    <p className="text-xs text-destructive">{match.status === "outside" ? "Outside coverage / needs clarification" : "Needs location review"}</p>
+    <Input aria-label={`Find location for ${host.name}`} placeholder="Search eligible street or avenue" value={search} onChange={(e) => setSearch(e.target.value)} />
+    <select aria-label={`Location for ${host.name}`} className="h-10 w-full max-w-xs rounded-md border bg-card text-sm" value={id} onChange={(e) => setId(e.target.value)}>
+      <option value="">Choose location</option>
+      {options.map((b) => <option key={b.id} value={b.id}>{blockLabel("en", b.avenue, b.north, b.south)}</option>)}
+    </select>
+    <Button size="sm" variant="outline" disabled={!id || busy} onClick={async () => {
+      if (!window.confirm(`Confirm map location for ${host.name}? Their original description will be preserved.`)) return;
+      setBusy(true);
+      try { await save({ data: { hostId: host.id, blockId: id } }); await router.invalidate(); }
+      catch (error) { toast.error(error instanceof Error ? error.message : "Could not save location"); }
+      finally { setBusy(false); }
+    }}>Confirm location</Button>
+  </div>;
 }
 
 function Notes({ notes, hosts }: { notes: Data["notes"]; hosts: HostRow[] }) {
