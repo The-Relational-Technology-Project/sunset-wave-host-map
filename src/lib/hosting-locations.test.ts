@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { HOSTING_LOCATIONS, LOCATION_BY_ID, resolveStretch, submissionLocation } from "./hosting-locations";
 import { BLOCK_COORDINATES } from "./block-coordinates";
 import { validateNoteHost } from "./note-review";
+import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
   it("places Renee's Wawona stretch on the actual east-west block", () => {
@@ -34,6 +35,23 @@ describe("custom hosting locations", () => {
   it("keeps existing south-Sloat IDs and unique location IDs", () => {
     expect(LOCATION_BY_ID.has("ss-20th-ave-s-of-sloat-")).toBe(true);
     expect(new Set(HOSTING_LOCATIONS.map((b) => b.id)).size).toBe(HOSTING_LOCATIONS.length);
+  });
+  it("restricts every new street segment to the campaign envelope and supported endpoint streets", () => {
+    for (const segment of streetCatalog.segments) {
+      for (const point of segment.geometry) {
+        expect(point[0]).toBeGreaterThanOrEqual(-122.512);
+        expect(point[0]).toBeLessThanOrEqual(-122.4755);
+        expect(point[1]).toBeGreaterThanOrEqual(37.733);
+        expect(point[1]).toBeLessThanOrEqual(37.766);
+      }
+      for (const endpoint of [segment.from, segment.to]) {
+        const avenue = Number.parseInt(endpoint);
+        if (Number.isFinite(avenue)) {
+          expect(avenue).toBeGreaterThanOrEqual(19);
+          expect(avenue).toBeLessThanOrEqual(48);
+        } else expect(["Sunset Blvd", "Great Hwy", "La Playa"]).toContain(endpoint);
+      }
+    }
   });
   it("keeps custom-street notes restricted to hosts at the exact location", () => {
     expect(() => validateNoteHost({ block_id: "ew-13491000", reviewed_host_id: null }, { id: "host", block_id: "37-wawona", contact: "host@example.com" })).toThrow();

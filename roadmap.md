@@ -1,5 +1,5 @@
 # Sunset Wave refinements
-- [ ] Resolve custom hosting stretches within defined map coverage, including non-Avenue streets; backfill clear matches and review uncertain locations.
+- [x] Resolve custom hosting stretches within defined map coverage, including non-Avenue streets; backfill clear matches and add review controls for uncertain locations.
 - [x] Add a sharing invitation to the host thank-you page and confirmation email; verify copying the public URL.
 - [x] Hide host names in map details and remove the map co-host action.
 - [x] Alert the Social Club to new notes and add steward-approved forwarding to a selected host email.
