@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { Map as LeafletMap, LayerGroup } from "leaflet";
 import { Minus, Plus, RotateCcw } from "lucide-react";
-import { BLOCKS, type Block } from "@/lib/blocks";
-import { BLOCK_COORDINATES } from "@/lib/block-coordinates";
+import type { Block } from "@/lib/blocks";
+import { HOSTING_LOCATIONS } from "@/lib/hosting-locations";
 import { blockLabel, useLang } from "@/lib/i18n";
 import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 const INITIAL_CENTER: [number, number] = [37.7485, -122.4925];
 const INITIAL_ZOOM = 16;
 
-export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]>; onPick: (b: Block) => void }) {
+export function BlockMap({ claimed, onPick, previewId }: { claimed: Record<string, string[]>; onPick: (b: Block) => void; previewId?: string }) {
   const { t, lang } = useLang();
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<LeafletMap | null>(null);
@@ -68,11 +68,11 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
       const layer = markers.current;
       if (disposed || !layer) return;
       layer.clearLayers();
-      for (const b of BLOCKS) {
-        const position = BLOCK_COORDINATES[b.id];
-        if (!position) continue;
+      for (const b of HOSTING_LOCATIONS) {
+        const position = b.position;
+        if (b.kind !== "legacy" && !claimed[b.id]?.length && b.id !== previewId) continue;
         const names = claimed[b.id];
-        const isClaimed = Boolean(names?.length);
+        const isClaimed = Boolean(names?.length) || b.id === previewId;
         const label = `${blockLabel(lang, b.avenue, b.north, b.south)} – ${isClaimed ? t.map.claimed : t.map.open}`;
         const size = isClaimed ? (zoom < 14 ? 24 : 34) : zoom < 14 ? 6 : zoom < 15 ? 10 : 16;
         const marker = L.marker(position, {
@@ -85,6 +85,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
         });
         marker.on("click", () => pick.current(b));
         marker.addTo(layer);
+        if (b.id === previewId) map.current?.setView(position, 17);
         marker.getElement()?.addEventListener("keydown", (event) => {
           if (event.key === " " || event.key === "Enter") {
             event.preventDefault();
@@ -95,7 +96,7 @@ export function BlockMap({ claimed, onPick }: { claimed: Record<string, string[]
       }
     });
     return () => { disposed = true; };
-  }, [ready, claimed, lang, t, zoom]);
+  }, [ready, claimed, lang, t, zoom, previewId]);
 
   return (
     <div className="relative overflow-hidden rounded-lg border-2 border-ink bg-card shadow-poster">

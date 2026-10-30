@@ -718,6 +718,10 @@ const es: Dict = {
 export const DICTS: Record<Lang, Dict> = { en, zh, yue, es };
 
 export function blockLabel(lang: Lang, avenue: number | string, north: string, south: string) {
+  if (typeof avenue === "string" && /Ave|Blvd|Playa|Hwy/.test(north) && avenue !== "Great Hwy" && avenue !== "La Playa") {
+    if (!south) return `${avenue} & ${north}`;
+    return lang === "zh" ? `${avenue}（${north} 与 ${south} 之间）` : lang === "yue" ? `${avenue}（${north} 同 ${south} 之間）` : lang === "es" ? `${avenue} entre ${north} y ${south}` : `${avenue} between ${north} and ${south}`;
+  }
   if (typeof avenue === "string" && avenue !== "Great Hwy" && avenue !== "La Playa") {
     return `${avenue} · ${DICTS[lang].map.southSloat}`;
   }
