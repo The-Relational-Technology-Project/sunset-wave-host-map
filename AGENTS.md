@@ -22,3 +22,4 @@
 - The /steward page is gated by a shared password (server-only secret + encrypted session cookie); every steward server function re-checks the session, since route gating alone does not protect RPCs. Steward copy is English-only by design (internal tool), an exception to the i18n rule.
 - FAQ items are editable per language in the `faq_content` table; the main site falls back to the i18n dictionary when a language has no saved row.
 - Site traffic is self-recorded in `page_views` (anonymous visitor id + referrer) because platform analytics aren't readable from app code.
+- Share links use one canonical public URL in a browser-safe shared module, so the thank-you page and confirmation email never share preview links.

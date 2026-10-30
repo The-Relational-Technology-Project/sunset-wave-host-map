@@ -99,7 +99,7 @@ export const submitHost = createServerFn({ method: "POST" })
       language: data.language,
     });
     if (error) throw new Error("Could not save");
-    await confirm("host-confirmation", data.contact, id, { name: data.name, stretch: data.stretch });
+    await confirm("host-confirmation", data.contact, id, { name: data.name, stretch: data.stretch, language: data.language });
     try {
       const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
       await sendTemplateEmail("host-alert", REPLY_TO, {
