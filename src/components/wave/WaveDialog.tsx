@@ -95,7 +95,6 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   const [stretch, setStretch] = useState("");
   const [cohosts, setCohosts] = useState<{ name: string; contact: string }[]>([]);
   const [grant, setGrant] = useState(false);
-  const [give, setGive] = useState(false);
   const [sheltered, setSheltered] = useState(false);
   const [hp, setHp] = useState("");
   const [errors, setErrors] = useState<Errs>({});
@@ -123,7 +122,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
           contact,
           cohosts: cohosts.filter((c) => c.name.trim()),
           wantsMicrogrant: grant,
-          canGive: give,
+          canGive: false,
           sheltered,
           language: lang,
           ...(hp ? { website: hp } : {}),
@@ -175,21 +174,16 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
         )}
       </fieldset>
 
-      <div className="space-y-3 rounded-xl bg-muted p-4">
+      <div className="space-y-3 px-4">
         <label className="flex items-start gap-3 text-sm">
           <Checkbox checked={grant} onCheckedChange={(v) => setGrant(v === true)} className="mt-0.5" />
           <span>{t.host.microgrant}</span>
         </label>
         <label className="flex items-start gap-3 text-sm">
-          <Checkbox checked={give} onCheckedChange={(v) => setGive(v === true)} className="mt-0.5" />
-          <span>{t.host.give}</span>
+          <Checkbox checked={sheltered} onCheckedChange={(v) => setSheltered(v === true)} className="mt-0.5" />
+          <span>{t.host.sheltered}</span>
         </label>
-        <p className="text-xs text-muted-foreground">{t.host.moneyNote}</p>
       </div>
-      <label className="flex items-start gap-3 px-4 text-sm">
-        <Checkbox checked={sheltered} onCheckedChange={(v) => setSheltered(v === true)} className="mt-0.5" />
-        <span>{t.host.sheltered}</span>
-      </label>
 
       <input type="text" name="website" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} className="absolute -left-[9999px] h-0 w-0 opacity-0" aria-hidden="true" />
       {errors.form && <p className="text-sm font-medium text-destructive">{errors.form}</p>}
