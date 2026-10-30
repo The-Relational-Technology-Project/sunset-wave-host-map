@@ -18,7 +18,7 @@ describe("custom hosting locations", () => {
     expect(submissionLocation("35th and Moraga", "corner-27700000")).toBe("corner-27700000");
   });
   it("supports the four languages and Unicode width", () => {
-    for (const text of ["Wawona between 37th and 38th", "Wawona entre 37 y 38", "Wawona ３７街 与 ３８街 之间", "Wawona 37街 同 38街 之間"]) expect(submissionLocation(text, null)).toBe("ew-13491000");
+    for (const text of ["Wawona between 37th and 38th", "Wawona entre 37 y 38", "Wawona ３７街 与 ３８街 之间", "Wawona 37街 同 38街 之間", "Wawona37街与38街之间"]) expect(submissionLocation(text, null)).toBe("ew-13491000");
   });
   it("leaves multi-block and incomplete descriptions unassigned", () => {
     expect(submissionLocation("Wawona between 37th and 39th", null)).toBeNull();
@@ -29,6 +29,8 @@ describe("custom hosting locations", () => {
     expect(submissionLocation("Wawona between 17th and 18th", null)).toBeNull();
   });
   it("rejects stale selections after stretch changes", () => expect(() => submissionLocation("Wawona between 37th and 38th", "24-lincoln")).toThrow());
+  it("rejects arbitrary selections for descriptions that do not match", () => expect(() => submissionLocation("3 blocks east ;)", "24-lincoln")).toThrow());
+  it("leaves conflicting and uncertain prose for review", () => expect(submissionLocation("Maybe Wawona between 37th and 38th", null)).toBeNull());
   it("keeps existing south-Sloat IDs and unique location IDs", () => {
     expect(LOCATION_BY_ID.has("ss-20th-ave-s-of-sloat-")).toBe(true);
     expect(new Set(HOSTING_LOCATIONS.map((b) => b.id)).size).toBe(HOSTING_LOCATIONS.length);

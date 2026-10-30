@@ -17,6 +17,7 @@ export const LOCATION_BY_ID = new Map(HOSTING_LOCATIONS.map((b) => [b.id, b]));
 
 export function normalizeStretch(text: string) {
   return text.normalize("NFKC").toLowerCase()
+    .replace(/([a-z])(?=\d)|(?<=\d)(?=[a-z\u3400-\u9fff])/g, "$1 ")
     .replace(/(\d+)\s*(st|nd|rd|th|街|大道)/g, "$1")
     .replace(/\b(avenue|ave|street|st|boulevard|blvd|drive|dr|highway|hwy)\b/g, "")
     .replace(/(之间|之間|与|同|和|及)/g, " $1 ")
@@ -29,6 +30,7 @@ export type LocationMatch = { status: "resolved" | "ambiguous" | "unmatched" | "
 export function resolveStretch(input: string): LocationMatch {
   const text = normalizeStretch(input);
   if (!text) return { status: "unmatched", candidates: [] };
+  if (/\b(not|or|maybe|possibly|except|outside)\b|或者|或是|唔係|不是/.test(text)) return { status: "unmatched", candidates: [] };
   const numbers = [...text.matchAll(/\b\d+\b/g)].map((m) => Number(m[0]));
   const legacy = HOSTING_LOCATIONS.filter((b) => b.south_of_sloat && (text === normalizeStretch(String(b.avenue)) || text === normalizeStretch(`${b.avenue} South of Sloat`) || text === normalizeStretch(`${b.avenue} Sloat`)));
   if (legacy.length) return { status: "resolved", candidates: legacy };
