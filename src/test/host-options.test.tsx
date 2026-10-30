@@ -7,6 +7,11 @@ import { LanguageProvider } from "@/lib/i18n";
 vi.mock("@tanstack/react-router", () => ({ useNavigate: () => vi.fn() }));
 vi.mock("@tanstack/react-start", () => ({ useServerFn: () => vi.fn() }));
 vi.mock("@/lib/wave.functions", () => ({ submitHost: vi.fn(), submitNote: vi.fn() }));
+vi.stubGlobal("ResizeObserver", class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+});
 
 afterEach(cleanup);
 
