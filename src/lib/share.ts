@@ -1,0 +1,1 @@
+export const WAVE_URL = "https://thesunsetwave.org";
