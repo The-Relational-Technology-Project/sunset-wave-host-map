@@ -1,3 +1,4 @@
+import type React from "react";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ordinal } from "./blocks";
 
@@ -761,7 +762,10 @@ export const fill = (s: string, vars: Record<string, string | number>) =>
   s.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
 
 type Ctx = { lang: Lang; t: Dict; setLang: (l: Lang) => void };
-const LangContext = createContext<Ctx | null>(null);
+// Keep one context instance across hot reloads; a fresh one per module reload
+// would leave the already-mounted provider and new consumers out of sync.
+const g = globalThis as { __waveLangContext?: React.Context<Ctx | null> };
+const LangContext = (g.__waveLangContext ??= createContext<Ctx | null>(null));
 const KEY = "sunset-wave-lang";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
