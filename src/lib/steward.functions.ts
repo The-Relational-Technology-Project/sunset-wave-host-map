@@ -59,7 +59,7 @@ export const lockSteward = createServerFn({ method: "POST" }).handler(async () =
 export type HostRow = {
   id: string; created_at: string; block_id: string | null; stretch_text: string; name: string; contact: string;
   cohosts: { name: string; contact: string }[]; wants_microgrant: boolean; can_give: boolean; sheltered: boolean; language: string;
-  merged_into: string | null; merged_at: string | null;
+  merged_into: string | null; merged_at: string | null; location_resolved_at: string | null;
 };
 export type NoteRow = { id: string; created_at: string; block_id: string; name: string; contact: string; message: string; language: string; review_status: ReviewStatus; reviewed_host_id: string | null; review_started_at: string | null; forwarded_at: string | null };
 export type ContactRow = { id: string; created_at: string; name: string; email: string; organization: string; message: string; language: string };
@@ -205,4 +205,16 @@ export const mergeHosts = createServerFn({ method: "POST" })
       .update({ ...plan.update, merge_history: [...history, snapshot] }).eq("id", plan.keeperId).is("merged_into", null);
     if (saveError) throw new Error("Duplicates were marked but the kept signup could not be updated. Refresh and contact support.");
     return { ok: true, keeperId: plan.keeperId };
+  });
+
+/** Steward keeps a host on the list without a map pin (e.g. outside campaign coverage). */
+export const keepHostUnmapped = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ hostId: z.string().uuid() }).parse(d))
+  .handler(async ({ data }) => {
+    await requireSteward();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: row, error } = await supabaseAdmin.from("host_offers").update({ location_resolved_at: new Date().toISOString() })
+      .eq("id", data.hostId).is("block_id", null).is("merged_into", null).select("id").maybeSingle();
+    if (error || !row) throw new Error("This host is already mapped or could not be saved. Refresh the page.");
+    return { ok: true };
   });

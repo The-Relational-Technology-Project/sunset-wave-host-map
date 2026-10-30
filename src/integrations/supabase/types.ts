@@ -121,6 +121,7 @@ export type Database = {
           created_at: string
           id: string
           language: string
+          location_resolved_at: string | null
           merge_history: Json
           merged_at: string | null
           merged_into: string | null
@@ -137,6 +138,7 @@ export type Database = {
           created_at?: string
           id?: string
           language?: string
+          location_resolved_at?: string | null
           merge_history?: Json
           merged_at?: string | null
           merged_into?: string | null
@@ -153,6 +155,7 @@ export type Database = {
           created_at?: string
           id?: string
           language?: string
+          location_resolved_at?: string | null
           merge_history?: Json
           merged_at?: string | null
           merged_into?: string | null
