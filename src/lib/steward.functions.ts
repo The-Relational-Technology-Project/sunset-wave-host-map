@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { canReviewNote, forwardingKey, STEWARD_REPLY_TO, validateNoteHost, type ReviewStatus } from "./note-review";
+import { LOCATION_BY_ID } from "./hosting-locations";
 
 type StewardSession = { unlocked?: boolean };
 
@@ -165,5 +166,19 @@ export const saveFaq = createServerFn({ method: "POST" })
       .from("faq_content")
       .upsert({ language: data.language, items: data.items, updated_at: new Date().toISOString() });
     if (error) throw new Error("Could not save");
+    return { ok: true };
+  });
+
+export const assignHostLocation = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ hostId: z.string().uuid(), blockId: z.string().max(80) }).parse(d))
+  .handler(async ({ data }) => {
+    await requireSteward();
+    if (!LOCATION_BY_ID.has(data.blockId)) throw new Error("Choose a location within the campaign streets.");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    // Null-only claims cannot have an approved note recipient: notes always require a block ID.
+    // Never move an assigned host, which could invalidate existing note routing.
+    const { data: row, error } = await supabaseAdmin.from("host_offers").update({ block_id: data.blockId })
+      .eq("id", data.hostId).is("block_id", null).select("id").maybeSingle();
+    if (error || !row) throw new Error("This host is already mapped or could not be saved. Refresh the page.");
     return { ok: true };
   });

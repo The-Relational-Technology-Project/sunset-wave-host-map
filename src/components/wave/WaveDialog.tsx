@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -12,6 +12,8 @@ import { blockLabel, useLang } from "@/lib/i18n";
 import type { Block } from "@/lib/blocks";
 import { submitHost, submitNote } from "@/lib/wave.functions";
 import { WaveHand } from "./WaveHand";
+import { LOCATION_BY_ID, resolveStretch } from "@/lib/hosting-locations";
+import { LocationPreview } from "./LocationPreview";
 
 export type DialogState =
   | { mode: "closed" }
@@ -100,6 +102,11 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
   const [errors, setErrors] = useState<Errs>({});
   const [busy, setBusy] = useState(false);
 
+  const [selectedId, setSelectedId] = useState<string | null>(block?.id ?? null);
+  const match = useMemo(() => resolveStretch(stretch), [stretch]);
+  const matchedId = selectedId ?? (match.status === "resolved" ? match.candidates[0]?.id : null);
+  const location = matchedId ? LOCATION_BY_ID.get(matchedId) : undefined;
+
   useEffect(() => {
     if (block) setStretch(blockLabel("en", block.avenue, block.north, block.south));
   }, [block]);
@@ -116,7 +123,7 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
     try {
       await send({
         data: {
-          blockId: block?.id ?? null,
+          blockId: matchedId ?? null,
           stretch,
           name,
           contact,
@@ -151,8 +158,17 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
         <Input required aria-required="true" id="h-contact" autoComplete="email" value={contact} onChange={(e) => setContact(e.target.value)} maxLength={200} className={inputCls} />
       </Field>
       <Field required id="h-stretch" label={t.host.stretch} error={errors.stretch} hint={t.host.stretchHint}>
-        <Input required aria-required="true" id="h-stretch" value={stretch} placeholder={t.host.stretchPh} onChange={(e) => setStretch(e.target.value)} maxLength={200} className={inputCls} />
+        <Input required aria-required="true" id="h-stretch" value={stretch} placeholder={t.host.stretchPh} onChange={(e) => { setStretch(e.target.value); setSelectedId(null); }} maxLength={200} className={inputCls} />
       </Field>
+      {location && <div className="space-y-2">
+        <p className="text-sm font-semibold text-ocean">{t.location.matched}: {blockLabel(lang, location.avenue, location.north, location.south)}</p>
+        <LocationPreview location={location} />
+      </div>}
+      {!location && match.candidates.length > 0 && <div className="space-y-2">
+        <p className="text-sm">{t.location.choose}</p>
+        {match.candidates.map((candidate) => <Button key={candidate.id} type="button" variant="posterAlt" className="h-auto w-full whitespace-normal py-2" onClick={() => setSelectedId(candidate.id)}>{candidate.kind === "corner" ? t.location.confirm + ": " : ""}{blockLabel(lang, candidate.avenue, candidate.north, candidate.south)}</Button>)}
+      </div>}
+      {stretch.trim().length >= 2 && !location && <p className="text-sm text-muted-foreground">{match.status === "outside" ? t.location.outside : t.location.review}</p>}
 
       <fieldset className="space-y-3">
         <legend className="text-sm font-semibold">{t.host.cohosts}</legend>

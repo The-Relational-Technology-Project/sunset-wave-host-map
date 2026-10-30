@@ -10,6 +10,7 @@ export const LANGS: { code: Lang; label: string; html: string }[] = [
 ];
 
 const en = {
+  location: { matched: "Your map location", confirm: "Confirm this corner", confirmed: "Corner confirmed", review: "We'll review your stretch before placing your wave.", outside: "This looks outside the campaign streets. You can still sign up; we'll follow up about your location.", choose: "Which location did you mean?", preview: "Preview of your hosting location" },
   noteForward: { title: "A note from your neighbor", hello: "Hi", intro: "The Sunset Social Club reviewed this neighbor's note about your gathering on", name: "Neighbor", contact: "Email and/or phone", encourage: "Please get in touch with your neighbor directly using the email or phone above.", reply: "Replies to this email go to oursunsetsocialclub@gmail.com, not to your neighbor." },
   support: {"title": "Support the Wave", "businessTitle": "Local business? Join the Wave.", "businessBody": "Sponsor a gathering or get involved in bringing Sunset neighbors together. We’d love to hear from you.", "contact": "Contact us", "donateTitle": "Donate and help bring neighbors together.", "donateBody": "Support neighborhood gatherings with a tax-deductible donation.", "donate": "Donate"},
   contactForm: {"name": "Your name", "email": "Your email", "organization": "Business / organization (optional)", "message": "Your message", "submit": "Send message", "success": "Thanks for reaching out! Your message has been received.", "error": "We couldn’t save your message. Please try again.", "invalid": "Please add your name, a valid email address and a message.", "privacy": "Your details stay private and are used to respond to your inquiry."},
@@ -188,6 +189,7 @@ const en = {
 export type Dict = typeof en;
 
 const zh: Dict = {
+  location: { matched: "你的地图位置", confirm: "确认这个街角", confirmed: "街角已确认", review: "我们会先审核你的路段，再放置挥手标记。", outside: "这里似乎不在活动街区范围内。你仍可报名，我们会联系你确认地点。", choose: "你指的是哪个位置？", preview: "聚会地点预览" },
   noteForward: { title: "邻居给你的留言", hello: "你好", intro: "日落社交俱乐部已审核这位邻居关于你举办的聚会的留言：", name: "邻居", contact: "电子邮件和／或电话", encourage: "请通过上面的电子邮件或电话直接联系你的邻居。", reply: "回复这封邮件会发送至 oursunsetsocialclub@gmail.com，而不是你的邻居。" },
   support: {"title": "支持 The Sunset Wave", "businessTitle": "本地商家，一起加入吧！", "businessBody": "赞助邻里聚会，或一起帮助日落区邻居相聚。我们期待听到你的想法。", "contact": "联系我们", "donateTitle": "一点支持，让邻居相聚。", "donateBody": "通过可抵税的捐款，支持邻里聚会。", "donate": "捐款"},
   contactForm: {"name": "你的名字", "email": "你的电子邮件", "organization": "商家／组织（可选）", "message": "你的留言", "submit": "发送留言", "success": "谢谢联系！我们已收到你的留言。", "error": "未能保存留言，请再试一次。", "invalid": "请填写姓名、有效的电子邮件地址和留言。", "privacy": "你的资料会保密，仅用于回复你的咨询。"},
@@ -364,6 +366,7 @@ const zh: Dict = {
 };
 
 const yue: Dict = {
+  location: { matched: "你嘅地圖位置", confirm: "確認呢個街角", confirmed: "街角已確認", review: "我哋會先確認你嘅路段，再放上揮手標記。", outside: "呢度似乎唔喺活動街區範圍內。你仍然可以報名，我哋會聯絡你確認地點。", choose: "你指邊個位置？", preview: "聚會地點預覽" },
   noteForward: { title: "街坊俾你嘅口訊", hello: "你好", intro: "日落社交俱樂部已睇過呢位街坊關於你搞嘅聚會嘅口訊：", name: "街坊", contact: "電郵同／或電話", encourage: "請用上面嘅電郵或者電話直接聯絡你嘅街坊。", reply: "回覆呢封電郵會寄去 oursunsetsocialclub@gmail.com，唔係你嘅街坊。" },
   support: {"title": "支持 The Sunset Wave", "businessTitle": "本地商戶，一齊加入啦！", "businessBody": "贊助街坊聚會，或者一齊幫日落區街坊聚埋一齊。我哋好想聽吓你嘅諗法。", "contact": "聯絡我哋", "donateTitle": "少少支持，令街坊聚埋。", "donateBody": "透過可扣稅嘅捐款，支持街坊聚會。", "donate": "捐款"},
   contactForm: {"name": "你嘅名", "email": "你嘅電郵", "organization": "商戶／組織（可選）", "message": "你嘅留言", "submit": "傳送留言", "success": "多謝聯絡！我哋收到你嘅留言喇。", "error": "儲存唔到留言，請再試一次。", "invalid": "請填你嘅名、有效嘅電郵地址同留言。", "privacy": "你嘅資料會保密，只用嚟回覆你嘅查詢。"},
@@ -540,6 +543,7 @@ const yue: Dict = {
 };
 
 const es: Dict = {
+  location: { matched: "Tu ubicación en el mapa", confirm: "Confirmar esta esquina", confirmed: "Esquina confirmada", review: "Revisaremos tu tramo antes de colocar tu saludo en el mapa.", outside: "Parece estar fuera de las calles de la campaña. Puedes inscribirte; te contactaremos sobre la ubicación.", choose: "¿Qué ubicación querías indicar?", preview: "Vista previa del lugar de tu reunión" },
   noteForward: { title: "Una nota de tu vecino", hello: "Hola", intro: "Sunset Social Club revisó esta nota de un vecino sobre tu reunión en", name: "Vecino", contact: "Correo y/o teléfono", encourage: "Comunícate directamente con tu vecino usando el correo o teléfono de arriba.", reply: "Las respuestas a este correo llegan a oursunsetsocialclub@gmail.com, no a tu vecino." },
   support: {"title": "Apoya la Wave", "businessTitle": "¿Un negocio local? Súmate a la Wave.", "businessBody": "Patrocina una reunión o participa para unir a los vecinos del Sunset. Nos encantaría saber de ti.", "contact": "Contáctanos", "donateTitle": "Un pequeño aporte une a los vecinos.", "donateBody": "Apoya las reuniones del barrio con una donación deducible de impuestos.", "donate": "Donar"},
   contactForm: {"name": "Tu nombre", "email": "Tu correo electrónico", "organization": "Negocio / organización (opcional)", "message": "Tu mensaje", "submit": "Enviar mensaje", "success": "¡Gracias por contactarnos! Hemos recibido tu mensaje.", "error": "No pudimos guardar tu mensaje. Inténtalo de nuevo.", "invalid": "Escribe tu nombre, un correo válido y un mensaje.", "privacy": "Tus datos se mantienen privados y solo se usan para responder a tu consulta."},
@@ -718,6 +722,10 @@ const es: Dict = {
 export const DICTS: Record<Lang, Dict> = { en, zh, yue, es };
 
 export function blockLabel(lang: Lang, avenue: number | string, north: string, south: string) {
+  if (typeof avenue === "string" && /Ave|Blvd|Playa|Hwy/.test(north) && avenue !== "Great Hwy" && avenue !== "La Playa") {
+    if (!south) return `${avenue} & ${north}`;
+    return lang === "zh" ? `${avenue}（${north} 与 ${south} 之间）` : lang === "yue" ? `${avenue}（${north} 同 ${south} 之間）` : lang === "es" ? `${avenue} entre ${north} y ${south}` : `${avenue} between ${north} and ${south}`;
+  }
   if (typeof avenue === "string" && avenue !== "Great Hwy" && avenue !== "La Playa") {
     return `${avenue} · ${DICTS[lang].map.southSloat}`;
   }

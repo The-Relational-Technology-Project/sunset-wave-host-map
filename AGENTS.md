@@ -23,3 +23,5 @@
 - FAQ items are editable per language in the `faq_content` table; the main site falls back to the i18n dictionary when a language has no saved row.
 - Site traffic is self-recorded in `page_views` (anonymous visitor id + referrer) because platform analytics aren't readable from app code.
 - Share links use one canonical public URL in a browser-safe shared module, so the thank-you page and confirmation email never share preview links.
+- Custom stretches resolve against a versioned local street/corner catalog with an explicit core polygon and legacy south-Sloat allowlist; existing block IDs remain immutable and new claimed locations render without adding open dots.
+- Steward location assignment is session-gated and null-only with an atomic conditional update, so mapped hosts and approved note routing cannot be reassigned.

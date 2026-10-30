@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
+import { LOCATION_BY_ID, submissionLocation } from "./hosting-locations";
 
 function publicClient() {
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
@@ -54,10 +55,13 @@ export type Claims = { claimed: Record<string, string[]>; hostCount: number };
 
 export const getClaims = createServerFn({ method: "GET" }).handler(async (): Promise<Claims> => {
   const sb = publicClient();
-  const [{ data: rows }, { data: count }] = await Promise.all([
+  const [blocksResult, countResult] = await Promise.all([
     sb.rpc("get_claimed_blocks"),
     sb.rpc("count_hosts"),
   ]);
+  if (blocksResult.error || countResult.error) throw new Error("Could not load hosting map");
+  const rows = blocksResult.data;
+  const count = countResult.data;
   const claimed: Record<string, string[]> = {};
   for (const r of rows ?? []) if (r.block_id) claimed[r.block_id] = r.first_names ?? [];
   return { claimed, hostCount: count ?? 0 };
@@ -86,9 +90,10 @@ export const submitHost = createServerFn({ method: "POST" })
     if (data.website) return { ok: true }; // bot: pretend success, store nothing
     if (limited(`h:${await clientKey()}`)) throw new Error("Too many submissions, try again later.");
     const id = crypto.randomUUID();
+    const blockId = submissionLocation(data.stretch, data.blockId);
     const { error } = await publicClient().from("host_offers").insert({
       id,
-      block_id: data.blockId,
+      block_id: blockId,
       stretch_text: data.stretch,
       name: data.name,
       contact: data.contact,
@@ -127,6 +132,7 @@ export const submitNote = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (data.website) return { ok: true };
     if (limited(`n:${await clientKey()}`)) throw new Error("Too many submissions, try again later.");
+    if (!LOCATION_BY_ID.has(data.blockId)) throw new Error("Unknown hosting location");
     const id = crypto.randomUUID();
     const { error } = await publicClient().from("host_notes").insert({
       id,
