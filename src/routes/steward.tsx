@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
 import { duplicateGroups } from "@/lib/host-duplicates";
-import { approveNote, assignHostLocation, mergeHosts, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { approveNote, assignHostLocation, keepHostUnmapped, mergeHosts, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
 import { hostEmail } from "@/lib/note-review";
 import { blockLabel, DICTS, LANGS, type Lang } from "@/lib/i18n";
 import { HOSTING_LOCATIONS, LOCATION_BY_ID, resolveStretch } from "@/lib/hosting-locations";
@@ -164,7 +164,7 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
   const rows = useMemo(() => {
     const s = q.trim().toLowerCase();
     return hosts.filter((h) => {
-      if (flag === "unmapped" && h.block_id) return false;
+      if (flag === "unmapped" && (h.block_id || h.location_resolved_at)) return false;
       if (flag === "microgrant" && !h.wants_microgrant) return false;
       if (flag === "give" && !h.can_give) return false;
       if (flag === "sheltered" && !h.sheltered) return false;
@@ -241,12 +241,14 @@ function Hosts({ hosts }: { hosts: HostRow[] }) {
 function HostLocationReview({ host }: { host: HostRow }) {
   const router = useRouter();
   const save = useServerFn(assignHostLocation);
+  const keep = useServerFn(keepHostUnmapped);
   const match = useMemo(() => resolveStretch(host.stretch_text), [host.stretch_text]);
   const [id, setId] = useState(match.candidates[0]?.id ?? "");
   const [search, setSearch] = useState("");
   const [busy, setBusy] = useState(false);
   const assigned = host.block_id ? LOCATION_BY_ID.get(host.block_id) : undefined;
   if (host.block_id) return <p className="mt-1 text-xs text-ocean">Mapped · {assigned ? blockLabel("en", assigned.avenue, assigned.north, assigned.south) : host.block_id}</p>;
+  if (host.location_resolved_at) return <p className="mt-1 text-xs text-muted-foreground">Reviewed · on host list, not shown on map</p>;
   const options = HOSTING_LOCATIONS.filter((b) => b.id === id || blockLabel("en", b.avenue, b.north, b.south).toLowerCase().includes(search.toLowerCase()));
   return <div className="mt-2 space-y-2">
     <p className="text-xs text-destructive">{match.status === "outside" ? "Outside coverage / needs clarification" : "Needs location review"}</p>
@@ -262,6 +264,13 @@ function HostLocationReview({ host }: { host: HostRow }) {
       catch (error) { toast.error(error instanceof Error ? error.message : "Could not save location"); }
       finally { setBusy(false); }
     }}>Confirm location</Button>
+    <Button size="sm" variant="ghost" disabled={busy} onClick={async () => {
+      if (!window.confirm(`Keep ${host.name} on the host list without a map location?`)) return;
+      setBusy(true);
+      try { await keep({ data: { hostId: host.id } }); await router.invalidate(); }
+      catch (error) { toast.error(error instanceof Error ? error.message : "Could not save"); }
+      finally { setBusy(false); }
+    }}>Keep without map location</Button>
   </div>;
 }
 
