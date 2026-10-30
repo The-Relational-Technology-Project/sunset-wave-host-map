@@ -59,6 +59,7 @@ export const lockSteward = createServerFn({ method: "POST" }).handler(async () =
 export type HostRow = {
   id: string; created_at: string; block_id: string | null; stretch_text: string; name: string; contact: string;
   cohosts: { name: string; contact: string }[]; wants_microgrant: boolean; can_give: boolean; sheltered: boolean; language: string;
+  merged_into: string | null; merged_at: string | null;
 };
 export type NoteRow = { id: string; created_at: string; block_id: string; name: string; contact: string; message: string; language: string; review_status: ReviewStatus; reviewed_host_id: string | null; review_started_at: string | null; forwarded_at: string | null };
 export type ContactRow = { id: string; created_at: string; name: string; email: string; organization: string; message: string; language: string };
@@ -181,4 +182,27 @@ export const assignHostLocation = createServerFn({ method: "POST" })
       .eq("id", data.hostId).is("block_id", null).select("id").maybeSingle();
     if (error || !row) throw new Error("This host is already mapped or could not be saved. Refresh the page.");
     return { ok: true };
+  });
+
+export const mergeHosts = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ hostIds: z.array(z.string().uuid()).min(2).max(10) }).parse(d))
+  .handler(async ({ data }) => {
+    await requireSteward();
+    const { mergePlan } = await import("./host-duplicates");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin.from("host_offers").select("*").in("id", data.hostIds).is("merged_into", null);
+    if (error || !rows || rows.length !== data.hostIds.length) throw new Error("One of these hosts was already merged. Refresh the page.");
+    const plan = mergePlan(rows as unknown as HostRow[]);
+    const keeper = rows.find((r) => r.id === plan.keeperId)!;
+    const now = new Date().toISOString();
+    const snapshot = { at: now, before: { name: keeper.name, contact: keeper.contact, block_id: keeper.block_id, cohosts: keeper.cohosts }, merged: plan.duplicateIds };
+    // Mark duplicates first (only if still unmerged) so concurrent merges cannot double-claim them.
+    const { data: marked, error: markError } = await supabaseAdmin.from("host_offers")
+      .update({ merged_into: plan.keeperId, merged_at: now }).in("id", plan.duplicateIds).is("merged_into", null).select("id");
+    if (markError || marked?.length !== plan.duplicateIds.length) throw new Error("Merge conflicted with another change. Refresh and check.");
+    const history = Array.isArray(keeper.merge_history) ? keeper.merge_history : [];
+    const { error: saveError } = await supabaseAdmin.from("host_offers")
+      .update({ ...plan.update, merge_history: [...history, snapshot] }).eq("id", plan.keeperId).is("merged_into", null);
+    if (saveError) throw new Error("Duplicates were marked but the kept signup could not be updated. Refresh and contact support.");
+    return { ok: true, keeperId: plan.keeperId };
   });

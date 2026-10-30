@@ -5,8 +5,11 @@ export const REVIEW_LEASE_MS = 5 * 60_000;
 export type ReviewStatus = "pending" | "sending" | "sent" | "failed" | "suppressed";
 
 export function hostEmail(contact: string): string | null {
-  const value = contact.trim();
-  return z.string().email().safeParse(value).success ? value : null;
+  for (const part of contact.split(/[;,\s]+/)) {
+    const value = part.trim();
+    if (value && z.string().email().safeParse(value).success) return value;
+  }
+  return null;
 }
 
 export function canReviewNote(note: { review_status: ReviewStatus; review_started_at: string | null }, now = Date.now()) {

@@ -121,6 +121,9 @@ export type Database = {
           created_at: string
           id: string
           language: string
+          merge_history: Json
+          merged_at: string | null
+          merged_into: string | null
           name: string
           sheltered: boolean
           stretch_text: string
@@ -134,6 +137,9 @@ export type Database = {
           created_at?: string
           id?: string
           language?: string
+          merge_history?: Json
+          merged_at?: string | null
+          merged_into?: string | null
           name: string
           sheltered?: boolean
           stretch_text: string
@@ -147,12 +153,23 @@ export type Database = {
           created_at?: string
           id?: string
           language?: string
+          merge_history?: Json
+          merged_at?: string | null
+          merged_into?: string | null
           name?: string
           sheltered?: boolean
           stretch_text?: string
           wants_microgrant?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "host_offers_merged_into_fkey"
+            columns: ["merged_into"]
+            isOneToOne: false
+            referencedRelation: "host_offers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       page_views: {
         Row: {
