@@ -29,7 +29,9 @@ function sameContact(a: DupHost, b: DupHost) {
   return contactParts(b.contact).some((p) => keys.has(contactKey(p)));
 }
 function sameLocation(a: DupHost, b: DupHost) {
-  return (a.block_id && a.block_id === b.block_id) || stretchKey(a.stretch_text) === stretchKey(b.stretch_text);
+  if (a.block_id && b.block_id) return a.block_id === b.block_id;
+  const k = stretchKey(a.stretch_text);
+  return Boolean(k) && k === stretchKey(b.stretch_text);
 }
 
 /** Obvious duplicates: shared contact method, or similar name at the same location. */
