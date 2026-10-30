@@ -176,11 +176,11 @@ function HostForm({ block, onClose }: { block: Block | null; onClose: () => void
 
       <div className="space-y-3 px-4">
         <label className="flex items-start gap-3 text-sm">
-          <Checkbox checked={grant} onCheckedChange={(v) => setGrant(v === true)} className="mt-0.5" />
+          <Checkbox checked={grant} onCheckedChange={(v) => setGrant(v === true)} className="mt-0.5 rounded-none" />
           <span>{t.host.microgrant}</span>
         </label>
         <label className="flex items-start gap-3 text-sm">
-          <Checkbox checked={sheltered} onCheckedChange={(v) => setSheltered(v === true)} className="mt-0.5" />
+          <Checkbox checked={sheltered} onCheckedChange={(v) => setSheltered(v === true)} className="mt-0.5 rounded-none" />
           <span>{t.host.sheltered}</span>
         </label>
       </div>
