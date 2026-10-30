@@ -103,7 +103,7 @@ export const submitHost = createServerFn({ method: "POST" })
     try {
       const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
       await sendTemplateEmail("host-alert", REPLY_TO, {
-        templateData: { name: data.name, contact: data.contact, stretch: data.stretch, cohosts: data.cohosts, wantsMicrogrant: data.wantsMicrogrant, canGive: data.canGive, sheltered: data.sheltered, language: data.language },
+        templateData: { name: data.name, contact: data.contact, stretch: data.stretch, cohosts: data.cohosts, wantsMicrogrant: data.wantsMicrogrant, sheltered: data.sheltered, language: data.language },
         idempotencyKey: `host-alert-${id}`,
         ...(EMAIL_RE.test(data.contact) ? { replyTo: data.contact } : {}),
       });
