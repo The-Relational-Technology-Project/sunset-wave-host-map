@@ -19,6 +19,7 @@ export function normalizeStretch(text: string) {
   return text.normalize("NFKC").toLowerCase()
     .replace(/(\d+)\s*(st|nd|rd|th|街|大道)/g, "$1")
     .replace(/\b(avenue|ave|street|st|boulevard|blvd|drive|dr|highway|hwy)\b/g, "")
+    .replace(/(之间|之間|与|同|和|及)/g, " $1 ")
     .replace(/[^a-z0-9\u3400-\u9fff]+/g, " ").trim();
 }
 function contains(text: string, token: string) {
@@ -29,13 +30,15 @@ export function resolveStretch(input: string): LocationMatch {
   const text = normalizeStretch(input);
   if (!text) return { status: "unmatched", candidates: [] };
   const numbers = [...text.matchAll(/\b\d+\b/g)].map((m) => Number(m[0]));
-  if (numbers.some((n) => n >= 1 && n <= 99 && (n < 19 || n > 48))) return { status: "outside", candidates: [] };
+  const legacy = HOSTING_LOCATIONS.filter((b) => b.south_of_sloat && (text === normalizeStretch(String(b.avenue)) || text === normalizeStretch(`${b.avenue} South of Sloat`) || text === normalizeStretch(`${b.avenue} Sloat`)));
+  if (legacy.length) return { status: "resolved", candidates: legacy };
+  if (numbers.length && /(?:\d+(?:st|nd|rd|th)?\s*(?:ave|avenue|街|大道))|between|entre|之间|之間/i.test(input) && numbers.some((n) => n >= 1 && n <= 99 && (n < 19 || n > 48))) return { status: "outside", candidates: [] };
   const named = ["Lincoln", "Irving", "Judah", "Kirkham", "Lawton", "Moraga", "Noriega", "Ortega", "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona", "Sloat"].filter((s) => contains(text, s));
   let candidates = HOSTING_LOCATIONS.filter((b) => {
     if (b.kind === "corner") return named.length === 1 && numbers.length === 1 && contains(text, String(b.avenue)) && contains(text, b.north);
     if (typeof b.avenue === "number") return numbers.length === 1 && named.length === 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
-    if (b.south_of_sloat) return normalizeStretch(input) === normalizeStretch(String(b.avenue)) || text === normalizeStretch(`${b.avenue} South of Sloat`);
-    if (b.kind === "segment") return named.length === 1 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
+    if (b.south_of_sloat) return false;
+    if (b.kind === "segment") return named.length === 1 && numbers.length <= 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
     return named.length === 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
   });
   // A single corner is geographically precise but always needs the host's confirmation.
@@ -49,7 +52,7 @@ export function submissionLocation(stretch: string, selected: string | null): st
   if (selected) {
     const location = LOCATION_BY_ID.get(selected);
     if (!location) throw new Error("Unknown hosting location");
-    if (match.candidates.length && !match.candidates.some((c) => c.id === selected)) throw new Error("Location does not match stretch");
+    if (!match.candidates.some((c) => c.id === selected)) throw new Error("Location does not match stretch");
     if (match.status === "outside") throw new Error("Location outside campaign coverage");
     return selected;
   }
