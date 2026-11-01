@@ -5,6 +5,13 @@ import { validateNoteHost } from "./note-review";
 import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
+  it("makes the clarified 2670 47th Ave stretch assignable without moving the legacy pin", () => {
+    expect(submissionLocation("47th Ave between Wawona and Cutler", null)).toBe("segment-2058000");
+    expect(submissionLocation("47th Ave between Cutler and Wawona", null)).toBe("segment-2058000");
+    expect(LOCATION_BY_ID.get("segment-2058000")?.position).toEqual([37.7366015, -122.5053296]);
+    expect(LOCATION_BY_ID.get("47-wawona")?.position).toEqual([37.7358052, -122.505277]);
+    expect(submissionLocation("2670 47th Ave", null)).toBeNull();
+  });
   it("places Renee's Wawona stretch on the actual east-west block", () => {
     expect(submissionLocation("Wawona between 37th and 38th", null)).toBe("ew-13491000");
     expect(LOCATION_BY_ID.get("ew-13491000")?.position).toEqual([37.7365815, -122.4951248]);

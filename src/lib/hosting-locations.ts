@@ -12,6 +12,9 @@ export const HOSTING_LOCATIONS: HostingLocation[] = [
     const position = BLOCK_COORDINATES[b.id];
     return position ? [{ ...b, position, kind: "legacy" }] : [];
   }), ...extras,
+  // SF Public Works CNN 2058000: distinct from the legacy Wawona–Sloat pin.
+  { id: "segment-2058000", avenue: 47, north: "Wawona", south: "Cutler", col: -1, row: -1,
+    position: [37.7366015, -122.5053296], kind: "segment" },
 ];
 export const LOCATION_BY_ID = new Map(HOSTING_LOCATIONS.map((b) => [b.id, b]));
 
@@ -35,7 +38,7 @@ export function resolveStretch(input: string): LocationMatch {
   const legacy = HOSTING_LOCATIONS.filter((b) => b.south_of_sloat && (text === normalizeStretch(String(b.avenue)) || text === normalizeStretch(`${b.avenue} South of Sloat`) || text === normalizeStretch(`${b.avenue} Sloat`)));
   if (legacy.length) return { status: "resolved", candidates: legacy };
   if (numbers.length && /(?:\d+(?:st|nd|rd|th)?\s*(?:ave|avenue|街|大道))|between|entre|之间|之間/i.test(input) && numbers.some((n) => n >= 1 && n <= 99 && (n < 19 || n > 48))) return { status: "outside", candidates: [] };
-  const named = ["Lincoln", "Irving", "Judah", "Kirkham", "Lawton", "Moraga", "Noriega", "Ortega", "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona", "Sloat"].filter((s) => contains(text, s));
+   const named = ["Lincoln", "Irving", "Judah", "Kirkham", "Lawton", "Moraga", "Noriega", "Ortega", "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona", "Sloat", "Cutler"].filter((s) => contains(text, s));
   let candidates = HOSTING_LOCATIONS.filter((b) => {
     if (b.kind === "corner") return named.length === 1 && numbers.length === 1 && contains(text, String(b.avenue)) && contains(text, b.north);
     if (typeof b.avenue === "number") return numbers.length === 1 && named.length === 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
