@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [ ] Include co-hosts in the neighbors ticker without changing the claimed-block count or host milestone.
 - [x] Make 2670 47th Ave reviewable as 47th Ave between Wawona and Cutler while preserving the original offer; verified the city centerline and 23 map tests.
 - [x] Resolve custom hosting stretches within defined map coverage, including non-Avenue streets; backfill clear matches and add review controls for uncertain locations.
 - [x] Add a sharing invitation to the host thank-you page and confirmation email; verify copying the public URL.

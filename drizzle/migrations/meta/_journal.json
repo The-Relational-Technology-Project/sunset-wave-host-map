@@ -71,6 +71,13 @@
       "when": 1793402887880,
       "tag": "0009_host_location_review",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793571997913,
+      "tag": "0010_count_host_neighbors",
+      "breakpoints": true
     }
   ]
 }

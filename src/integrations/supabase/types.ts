@@ -203,6 +203,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      count_host_neighbors: { Args: never; Returns: number }
       count_hosts: { Args: never; Returns: number }
       get_claimed_blocks: {
         Args: never
