@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [ ] Make 2670 47th Ave reviewable as 47th Ave between Wawona and Cutler while preserving the original offer.
 - [x] Resolve custom hosting stretches within defined map coverage, including non-Avenue streets; backfill clear matches and add review controls for uncertain locations.
 - [x] Add a sharing invitation to the host thank-you page and confirmation email; verify copying the public URL.
 - [x] Hide host names in map details and remove the map co-host action.
