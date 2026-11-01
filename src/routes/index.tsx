@@ -50,7 +50,7 @@ function Index() {
 
   return (
     <div className="mobile-host-page overflow-x-clip">
-      <Hero hostCount={data.hostCount} onHost={() => setDialog({ mode: "host", block: null })} />
+      <Hero neighborCount={data.neighborCount} onHost={() => setDialog({ mode: "host", block: null })} />
 
 
       {/* Invitation */}

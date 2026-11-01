@@ -51,20 +51,21 @@ async function confirm(template: string, contact: string, id: string, data: Reco
   }
 }
 
-export type Claims = { claimed: Record<string, string[]>; hostCount: number };
+export type Claims = { claimed: Record<string, string[]>; hostCount: number; neighborCount: number };
 
 export const getClaims = createServerFn({ method: "GET" }).handler(async (): Promise<Claims> => {
   const sb = publicClient();
-  const [blocksResult, countResult] = await Promise.all([
+  const [blocksResult, countResult, neighborsResult] = await Promise.all([
     sb.rpc("get_claimed_blocks"),
     sb.rpc("count_hosts"),
+    sb.rpc("count_host_neighbors"),
   ]);
-  if (blocksResult.error || countResult.error) throw new Error("Could not load hosting map");
+  if (blocksResult.error || countResult.error || neighborsResult.error) throw new Error("Could not load hosting map");
   const rows = blocksResult.data;
   const count = countResult.data;
   const claimed: Record<string, string[]> = {};
   for (const r of rows ?? []) if (r.block_id) claimed[r.block_id] = r.first_names ?? [];
-  return { claimed, hostCount: count ?? 0 };
+  return { claimed, hostCount: count ?? 0, neighborCount: neighborsResult.data ?? 0 };
 });
 
 const langSchema = z.enum(["en", "zh", "yue", "es"]);
