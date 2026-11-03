@@ -18,6 +18,7 @@
 - Public reads of host data go only through security-definer functions returning block occupancy without names; offer/note tables are insert-only for visitors to keep identities and contact details private.
 - Neighbor-note forwarding is a session-gated steward action to one server-validated host on the same block; persist moderation state with atomic claims and stable email idempotency keys, never an email queue, to prevent unreviewed or duplicate sends.
 - Use the shared WaveHand asset for the title, map markers, cursor and favicon so the campaign mark stays consistent across surfaces.
+- The shared map accepts optional name labels derived only from session-gated steward data; never supply them on public views, keeping host identities private.
 - Keep map count visibility in a tested presentation helper keyed to total host count, while the displayed number represents claimed blocks, so milestone logic stays independent of map generation.
 - Fetch the neighbors ticker through a separate anonymous aggregate RPC that includes co-hosts and excludes merged offers; preserve the host-only count for map milestones and return no contact details.
 - The /steward page is gated by a shared password (server-only secret + encrypted session cookie); every steward server function re-checks the session, since route gating alone does not protect RPCs. Steward copy is English-only by design (internal tool), an exception to the i18n rule.

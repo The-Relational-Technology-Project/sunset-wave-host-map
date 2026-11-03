@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 const INITIAL_CENTER: [number, number] = [37.7485, -122.4925];
 const INITIAL_ZOOM = 16;
 
-export function BlockMap({ claimed, onPick, previewId }: { claimed: Record<string, string[]>; onPick: (b: Block) => void; previewId?: string }) {
+export function BlockMap({ claimed, onPick, previewId, hostNames }: { claimed: Record<string, string[]>; onPick: (b: Block) => void; previewId?: string; hostNames?: Record<string, string[]> }) {
   const { t, lang } = useLang();
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<LeafletMap | null>(null);
@@ -75,12 +75,18 @@ export function BlockMap({ claimed, onPick, previewId }: { claimed: Record<strin
         const isClaimed = Boolean(names?.length) || b.id === previewId;
         const label = `${blockLabel(lang, b.avenue, b.north, b.south)} – ${isClaimed ? t.map.claimed : t.map.open}`;
         const size = isClaimed ? (zoom < 14 ? 24 : 34) : zoom < 14 ? 6 : zoom < 15 ? 10 : 16;
+        const firstNames = hostNames?.[b.id];
+        const nameLabel = firstNames?.length ? document.createElement("span") : null;
+        if (nameLabel) {
+          nameLabel.className = "wave-map-host-name";
+          nameLabel.textContent = firstNames?.join(" · ") ?? "";
+        }
         const marker = L.marker(position, {
-          title: label, alt: label, keyboard: true, riseOnHover: true,
+          title: nameLabel ? `${nameLabel.textContent} – ${label}` : label, alt: label, keyboard: true, riseOnHover: true,
           zIndexOffset: isClaimed ? 1000 : 0,
           icon: L.divIcon({
-            className: "wave-map-marker", iconSize: [size, size], iconAnchor: [size / 2, size / 2],
-            html: `<span class="wave-map-dot${isClaimed ? " is-claimed" : ""}">${isClaimed ? `<img src="${WAVE_SRC}" alt="" />` : ""}</span>`,
+            className: "wave-map-marker", iconSize: nameLabel ? [0, 0] : [size, size], iconAnchor: nameLabel ? [0, 0] : [size / 2, size / 2],
+            html: nameLabel ?? `<span class="wave-map-dot${isClaimed ? " is-claimed" : ""}">${isClaimed ? `<img src="${WAVE_SRC}" alt="" />` : ""}</span>`,
           }),
         });
         marker.on("click", () => pick.current(b));
@@ -96,7 +102,7 @@ export function BlockMap({ claimed, onPick, previewId }: { claimed: Record<strin
       }
     });
     return () => { disposed = true; };
-  }, [ready, claimed, lang, t, zoom, previewId]);
+  }, [ready, claimed, lang, t, zoom, previewId, hostNames]);
 
   return (
     <div className="relative overflow-hidden rounded-lg border-2 border-ink bg-card shadow-poster">
