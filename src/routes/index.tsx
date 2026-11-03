@@ -5,7 +5,6 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq } from "@/lib/site.functions";
 import { useLang } from "@/lib/i18n";
-import { shouldShowMapCount } from "@/lib/map-count";
 import { Hero } from "@/components/wave/Hero";
 import { BlockMap } from "@/components/wave/BlockMap";
 import { HostingInvitation, MobileHostAction } from "@/components/wave/HostingInvitation";
@@ -46,7 +45,6 @@ function Index() {
   const { data } = useSuspenseQuery(claimsQuery);
   const { data: faq } = useSuspenseQuery(faqQuery);
   const [dialog, setDialog] = useState<DialogState>({ mode: "closed" });
-  const claimedCount = Object.keys(data.claimed).length;
 
   return (
     <div className="mobile-host-page overflow-x-clip">
@@ -83,7 +81,7 @@ function Index() {
             </div>
             <div className="flex flex-wrap items-center gap-4 text-sm font-semibold">
               <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-coral" /> {t.map.open}</span>
-              <span className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-full border border-ink bg-claim"><WaveHand className="h-5 w-5" /></span> {t.map.claimed}{shouldShowMapCount(data.hostCount) && <> · {claimedCount}</>}</span>
+              <span className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-full border border-ink bg-claim"><WaveHand className="h-5 w-5" /></span> {t.map.claimed}</span>
             </div>
           </div>
           <BlockMap claimed={data.claimed} onPick={(b) => {
