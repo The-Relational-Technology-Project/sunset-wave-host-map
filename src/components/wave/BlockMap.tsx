@@ -8,7 +8,7 @@ import { WAVE_SRC } from "./WaveHand";
 import { Button } from "@/components/ui/button";
 
 const INITIAL_CENTER: [number, number] = [37.7485, -122.4925];
-const INITIAL_ZOOM = 16;
+const INITIAL_ZOOM = 15;
 
 export function BlockMap({ claimed, onPick, previewId, hostNames }: { claimed: Record<string, string[]>; onPick: (b: Block) => void; previewId?: string; hostNames?: Record<string, string[]> }) {
   const { t, lang } = useLang();
