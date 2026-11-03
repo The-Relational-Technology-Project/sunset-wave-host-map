@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
 import { duplicateGroups } from "@/lib/host-duplicates";
+import { stewardMapNames } from "@/lib/steward-map";
 import { approveNote, assignHostLocation, keepHostUnmapped, mergeHosts, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
 import { hostEmail } from "@/lib/note-review";
 import { blockLabel, DICTS, LANGS, type Lang } from "@/lib/i18n";
@@ -52,7 +53,7 @@ function Unlock() {
   const [err, setErr] = useState(false);
   const [busy, setBusy] = useState(false);
   return (
-    <main className="grain flex min-h-screen items-center justify-center bg-sand px-5">
+    <main className="steward-page grain flex min-h-screen items-center justify-center bg-sand px-5">
       <form
         className="w-full max-w-sm space-y-4 rounded-2xl border-2 border-ink bg-card p-8 shadow-[6px_6px_0_var(--color-ink)]"
         onSubmit={async (e) => {
@@ -89,8 +90,9 @@ function download(name: string, text: string) {
 function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnType<typeof getClaims>>; faq: Awaited<ReturnType<typeof getFaq>> }) {
   const router = useRouter();
   const lock = useServerFn(lockSteward);
+  const hostNames = useMemo(() => stewardMapNames(data.hosts), [data.hosts]);
   return (
-    <main className="min-h-screen bg-sand">
+    <main className="steward-page min-h-screen bg-sand">
       <div className="mx-auto max-w-6xl px-4 py-8">
         <div className="flex items-center justify-between gap-4">
           <h1 className="poster-title text-4xl text-ink md:text-5xl">Steward</h1>
@@ -117,7 +119,7 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
           </TabsContent>
           <TabsContent value="map">
             <p className="mb-3 text-sm text-muted-foreground">{claims.hostCount} hosts · {Object.keys(claims.claimed).length} blocks claimed</p>
-            <BlockMap claimed={claims.claimed} onPick={() => {}} />
+            <BlockMap claimed={claims.claimed} hostNames={hostNames} onPick={() => {}} />
           </TabsContent>
           <TabsContent value="traffic"><TrafficView t={data.traffic} /></TabsContent>
           <TabsContent value="faq"><FaqEditor faq={faq} /></TabsContent>
