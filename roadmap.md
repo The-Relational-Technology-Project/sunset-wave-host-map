@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [ ] Add Pamela Lee at the approved east-side 19th Avenue church, preserve existing block pins, and verify the public hand and updated neighbors total.
 - [x] Use a normal steward cursor and private first-name map labels; verified signed-in map labels and unchanged public hand markers.
 - [x] Include co-hosts in the neighbors ticker without changing the claimed-block count or host milestone; tested counting and verified 24 neighbors in the website.
 - [x] Make 2670 47th Ave reviewable as 47th Ave between Wawona and Cutler while preserving the original offer; verified the city centerline and 23 map tests.
