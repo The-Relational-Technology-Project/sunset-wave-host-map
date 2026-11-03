@@ -2,7 +2,7 @@ import { BLOCKS, type Block } from "./blocks";
 import { BLOCK_COORDINATES } from "./block-coordinates";
 import streets from "./hosting-streets.json";
 
-export type HostingLocation = Block & { position: [number, number]; kind: "legacy" | "segment" | "corner" };
+export type HostingLocation = Block & { position: [number, number]; kind: "legacy" | "segment" | "corner" | "venue" };
 const extras: HostingLocation[] = [...streets.segments, ...streets.corners].map((s) => ({
   id: s.id, avenue: s.street, north: s.from, south: s.to, col: -1, row: -1,
   position: [s.position[0] ?? 0, s.position[1] ?? 0], kind: s.to ? "segment" : "corner",
@@ -15,6 +15,10 @@ export const HOSTING_LOCATIONS: HostingLocation[] = [
   // SF Public Works CNN 2058000: distinct from the legacy Wawona–Sloat pin.
   { id: "segment-2058000", avenue: 47, north: "Wawona", south: "Cutler", col: -1, row: -1,
     position: [37.7366015, -122.5053296], kind: "segment" },
+  // Approved exception: church frontage at 1370 19th Ave, east of the avenue.
+  // Keep separate from the existing 19th Avenue block and ordinary matching.
+  { id: "venue-19-irving-east", avenue: 19, north: "Irving", south: "Judah", col: -1, row: -1,
+    position: [37.762279, -122.476694], kind: "venue" },
 ];
 export const LOCATION_BY_ID = new Map(HOSTING_LOCATIONS.map((b) => [b.id, b]));
 
@@ -40,6 +44,7 @@ export function resolveStretch(input: string): LocationMatch {
   if (numbers.length && /(?:\d+(?:st|nd|rd|th)?\s*(?:ave|avenue|街|大道))|between|entre|之间|之間/i.test(input) && numbers.some((n) => n >= 1 && n <= 99 && (n < 19 || n > 48))) return { status: "outside", candidates: [] };
    const named = ["Lincoln", "Irving", "Judah", "Kirkham", "Lawton", "Moraga", "Noriega", "Ortega", "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona", "Sloat", "Cutler"].filter((s) => contains(text, s));
   let candidates = HOSTING_LOCATIONS.filter((b) => {
+    if (b.kind === "venue") return false;
     if (b.kind === "corner") return named.length === 1 && numbers.length === 1 && contains(text, String(b.avenue)) && contains(text, b.north);
     if (typeof b.avenue === "number") return numbers.length === 1 && named.length === 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
     if (b.south_of_sloat) return false;

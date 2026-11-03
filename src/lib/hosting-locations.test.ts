@@ -5,6 +5,20 @@ import { validateNoteHost } from "./note-review";
 import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
+  it("places Pamela's approved church east of 19th between Irving and Judah without moving the existing block", () => {
+    const church = LOCATION_BY_ID.get("venue-19-irving-east");
+    expect(church?.position).toEqual([37.762279, -122.476694]);
+    expect(church?.avenue).toBe(19);
+    expect(church?.north).toBe("Irving");
+    expect(church?.south).toBe("Judah");
+    expect(church?.kind).toBe("venue");
+    expect(church?.position[1]).toBeGreaterThan(BLOCK_COORDINATES["19-irving"]?.[1] ?? 0);
+    expect(LOCATION_BY_ID.get("19-irving")?.position).toEqual(BLOCK_COORDINATES["19-irving"]);
+  });
+  it("keeps the approved church exception out of general stretch matching", () => {
+    expect(submissionLocation("19th Ave between Irving and Judah", null)).toBe("19-irving");
+    expect(submissionLocation("Wawona between 17th and 18th", null)).toBeNull();
+  });
   it("makes the clarified 2670 47th Ave stretch assignable without moving the legacy pin", () => {
     expect(submissionLocation("47th Ave between Wawona and Cutler", null)).toBe("segment-2058000");
     expect(submissionLocation("47th Ave between Cutler and Wawona", null)).toBe("segment-2058000");
