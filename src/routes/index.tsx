@@ -58,6 +58,14 @@ function Index() {
             <h2 className="poster-title text-6xl text-ink sm:text-7xl">{t.invite.title}</h2>
             <p className="text-lg leading-relaxed text-muted-foreground">{t.invite.p1}</p>
             <p className="text-lg leading-relaxed text-muted-foreground">{t.invite.p2}</p>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-ink/15 pt-5">
+              <span className="text-xs font-semibold uppercase text-muted-foreground">{t.invite.pressLabel}</span>
+              <Button asChild variant="link" className="h-auto max-w-full justify-start rounded-none px-0 py-2 text-base font-semibold whitespace-normal text-ink underline decoration-mustard decoration-2 underline-offset-4 hover:text-ocean">
+                <a href="https://sfstandard.com/2026/11/01/the-sunset-wave-is-coming-this-spring/" target="_blank" rel="noopener noreferrer">
+                  {t.invite.pressPublication}<ArrowUpRight aria-hidden="true" />
+                </a>
+              </Button>
+            </div>
           </div>
           <ul className="mt-14 grid grid-cols-2 items-center gap-5 sm:gap-8 md:grid-cols-4">
             {t.easy.steps.map((s, i) => (

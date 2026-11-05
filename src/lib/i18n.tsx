@@ -28,6 +28,8 @@ const en = {
   },
   invite: {
     title: "Gatherings on every block. On the same day.",
+    pressLabel: "As featured in",
+    pressPublication: "The San Francisco Standard",
     p1: "We're envisioning a day where Sunset neighbors come together. Folding tables and lawn chairs and outstretched hands. Good will in action on every street.",
     p2: "It's a chance to finally meet your neighbors, and for them to meet each other.",
     p3: "You host on your block. We support you with a hosting kit and opportunities to meet fellow hosts.",
@@ -207,6 +209,8 @@ const zh: Dict = {
   },
   invite: {
     title: "每个街区都有聚会。就在同一天。",
+    pressLabel: "媒体报道",
+    pressPublication: "The San Francisco Standard",
     p1: "我们想象着这样一天：日落区的邻居们聚在一起。折叠桌、草坪椅，还有伸出来打招呼的手。每条街上，善意都化为行动。",
     p2: "这是一个终于认识邻居、也让他们彼此认识的机会。",
     p3: "你在自己的街区主持聚会。我们提供主持人工具包，还有机会认识其他主持人。",
@@ -384,6 +388,8 @@ const yue: Dict = {
   },
   invite: {
     title: "每個街區都有聚會。就喺同一日。",
+    pressLabel: "傳媒報道",
+    pressPublication: "The San Francisco Standard",
     p1: "我哋想像有一日，日落區嘅街坊聚埋一齊。摺枱、草地櫈，同伸出嚟打招呼嘅手。每條街都有善意化成行動。",
     p2: "呢個係終於識吓你嘅街坊、亦俾佢哋互相認識嘅機會。",
     p3: "你喺自己嘅街區主持聚會。我哋提供主持人工具包，仲有機會識其他主持人。",
@@ -561,6 +567,8 @@ const es: Dict = {
   },
   invite: {
     title: "Reuniones en cada cuadra. El mismo día.",
+    pressLabel: "Destacado en",
+    pressPublication: "The San Francisco Standard",
     p1: "Imaginamos un día en que los vecinos del Sunset se reúnen. Mesas plegables, sillas de jardín y manos extendidas. Buena voluntad en acción en cada calle.",
     p2: "Es una oportunidad de por fin conocer a tus vecinos, y de que ellos se conozcan entre sí.",
     p3: "Tú organizas en tu cuadra. Te apoyamos con un kit para anfitriones y oportunidades de conocer a otros anfitriones.",
