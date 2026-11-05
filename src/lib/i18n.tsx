@@ -73,7 +73,7 @@ const en = {
       { t: "Neighbors, at last", b: "Folding chairs, shared snacks, and conversations that keep going." },
     ],
     ideasTitle: "Make it yours",
-    ideas: ["Card games in the garage", "Potluck out front", "Coffee + donuts", "Chalk art and music", "Tea on the steps", "Kids' bike parade", "You decide!"],
+    ideas: ["Card games in the garage", "Potluck out front", "Coffee + donuts", "Chalk art and music", "Tea on the steps", "Kids' bike parade", "Bake sale", "You decide!"],
   },
   gets: {
     title: "HOST WITH SUPPORT",
@@ -254,7 +254,7 @@ const zh: Dict = {
       { t: "终于认识你", b: "折叠椅、分享的小吃，还有聊不完的话。" },
     ],
     ideasTitle: "用你的方式",
-    ideas: ["车库里打牌", "门前百家宴", "咖啡加甜甜圈", "粉笔画和音乐", "台阶上喝茶", "小朋友单车巡游", "你来决定！"],
+    ideas: ["车库里打牌", "门前百家宴", "咖啡加甜甜圈", "粉笔画和音乐", "台阶上喝茶", "小朋友单车巡游", "烘焙义卖", "你来决定！"],
   },
   gets: {
     title: "你不是一个人",
@@ -433,7 +433,7 @@ const yue: Dict = {
       { t: "終於識到你", b: "摺櫈、分享嘅小食，同傾唔完嘅偈。" },
     ],
     ideasTitle: "用你嘅方式",
-    ideas: ["車房打牌", "門口百家宴", "咖啡加冬甩", "粉筆畫同音樂", "樓梯飲茶", "細路單車巡遊", "你話事！"],
+    ideas: ["車房打牌", "門口百家宴", "咖啡加冬甩", "粉筆畫同音樂", "樓梯飲茶", "細路單車巡遊", "糕點義賣", "你話事！"],
   },
   gets: {
     title: "你唔會孤軍作戰",
@@ -612,7 +612,7 @@ const es: Dict = {
       { t: "Vecinos, por fin", b: "Sillas plegables, bocadillos compartidos y conversaciones que siguen." },
     ],
     ideasTitle: "Hazlo a tu manera",
-    ideas: ["Juegos de cartas en el garaje", "Potluck enfrente", "Café y donas", "Arte con gis y música", "Té en los escalones", "Desfile de bicis infantil", "¡Tú decides!"],
+    ideas: ["Juegos de cartas en el garaje", "Potluck enfrente", "Café y donas", "Arte con gis y música", "Té en los escalones", "Desfile de bicis infantil", "Venta de repostería", "¡Tú decides!"],
   },
   gets: {
     title: "No lo harás solo",
