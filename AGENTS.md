@@ -27,5 +27,6 @@
 - Share links use one canonical public URL in a browser-safe shared module, so the thank-you page and confirmation email never share preview links.
 - Custom stretches resolve against a versioned local street/corner catalog with an explicit core polygon and legacy south-Sloat allowlist; existing block IDs remain immutable and new claimed locations render without adding open dots.
 - Verified supplemental street segments may use CNN-based IDs in the hosting catalog; never repurpose a legacy pin for a neighboring segment, to preserve saved host and note routing.
+- Verified coastal corners use city node-based IDs and composite road stretches use their active CNN IDs; preserve legacy coastal midpoints because they represent adjacent blocks, not intersections.
 - Individually approved out-of-catchment venues use separate venue IDs excluded from automatic stretch matching; show them only when claimed, preserving the general coverage and existing pins.
 - Steward location assignment is session-gated and null-only with an atomic conditional update, so mapped hosts and approved note routing cannot be reassigned.

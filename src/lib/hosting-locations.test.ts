@@ -5,6 +5,20 @@ import { validateNoteHost } from "./note-review";
 import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
+  it("places Brian's gathering at the Lower Great Hwy and Noriega road corner, not a neighboring block", () => {
+    expect(submissionLocation("Great Hwy and Noriega St", "corner-27929000")).toBe("corner-27929000");
+    expect(LOCATION_BY_ID.get("corner-27929000")?.position).toEqual([37.7528302, -122.5084324]);
+    expect(LOCATION_BY_ID.get("great-hwy-noriega")?.position).toEqual(BLOCK_COORDINATES["great-hwy-noriega"]);
+  });
+  it("places Eliza's gathering at the Lower Great Hwy and Vicente road corner", () => {
+    expect(submissionLocation("Lower Great Hwy and Vicente St", "corner-23504000")).toBe("corner-23504000");
+    expect(LOCATION_BY_ID.get("corner-23504000")?.position).toEqual([37.7379599, -122.5064356]);
+  });
+  it("places Pam's gathering on the Lower Great Hwy road between Lawton and Moraga", () => {
+    expect(submissionLocation("Great Hwy between Lawton and Moraga", null)).toBe("segment-8512001-8512002");
+    expect(LOCATION_BY_ID.get("segment-8512001-8512002")?.position).toEqual([37.7556216, -122.5087899]);
+    expect(LOCATION_BY_ID.get("great-hwy-moraga")?.position).toEqual(BLOCK_COORDINATES["great-hwy-moraga"]);
+  });
   it("places Pamela's approved church east of 19th between Irving and Judah without moving the existing block", () => {
     const church = LOCATION_BY_ID.get("venue-19-irving-east");
     expect(church?.position).toEqual([37.762279, -122.476694]);

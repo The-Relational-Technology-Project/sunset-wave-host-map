@@ -12,6 +12,14 @@ export const HOSTING_LOCATIONS: HostingLocation[] = [
     const position = BLOCK_COORDINATES[b.id];
     return position ? [{ ...b, position, kind: "legacy" }] : [];
   }), ...extras,
+  // DataSF Lower Great Hwy road nodes, separate from legacy block midpoints.
+  { id: "corner-27929000", avenue: "Great Hwy", north: "Noriega", south: "", col: -1, row: -1,
+    position: [37.7528302, -122.5084324], kind: "corner" },
+  { id: "corner-23504000", avenue: "Great Hwy", north: "Vicente", south: "", col: -1, row: -1,
+    position: [37.7379599, -122.5064356], kind: "corner" },
+  // Active CNNs 8512001 + 8512002 join at a mid-block node on Lawton–Moraga.
+  { id: "segment-8512001-8512002", avenue: "Great Hwy", north: "Lawton", south: "Moraga", col: -1, row: -1,
+    position: [37.7556216, -122.5087899], kind: "segment" },
   // SF Public Works CNN 2058000: distinct from the legacy Wawona–Sloat pin.
   { id: "segment-2058000", avenue: 47, north: "Wawona", south: "Cutler", col: -1, row: -1,
     position: [37.7366015, -122.5053296], kind: "segment" },
@@ -45,10 +53,10 @@ export function resolveStretch(input: string): LocationMatch {
    const named = ["Lincoln", "Irving", "Judah", "Kirkham", "Lawton", "Moraga", "Noriega", "Ortega", "Pacheco", "Quintara", "Rivera", "Santiago", "Taraval", "Ulloa", "Vicente", "Wawona", "Sloat", "Cutler"].filter((s) => contains(text, s));
   let candidates = HOSTING_LOCATIONS.filter((b) => {
     if (b.kind === "venue") return false;
-    if (b.kind === "corner") return named.length === 1 && numbers.length === 1 && contains(text, String(b.avenue)) && contains(text, b.north);
+     if (b.kind === "corner") return named.length === 1 && numbers.length === (b.avenue === "Great Hwy" ? 0 : 1) && contains(text, String(b.avenue)) && contains(text, b.north);
     if (typeof b.avenue === "number") return numbers.length === 1 && named.length === 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
     if (b.south_of_sloat) return false;
-    if (b.kind === "segment") return named.length === 1 && numbers.length <= 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
+    if (b.kind === "segment") return named.length === (b.avenue === "Great Hwy" ? 2 : 1) && numbers.length <= 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
     return named.length === 2 && contains(text, String(b.avenue)) && contains(text, b.north) && contains(text, b.south);
   });
   // A single corner is geographically precise but always needs the host's confirmation.

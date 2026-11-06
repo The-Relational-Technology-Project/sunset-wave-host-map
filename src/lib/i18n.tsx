@@ -746,6 +746,7 @@ export function blockLabel(lang: Lang, avenue: number | string, north: string, s
   }
   if (typeof avenue === "string") {
     const street = avenue === "Great Hwy" ? DICTS[lang].map.greatHwy : DICTS[lang].map.laPlaya;
+    if (!south) return `${street} & ${north}`;
     switch (lang) {
       case "zh": return `${street}（${north} 与 ${south} 之间）`;
       case "yue": return `${street}（${north} 同 ${south} 之間）`;
