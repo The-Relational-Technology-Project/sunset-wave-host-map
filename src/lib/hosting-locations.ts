@@ -23,6 +23,10 @@ export const HOSTING_LOCATIONS: HostingLocation[] = [
   // SF Public Works CNN 2058000: distinct from the legacy Wawona–Sloat pin.
   { id: "segment-2058000", avenue: 47, north: "Wawona", south: "Cutler", col: -1, row: -1,
     position: [37.7366015, -122.5053296], kind: "segment" },
+  // SF Public Works active CNN 1148000: roadway beside Lincoln High School.
+  // The initial open-dot grid omits this stretch; show it only when claimed.
+  { id: "segment-1148000", avenue: 22, north: "Quintara", south: "Rivera", col: -1, row: -1,
+    position: [37.7475708, -122.479231], kind: "segment" },
   // Approved exception: church frontage at 1370 19th Ave, east of the avenue.
   // Keep separate from the existing 19th Avenue block and ordinary matching.
   { id: "venue-19-irving-east", avenue: 19, north: "Irving", south: "Judah", col: -1, row: -1,

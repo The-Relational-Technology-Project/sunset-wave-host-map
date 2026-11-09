@@ -5,6 +5,12 @@ import { validateNoteHost } from "./note-review";
 import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
+  it("maps Kelsey Piva to 22nd Avenue between Quintara and Rivera without adding a legacy open dot", () => {
+    expect(submissionLocation("22nd Ave between Quintara and Rivera", null)).toBe("segment-1148000");
+    expect(submissionLocation("22nd Ave between Rivera and Quintara", null)).toBe("segment-1148000");
+    expect(LOCATION_BY_ID.get("segment-1148000")).toMatchObject({ avenue: 22, north: "Quintara", south: "Rivera", kind: "segment", position: [37.7475708, -122.479231] });
+    expect(LOCATION_BY_ID.has("22-quintara")).toBe(false);
+  });
   it("places Brian's gathering at the Lower Great Hwy and Noriega road corner, not a neighboring block", () => {
     expect(submissionLocation("Great Hwy and Noriega St", "corner-27929000")).toBe("corner-27929000");
     expect(LOCATION_BY_ID.get("corner-27929000")?.position).toEqual([37.7528302, -122.5084324]);

@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [x] Map Kelsey Piva on the verified 22nd Avenue Quintara–Rivera segment and clear her review, preserving her original offer; 29 tests pass and public claimed-pin details verified.
 - [x] Apply Brian, Eliza and Pam's clarified Lower Great Hwy road locations; verified original offers preserved, reviews cleared, public claimed-pin dialogs and signed-in steward listings; 23 location/map tests pass.
 - [x] Add Pamela Lee at the approved east-side 19th Avenue church, preserve existing block pins, and verify the public hand and updated neighbors total (51).
 - [x] Use a normal steward cursor and private first-name map labels; verified signed-in map labels and unchanged public hand markers.
