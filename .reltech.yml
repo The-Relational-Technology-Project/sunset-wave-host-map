@@ -1,0 +1,15 @@
+# .reltech.yml — see github.com/The-Relational-Technology-Project/watcher
+version: 2
+
+project:
+  name: "The Sunset Wave"
+  description: "A host map for a day of neighbor gatherings: 400 blocks, one afternoon, hosted by the neighbors."
+  neighborhood: "The Sunset, San Francisco"
+  builder: "Sunset Social Club"
+
+tags:
+  - gatherings
+  - block-parties
+  - mapping
+  - microgrants
+  - host-network
