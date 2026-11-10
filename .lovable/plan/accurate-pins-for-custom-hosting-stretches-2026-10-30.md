@@ -31,6 +31,6 @@ Typing a stretch such as **“Wawona between 37th and 38th”** will place a wav
 - Fail safely when claim reads fail rather than showing a misleading empty map.
 
 ## Verification
-- Test Renee’s exact Wawona description, reversed Avenue endpoints, coastal descriptions, intersections, ambiguous input, geographic limits and preservation of existing IDs.
+- Test an east–west Wawona description, reversed Avenue endpoints, coastal descriptions, intersections, ambiguous input, geographic limits and preservation of existing IDs.
 - Check future signup → mapped wave → neighbor note routing, plus a steward-reviewed uncertain location.
 - Verify phone and desktop layouts, all four languages, anonymous map privacy and no duplicate waves for hosts sharing a segment.

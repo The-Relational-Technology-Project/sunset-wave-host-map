@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Project rules
+- Repository fixtures use fictional people and reserved example.com contacts; commit messages, plans and roadmaps describe changes without real participant identities, contact details or submitted addresses, because repository content and history may be public.
 - Contact inquiries use a dedicated validated public server function, insert-only visitor storage and a fixed-recipient app email; stewards read them only after the shared session check, preserving private contact details if delivery fails.
 - All UI copy lives in `src/lib/i18n.tsx` as one typed dictionary per language (en, zh, yue, es); never hardcode visible text in components, so every language stays complete.
 - Block dots are generated in `src/lib/blocks.ts` (not stored in the database); host offers reference them by block id string, so the grid can be tuned without migrations.

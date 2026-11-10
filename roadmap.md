@@ -1,10 +1,11 @@
 # Sunset Wave refinements
-- [x] Map Kelsey Piva on the verified 22nd Avenue Quintara–Rivera segment and clear her review, preserving her original offer; 29 tests pass and public claimed-pin details verified.
-- [x] Apply Brian, Eliza and Pam's clarified Lower Great Hwy road locations; verified original offers preserved, reviews cleared, public claimed-pin dialogs and signed-in steward listings; 23 location/map tests pass.
-- [x] Add Pamela Lee at the approved east-side 19th Avenue church, preserve existing block pins, and verify the public hand and updated neighbors total (51).
+- [x] Remove identified host details from current repository files and use fictional test fixtures; 26 tests pass; connected history remains unchanged and retains earlier disclosures.
+- [x] Map a verified supplemental Avenue segment and clear location review, preserving the original offer; location tests and public claimed-pin details verified.
+- [x] Apply clarified coastal road locations; original offers preserved, reviews cleared, public claimed-pin dialogs and signed-in steward listings verified.
+- [x] Add an approved out-of-catchment church venue, preserve existing block pins, and verify the public hand and updated neighbors total.
 - [x] Use a normal steward cursor and private first-name map labels; verified signed-in map labels and unchanged public hand markers.
 - [x] Include co-hosts in the neighbors ticker without changing the claimed-block count or host milestone; tested counting and verified 24 neighbors in the website.
-- [x] Make 2670 47th Ave reviewable as 47th Ave between Wawona and Cutler while preserving the original offer; verified the city centerline and 23 map tests.
+- [x] Make a verified supplemental street segment reviewable while preserving the original offer; city centerline and map tests verified.
 - [x] Resolve custom hosting stretches within defined map coverage, including non-Avenue streets; backfill clear matches and add review controls for uncertain locations.
 - [x] Add a sharing invitation to the host thank-you page and confirmation email; verify copying the public URL.
 - [x] Hide host names in map details and remove the map co-host action.

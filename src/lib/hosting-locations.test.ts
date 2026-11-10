@@ -5,27 +5,27 @@ import { validateNoteHost } from "./note-review";
 import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
-  it("maps Kelsey Piva to 22nd Avenue between Quintara and Rivera without adding a legacy open dot", () => {
+  it("maps 22nd Avenue between Quintara and Rivera without adding a legacy open dot", () => {
     expect(submissionLocation("22nd Ave between Quintara and Rivera", null)).toBe("segment-1148000");
     expect(submissionLocation("22nd Ave between Rivera and Quintara", null)).toBe("segment-1148000");
     expect(LOCATION_BY_ID.get("segment-1148000")).toMatchObject({ avenue: 22, north: "Quintara", south: "Rivera", kind: "segment", position: [37.7475708, -122.479231] });
     expect(LOCATION_BY_ID.has("22-quintara")).toBe(false);
   });
-  it("places Brian's gathering at the Lower Great Hwy and Noriega road corner, not a neighboring block", () => {
+  it("places the Lower Great Hwy and Noriega road corner, not a neighboring block", () => {
     expect(submissionLocation("Great Hwy and Noriega St", "corner-27929000")).toBe("corner-27929000");
     expect(LOCATION_BY_ID.get("corner-27929000")?.position).toEqual([37.7528302, -122.5084324]);
     expect(LOCATION_BY_ID.get("great-hwy-noriega")?.position).toEqual(BLOCK_COORDINATES["great-hwy-noriega"]);
   });
-  it("places Eliza's gathering at the Lower Great Hwy and Vicente road corner", () => {
+  it("places the Lower Great Hwy and Vicente road corner", () => {
     expect(submissionLocation("Lower Great Hwy and Vicente St", "corner-23504000")).toBe("corner-23504000");
     expect(LOCATION_BY_ID.get("corner-23504000")?.position).toEqual([37.7379599, -122.5064356]);
   });
-  it("places Pam's gathering on the Lower Great Hwy road between Lawton and Moraga", () => {
+  it("places the Lower Great Hwy road between Lawton and Moraga", () => {
     expect(submissionLocation("Great Hwy between Lawton and Moraga", null)).toBe("segment-8512001-8512002");
     expect(LOCATION_BY_ID.get("segment-8512001-8512002")?.position).toEqual([37.7556216, -122.5087899]);
     expect(LOCATION_BY_ID.get("great-hwy-moraga")?.position).toEqual(BLOCK_COORDINATES["great-hwy-moraga"]);
   });
-  it("places Pamela's approved church east of 19th between Irving and Judah without moving the existing block", () => {
+  it("places the approved church east of 19th between Irving and Judah without moving the existing block", () => {
     const church = LOCATION_BY_ID.get("venue-19-irving-east");
     expect(church?.position).toEqual([37.762279, -122.476694]);
     expect(church?.avenue).toBe(19);
@@ -39,14 +39,14 @@ describe("custom hosting locations", () => {
     expect(submissionLocation("19th Ave between Irving and Judah", null)).toBe("19-irving");
     expect(submissionLocation("Wawona between 17th and 18th", null)).toBeNull();
   });
-  it("makes the clarified 2670 47th Ave stretch assignable without moving the legacy pin", () => {
+  it("makes the Wawona–Cutler stretch assignable without moving the legacy pin", () => {
     expect(submissionLocation("47th Ave between Wawona and Cutler", null)).toBe("segment-2058000");
     expect(submissionLocation("47th Ave between Cutler and Wawona", null)).toBe("segment-2058000");
     expect(LOCATION_BY_ID.get("segment-2058000")?.position).toEqual([37.7366015, -122.5053296]);
     expect(LOCATION_BY_ID.get("47-wawona")?.position).toEqual([37.7358052, -122.505277]);
-    expect(submissionLocation("2670 47th Ave", null)).toBeNull();
+    expect(submissionLocation("1234 47th Ave", null)).toBeNull();
   });
-  it("places Renee's Wawona stretch on the actual east-west block", () => {
+  it("places the Wawona stretch on the actual east-west block", () => {
     expect(submissionLocation("Wawona between 37th and 38th", null)).toBe("ew-13491000");
     expect(LOCATION_BY_ID.get("ew-13491000")?.position).toEqual([37.7365815, -122.4951248]);
   });

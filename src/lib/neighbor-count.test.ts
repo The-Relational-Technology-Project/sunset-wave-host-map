@@ -14,7 +14,7 @@ it("counts hosts plus co-hosts while excluding merged duplicate offers", async (
     expect(await total()).toBe(0);
     await db.exec(`INSERT INTO public.host_offers VALUES ('[]', NULL);`);
     expect(await total()).toBe(1);
-    await db.exec(`INSERT INTO public.host_offers VALUES ('[{"name":"Carlye Morley"},{"name":"Ashley Kam"}]', NULL);`);
+    await db.exec(`INSERT INTO public.host_offers VALUES ('[{"name":"Example Co-host One"},{"name":"Example Co-host Two"}]', NULL);`);
     expect(await total()).toBe(4);
     await db.exec(`INSERT INTO public.host_offers VALUES ('[{"name":"Duplicate"}]', '00000000-0000-0000-0000-000000000001');`);
     expect(await total()).toBe(4);
