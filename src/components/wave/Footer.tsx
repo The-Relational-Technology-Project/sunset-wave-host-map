@@ -18,6 +18,7 @@ export function Footer() {
             <Link to="/privacy" className="underline-offset-4 hover:underline">{t.footer.privacy}</Link>
             <Link to="/terms" className="underline-offset-4 hover:underline">{t.footer.terms}</Link>
             <Link to="/contact" className="underline-offset-4 hover:underline">{t.footer.contact}</Link>
+            <Link to="/artists" className="underline-offset-4 hover:underline">{t.footer.artists}</Link>
           </nav>
           <p className="flex items-center gap-2 text-sm opacity-70">
             <WaveHand className="h-5 w-5" /> {t.footer.made}
