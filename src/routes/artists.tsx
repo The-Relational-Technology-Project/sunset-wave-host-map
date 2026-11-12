@@ -22,6 +22,7 @@ function Artists() {
   }>
     <p className="font-semibold text-ocean">{t.artists.intro}</p>
     <p>{t.artists.body}</p>
+    <p className="font-semibold text-ocean">{t.artists.offer}</p>
     <ArtistForm />
   </SimplePage>;
 }
