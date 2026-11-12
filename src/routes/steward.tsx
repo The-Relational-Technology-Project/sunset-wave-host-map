@@ -6,7 +6,7 @@ import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
 import { duplicateGroups } from "@/lib/host-duplicates";
 import { stewardMapNames } from "@/lib/steward-map";
-import { approveNote, assignHostLocation, keepHostUnmapped, mergeHosts, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { approveNote, assignHostLocation, keepHostUnmapped, mergeHosts, getStewardData, getArtistFile, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
 import { hostEmail } from "@/lib/note-review";
 import { blockLabel, DICTS, LANGS, type Lang } from "@/lib/i18n";
 import { HOSTING_LOCATIONS, LOCATION_BY_ID, resolveStretch } from "@/lib/hosting-locations";
@@ -103,12 +103,14 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
             <TabsTrigger value="hosts">Hosts ({data.hosts.filter((h) => !h.merged_into).length})</TabsTrigger>
             <TabsTrigger value="notes">Notes ({data.notes.length})</TabsTrigger>
             <TabsTrigger value="contacts">Contact ({data.contacts.length})</TabsTrigger>
+            <TabsTrigger value="artists">Artists ({data.artists.length})</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="traffic">Traffic</TabsTrigger>
             <TabsTrigger value="faq">FAQ</TabsTrigger>
           </TabsList>
           <TabsContent value="hosts"><Duplicates hosts={data.hosts} /><Hosts hosts={data.hosts.filter((h) => !h.merged_into)} /></TabsContent>
           <TabsContent value="notes"><Notes notes={data.notes} hosts={data.hosts} /></TabsContent>
+          <TabsContent value="artists"><ArtistSubmissions artists={data.artists} /></TabsContent>
           <TabsContent value="contacts">
             <div className="overflow-x-auto rounded-lg border-2 border-ink bg-card">
               <Table>
@@ -127,6 +129,26 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
       </div>
     </main>
   );
+}
+
+function ArtistSubmissions({ artists }: { artists: Data["artists"] }) {
+  const openFile = useServerFn(getArtistFile);
+  const [busy, setBusy] = useState<string | null>(null);
+  return <div className="overflow-x-auto rounded-lg border-2 border-ink bg-card"><Table>
+    <TableHeader><TableRow><TableHead>Date</TableHead><TableHead>Name</TableHead><TableHead>Contact</TableHead><TableHead>Note</TableHead><TableHead>Work examples</TableHead></TableRow></TableHeader>
+    <TableBody>{artists.map(artist => <TableRow key={artist.id}>
+      <TableCell className="whitespace-nowrap">{new Date(artist.created_at).toLocaleDateString()}</TableCell><TableCell>{artist.name}</TableCell><TableCell>{artist.contact}</TableCell><TableCell className="min-w-48 whitespace-pre-wrap">{artist.note}</TableCell>
+      <TableCell className="min-w-48 space-y-2">
+        {artist.work_link && <a href={artist.work_link} target="_blank" rel="noopener noreferrer" className="block break-all text-ocean underline">Work link</a>}
+        {artist.files.map(file => <Button key={file.path} size="sm" variant="outline" disabled={busy !== null} className="h-auto max-w-full whitespace-normal break-all" onClick={async () => {
+          setBusy(file.path);
+          try { const result = await openFile({ data: { id: artist.id, path: file.path } }); const a = document.createElement("a"); a.href = result.url; a.download = file.name; a.click(); }
+          catch { toast.error("Could not download file."); }
+          finally { setBusy(null); }
+        }}>{busy === file.path ? "Opening…" : file.name}</Button>)}
+      </TableCell>
+    </TableRow>)}{!artists.length && <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground">No artist submissions yet.</TableCell></TableRow>}</TableBody>
+  </Table></div>;
 }
 
 function Duplicates({ hosts }: { hosts: HostRow[] }) {

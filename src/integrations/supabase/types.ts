@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      artist_submission_limits: {
+        Row: {
+          hits: string[]
+          key: string
+        }
+        Insert: {
+          hits?: string[]
+          key: string
+        }
+        Update: {
+          hits?: string[]
+          key?: string
+        }
+        Relationships: []
+      }
+      artist_submissions: {
+        Row: {
+          contact: string
+          created_at: string
+          files: Json
+          id: string
+          language: string
+          name: string
+          note: string
+          work_link: string
+        }
+        Insert: {
+          contact: string
+          created_at?: string
+          files?: Json
+          id?: string
+          language: string
+          name: string
+          note?: string
+          work_link?: string
+        }
+        Update: {
+          contact?: string
+          created_at?: string
+          files?: Json
+          id?: string
+          language?: string
+          name?: string
+          note?: string
+          work_link?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -203,6 +251,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_artist_submission: { Args: { rate_key: string }; Returns: boolean }
       count_host_neighbors: { Args: never; Returns: number }
       count_hosts: { Args: never; Returns: number }
       get_claimed_blocks: {

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { canReviewNote, forwardingKey, STEWARD_REPLY_TO, validateNoteHost, type ReviewStatus } from "./note-review";
 import { LOCATION_BY_ID } from "./hosting-locations";
+import { artistFileSchema } from "./artist-schema";
 
 type StewardSession = { unlocked?: boolean };
 
@@ -84,11 +85,12 @@ export const getStewardData = createServerFn({ method: "GET" }).handler(async ()
   await requireSteward();
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const since = new Date(Date.now() - 7 * 864e5).toISOString();
-  const [hosts, notes, views, contacts] = await Promise.all([
+  const [hosts, notes, views, contacts, artists] = await Promise.all([
     supabaseAdmin.from("host_offers").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("host_notes").select("*").order("created_at", { ascending: false }),
     supabaseAdmin.from("page_views").select("visitor_id, referrer, created_at").gte("created_at", since).limit(50000),
     supabaseAdmin.from("contact_submissions").select("*").order("created_at", { ascending: false }),
+    supabaseAdmin.from("artist_submissions").select("*").order("created_at", { ascending: false }),
   ]);
   const v = views.data ?? [];
   const days = new Map<string, { v: Set<string>; n: number }>();
@@ -111,9 +113,27 @@ export const getStewardData = createServerFn({ method: "GET" }).handler(async ()
     hosts: (hosts.data ?? []) as unknown as HostRow[],
     notes: (notes.data ?? []) as NoteRow[],
     contacts: (contacts.data ?? []) as ContactRow[],
+    artists: (artists.data ?? []).map(row => ({ ...row, files: z.array(artistFileSchema).parse(row.files) })),
     traffic,
   };
 });
+
+export const getArtistFile = createServerFn({ method: "POST" })
+  .inputValidator(input => z.object({ id: z.string().uuid(), path: z.string().max(300) }).parse(input))
+  .handler(async ({ data }) => {
+    await requireSteward();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const row = await supabaseAdmin.from("artist_submissions").select("files").eq("id", data.id).single();
+    const files = z.array(artistFileSchema).parse(row.data?.files ?? []);
+    const file = files.find(f => f.path === data.path);
+    if (!file) throw new Error("File not found");
+    const result = await supabaseAdmin.storage.from("artist-work").createSignedUrl(file.path, 300, { download: file.name });
+    if (result.error || !result.data) throw new Error("Could not open file");
+    const url = new URL(result.data.signedUrl);
+    const publicOrigin = process.env["VITE_SUPABASE_URL"];
+    if (!publicOrigin) throw new Error("Storage not configured");
+    return { url: `${publicOrigin.replace(/\/$/, "")}${url.pathname}${url.search}` };
+  });
 
 const faqSchema = z.object({
   language: z.enum(["en", "zh", "yue", "es"]),

@@ -78,6 +78,20 @@
       "when": 1793571997913,
       "tag": "0010_count_host_neighbors",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1794521513236,
+      "tag": "0011_artist_submissions",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1794521528486,
+      "tag": "0012_artist_rate_limit_function",
+      "breakpoints": true
     }
   ]
 }

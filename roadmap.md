@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [x] Add a four-language artists invitation, optional private work uploads, owner notification and steward review; verified stored submission, owner email, private download, phone layout and 8 tests.
 - [x] Remove identified host details from current repository files and use fictional test fixtures; 26 tests pass; connected history remains unchanged and retains earlier disclosures.
 - [x] Map a verified supplemental Avenue segment and clear location review, preserving the original offer; location tests and public claimed-pin details verified.
 - [x] Apply clarified coastal road locations; original offers preserved, reviews cleared, public claimed-pin dialogs and signed-in steward listings verified.
