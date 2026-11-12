@@ -7,7 +7,7 @@ import { Footer } from "./Footer";
 
 export const CONTACT_EMAIL = "oursunsetsocialclub@gmail.com";
 
-export function SimplePage({ title, children }: { title: string; children: ReactNode }) {
+export function SimplePage({ title, children, titleClassName = "text-6xl sm:text-7xl" }: { title: ReactNode; children: ReactNode; titleClassName?: string }) {
   const { t } = useLang();
   return (
     <div className="grain flex min-h-screen flex-col bg-sand">
@@ -18,7 +18,7 @@ export function SimplePage({ title, children }: { title: string; children: React
         <LangSwitch />
       </div>
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 pb-20 pt-6">
-        <h1 className="poster-title text-6xl text-ink sm:text-7xl">{title}</h1>
+        <h1 className={`poster-title text-ink ${titleClassName}`}>{title}</h1>
         <div className="mt-8 space-y-4 text-lg leading-relaxed text-ink/85">{children}</div>
       </main>
       <Footer />

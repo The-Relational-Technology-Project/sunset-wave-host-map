@@ -17,7 +17,9 @@ export const Route = createFileRoute("/artists")({
 
 function Artists() {
   const { t } = useLang();
-  return <SimplePage title={t.artists.title}>
+  return <SimplePage titleClassName="text-4xl leading-tight md:whitespace-nowrap md:text-5xl" title={
+    <><span className="block md:inline">{t.artists.titleLead}</span>{" "}<span className="block md:inline">{t.artists.titleRest}</span></>
+  }>
     <p className="font-semibold text-ocean">{t.artists.intro}</p>
     <p>{t.artists.body}</p>
     <ArtistForm />
