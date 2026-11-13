@@ -6,9 +6,9 @@ import { ArtistForm } from "@/components/wave/ArtistForm";
 export const Route = createFileRoute("/artists")({
   head: () => ({ meta: [
     { title: "Calling local artists — The Sunset Wave" },
-    { name: "description", content: "Help draw or design The Sunset Wave logo for neighborhood gathering flyers and possible future Wave swag. Local artists, raise your hand." },
+    { name: "description", content: "Help create The Sunset Wave logo for neighborhood gathering flyers and possible future Wave swag. Local artists, raise your hand." },
     { property: "og:title", content: "Calling local artists — The Sunset Wave" },
-    { property: "og:description", content: "Help draw or design The Sunset Wave logo. Share your interest and optional work examples with the Sunset Social Club." },
+    { property: "og:description", content: "Help create The Sunset Wave logo. Share your interest and optional examples of your existing work with the Sunset Social Club. No logo experience needed." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

@@ -35,10 +35,11 @@ export function ArtistForm() {
   }}>
     <div className="space-y-2"><Label htmlFor="artist-name">{copy.name} <span aria-hidden="true" className="text-destructive">*</span></Label><Input id="artist-name" name="name" autoComplete="name" required maxLength={100} disabled={busy} className="h-12 bg-card text-base" /></div>
     <div className="space-y-2"><Label htmlFor="artist-contact">{copy.contact} <span aria-hidden="true" className="text-destructive">*</span></Label><Input id="artist-contact" name="contact" required minLength={3} maxLength={200} disabled={busy} aria-describedby="artist-contact-hint" className="h-12 bg-card text-base" /><p id="artist-contact-hint" className="text-sm text-muted-foreground">{copy.contactHint}</p></div>
-    <div className="space-y-2"><Label htmlFor="artist-note">{copy.note}</Label><Textarea id="artist-note" name="note" maxLength={1000} rows={3} disabled={busy} className="bg-card text-base" /></div>
+    <div className="space-y-2"><Label htmlFor="artist-note">{copy.note}</Label><p id="artist-note-hint" className="text-sm text-muted-foreground">{copy.noteHint}</p><Textarea id="artist-note" name="note" maxLength={1000} rows={3} disabled={busy} aria-describedby="artist-note-hint" className="bg-card text-base" /></div>
     <fieldset className="min-w-0 space-y-4 border-t border-ink/20 pt-5">
       <legend className="px-2 font-semibold text-ocean">{copy.work}</legend>
       <p className="text-sm text-muted-foreground">{copy.workHint}</p>
+      <p className="text-sm font-medium text-ocean">{copy.workSampleNote}</p>
       <div className="space-y-2"><Label htmlFor="artist-link">{copy.link}</Label><Input id="artist-link" name="workLink" type="url" placeholder="https://" maxLength={2000} disabled={busy} className="h-12 bg-card text-base" /></div>
       <div className="space-y-2">
         <input ref={picker} type="file" multiple accept={ARTIST_MIMES.join(",")} aria-label={copy.upload} className="hidden" onChange={e => {
