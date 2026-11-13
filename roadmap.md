@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [x] Add optional additional artist work links and strengthen the hidden bot trap; 12 tests pass, three submitted links read back in private review, filled bot trap saves nothing, and desktop/phone layouts verified.
 - [x] Update artist invitation, existing-work guidance and optional interest/Sunset-connections prompt in all four languages; verified desktop and phone layouts, language switching, optional note entry and 7 validation tests.
 - [x] Add a four-language artists invitation, optional private work uploads, owner notification and steward review; verified stored submission, owner email, private download, phone layout and 8 tests.
 - [x] Remove identified host details from current repository files and use fictional test fixtures; 26 tests pass; connected history remains unchanged and retains earlier disclosures.

@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { artistSchema, ARTIST_MIMES, MAX_ARTIST_FILES, MAX_ARTIST_FILE_SIZE } from "./artist-schema";
+import { artistSchema, artistFormFields, isArtistBotSubmission, ARTIST_MIMES, MAX_ARTIST_FILES, MAX_ARTIST_FILE_SIZE } from "./artist-schema";
 
 export const submitArtist = createServerFn({ method: "POST" })
   .inputValidator((input: FormData) => {
@@ -7,8 +7,8 @@ export const submitArtist = createServerFn({ method: "POST" })
     return input;
   })
   .handler(async ({ data }) => {
-    const fields = artistSchema.parse(Object.fromEntries(data.entries()));
-    if (fields.website) return { ok: true };
+    if (isArtistBotSubmission(data)) return { ok: true };
+    const fields = artistSchema.parse(artistFormFields(data));
     const files = data.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
     if (files.length > MAX_ARTIST_FILES || files.some(f => f.size > MAX_ARTIST_FILE_SIZE)) throw new Error("Invalid files");
     const { getRequest } = await import("@tanstack/react-start/server");
@@ -34,7 +34,7 @@ export const submitArtist = createServerFn({ method: "POST" })
         if (result.error) throw new Error("Could not upload");
         uploaded.push({ path, name: file.name, type: file.type.mime });
       }
-      const saved = await supabaseAdmin.from("artist_submissions").insert({ id, name: fields.name, contact: fields.contact, note: fields.note, work_link: fields.workLink, language: fields.language, files: uploaded });
+      const saved = await supabaseAdmin.from("artist_submissions").insert({ id, name: fields.name, contact: fields.contact, note: fields.note, work_link: fields.workLink, additional_work_links: fields.additionalWorkLinks, language: fields.language, files: uploaded });
       if (saved.error) throw new Error("Could not save");
     } catch (error) {
       if (uploaded.length) await supabaseAdmin.storage.from("artist-work").remove(uploaded.map(f => f.path));

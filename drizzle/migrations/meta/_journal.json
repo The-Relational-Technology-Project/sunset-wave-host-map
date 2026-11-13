@@ -92,6 +92,13 @@
       "when": 1794521528486,
       "tag": "0012_artist_rate_limit_function",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1794596032029,
+      "tag": "0013_artist_additional_work_links",
+      "breakpoints": true
     }
   ]
 }

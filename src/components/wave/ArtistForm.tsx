@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Upload, X } from "lucide-react";
+import { Check, Plus, Upload, X } from "lucide-react";
 import { useLang } from "@/lib/i18n";
-import { artistSchema, ARTIST_MIMES, validArtistFiles } from "@/lib/artist-schema";
+import { artistSchema, artistFormFields, ARTIST_MIMES, MAX_ADDITIONAL_ARTIST_LINKS, validArtistFiles } from "@/lib/artist-schema";
 import { submitArtist } from "@/lib/artist.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,8 @@ export function ArtistForm() {
   const send = useServerFn(submitArtist);
   const picker = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File[]>([]);
+  const [extraLinks, setExtraLinks] = useState<number[]>([]);
+  const nextLinkId = useRef(0);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +26,7 @@ export function ArtistForm() {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     form.set("language", lang);
-    const parsed = artistSchema.safeParse(Object.fromEntries(form.entries()));
+    const parsed = artistSchema.safeParse(artistFormFields(form));
     if (!parsed.success) { setError(copy.invalid); return; }
     if (!validArtistFiles(files)) { setError(copy.fileError); return; }
     files.forEach(file => form.append("files", file));
@@ -41,6 +43,14 @@ export function ArtistForm() {
       <p className="text-sm text-muted-foreground">{copy.workHint}</p>
       <p className="text-sm font-medium text-ocean">{copy.workSampleNote}</p>
       <div className="space-y-2"><Label htmlFor="artist-link">{copy.link}</Label><Input id="artist-link" name="workLink" type="url" placeholder="https://" maxLength={2000} disabled={busy} className="h-12 bg-card text-base" /></div>
+       {extraLinks.map((id, i) => <div key={id} className="space-y-2">
+         <Label htmlFor={`artist-link-${id}`}>{copy.link} {i + 2}</Label>
+         <div className="flex min-w-0 items-center gap-2">
+           <Input id={`artist-link-${id}`} name="additionalWorkLinks" type="url" placeholder="https://" maxLength={2000} disabled={busy} className="h-12 min-w-0 flex-1 bg-card text-base" />
+           <Button type="button" size="icon" variant="ghost" title={copy.removeLink} aria-label={`${copy.removeLink} ${i + 2}`} disabled={busy} onClick={() => setExtraLinks(links => links.filter(linkId => linkId !== id))}><X className="h-4 w-4" /></Button>
+         </div>
+       </div>)}
+       <Button type="button" variant="ghost" disabled={busy || extraLinks.length >= MAX_ADDITIONAL_ARTIST_LINKS} onClick={() => { const id = nextLinkId.current++; setExtraLinks(links => [...links, id]); }} className="h-auto min-h-12 max-w-full whitespace-normal"><Plus className="h-4 w-4 shrink-0" />{copy.addLink}</Button>
       <div className="space-y-2">
         <input ref={picker} type="file" multiple accept={ARTIST_MIMES.join(",")} aria-label={copy.upload} className="hidden" onChange={e => {
           const next = [...files, ...Array.from(e.target.files ?? [])];
@@ -53,7 +63,7 @@ export function ArtistForm() {
         {files.length > 0 && <ul className="divide-y divide-border">{files.map((file, i) => <li key={`${file.name}-${i}`} className="flex min-w-0 items-center gap-2 py-2"><span className="min-w-0 flex-1 break-all text-sm">{file.name}</span><Button type="button" size="icon" variant="ghost" title={copy.remove} aria-label={`${copy.remove}: ${file.name}`} disabled={busy} onClick={() => setFiles(files.filter((_, j) => j !== i))}><X className="h-4 w-4" /></Button></li>)}</ul>}
       </div>
     </fieldset>
-    <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true"><input name="website" tabIndex={-1} autoComplete="off" maxLength={500} /></div>
+    <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true"><input name="website" type="text" tabIndex={-1} autoComplete="off" maxLength={500} disabled={busy} /></div>
     <p className="text-sm text-muted-foreground">{copy.privacy}</p>
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
     <Button type="submit" variant="poster" disabled={busy} className="h-auto min-h-14 w-full whitespace-normal"><WaveHand className="h-6 w-6 shrink-0" />{busy ? t.host.sending : copy.submit}</Button>

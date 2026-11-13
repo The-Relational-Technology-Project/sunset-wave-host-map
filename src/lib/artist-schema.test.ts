@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { artistSchema, validArtistFiles } from "./artist-schema";
+import { artistSchema, artistFormFields, isArtistBotSubmission, validArtistFiles } from "./artist-schema";
 
 const entry = { name: "Rowan Example", contact: "artist@example.com", language: "en" };
 describe("artist submissions", () => {
@@ -28,4 +28,29 @@ describe("artist submissions", () => {
     expect(validArtistFiles([{ size: 10485761, type: "application/pdf" }])).toBe(false);
   });
   it("rejects unsafe example links", () => expect(artistSchema.safeParse({ ...entry, workLink: "javascript:alert(1)" }).success).toBe(false));
+  it("accepts several optional work links and ignores empty added fields", () => {
+    const form = new FormData();
+    Object.entries(entry).forEach(([key, value]) => form.set(key, value));
+    form.set("workLink", "https://example.com/portfolio");
+    form.append("additionalWorkLinks", "https://example.com/art");
+    form.append("additionalWorkLinks", "http://example.com/drawings");
+    form.append("additionalWorkLinks", " ");
+    expect(artistSchema.parse(artistFormFields(form)).additionalWorkLinks).toEqual(["https://example.com/art", "http://example.com/drawings"]);
+    expect(artistSchema.parse(entry).additionalWorkLinks).toEqual([]);
+  });
+  it("validates every additional work link", () => {
+    expect(artistSchema.safeParse({ ...entry, additionalWorkLinks: ["https://example.com", "javascript:alert(1)"] }).success).toBe(false);
+    expect(artistSchema.safeParse({ ...entry, additionalWorkLinks: ["https://example.com/" + "a".repeat(2000)] }).success).toBe(false);
+  });
+  it("bounds extra links to nine", () => {
+    expect(artistSchema.safeParse({ ...entry, additionalWorkLinks: Array(9).fill("https://example.com") }).success).toBe(true);
+    expect(artistSchema.safeParse({ ...entry, additionalWorkLinks: Array(10).fill("https://example.com") }).success).toBe(false);
+  });
+  it("catches a filled honeypot including repeated values but allows an empty one", () => {
+    const form = new FormData();
+    form.set("website", "");
+    expect(isArtistBotSubmission(form)).toBe(false);
+    form.append("website", "https://example.com/bot");
+    expect(isArtistBotSubmission(form)).toBe(true);
+  });
 });

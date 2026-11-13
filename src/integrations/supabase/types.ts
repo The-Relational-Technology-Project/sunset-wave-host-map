@@ -31,6 +31,7 @@ export type Database = {
       }
       artist_submissions: {
         Row: {
+          additional_work_links: string[]
           contact: string
           created_at: string
           files: Json
@@ -41,6 +42,7 @@ export type Database = {
           work_link: string
         }
         Insert: {
+          additional_work_links?: string[]
           contact: string
           created_at?: string
           files?: Json
@@ -51,6 +53,7 @@ export type Database = {
           work_link?: string
         }
         Update: {
+          additional_work_links?: string[]
           contact?: string
           created_at?: string
           files?: Json

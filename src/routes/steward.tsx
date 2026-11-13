@@ -139,7 +139,7 @@ function ArtistSubmissions({ artists }: { artists: Data["artists"] }) {
     <TableBody>{artists.map(artist => <TableRow key={artist.id}>
       <TableCell className="whitespace-nowrap">{new Date(artist.created_at).toLocaleDateString()}</TableCell><TableCell>{artist.name}</TableCell><TableCell>{artist.contact}</TableCell><TableCell className="min-w-48 whitespace-pre-wrap">{artist.note}</TableCell>
       <TableCell className="min-w-48 space-y-2">
-        {artist.work_link && <a href={artist.work_link} target="_blank" rel="noopener noreferrer" className="block break-all text-ocean underline">Work link</a>}
+        {[artist.work_link, ...artist.additional_work_links].filter(Boolean).map((link, i) => <a key={`${link}-${i}`} href={link} target="_blank" rel="noopener noreferrer" className="block break-all text-ocean underline">Work link {i + 1}</a>)}
         {artist.files.map(file => <Button key={file.path} size="sm" variant="outline" disabled={busy !== null} className="h-auto max-w-full whitespace-normal break-all" onClick={async () => {
           setBusy(file.path);
           try { const result = await openFile({ data: { id: artist.id, path: file.path } }); const a = document.createElement("a"); a.href = result.url; a.download = file.name; a.click(); }
