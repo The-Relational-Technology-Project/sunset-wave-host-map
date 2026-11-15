@@ -11,6 +11,7 @@
 
 ## Project rules
 - Artist submissions use a dedicated validated public action, server-only private Storage uploads with file-signature checks and durable rate limits, fixed owner email alerts, and session-gated steward reads; validate every optional work URL, store extra links separately alongside the original link, and discard filled honeypots before any storage or email work to keep samples private and avoid bot side effects.
+- Artist downloads use a same-origin attachment endpoint with the shared steward session check and submission-file ownership validation; never expose storage origins or rely on cross-origin download links.
 - Repository fixtures use fictional people and reserved example.com contacts; commit messages, plans and roadmaps describe changes without real participant identities, contact details or submitted addresses, because repository content and history may be public.
 - Contact inquiries use a dedicated validated public server function, insert-only visitor storage and a fixed-recipient app email; stewards read them only after the shared session check, preserving private contact details if delivery fails.
 - All UI copy lives in `src/lib/i18n.tsx` as one typed dictionary per language (en, zh, yue, es); never hardcode visible text in components, so every language stays complete.

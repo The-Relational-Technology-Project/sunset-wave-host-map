@@ -6,7 +6,7 @@ import { getClaims } from "@/lib/wave.functions";
 import { getFaq, type FaqItem } from "@/lib/site.functions";
 import { duplicateGroups } from "@/lib/host-duplicates";
 import { stewardMapNames } from "@/lib/steward-map";
-import { approveNote, assignHostLocation, keepHostUnmapped, mergeHosts, getStewardData, getArtistFile, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
+import { approveNote, assignHostLocation, keepHostUnmapped, mergeHosts, getStewardData, lockSteward, saveFaq, stewardStatus, unlockSteward, type HostRow } from "@/lib/steward.functions";
 import { hostEmail } from "@/lib/note-review";
 import { blockLabel, DICTS, LANGS, type Lang } from "@/lib/i18n";
 import { HOSTING_LOCATIONS, LOCATION_BY_ID, resolveStretch } from "@/lib/hosting-locations";
@@ -132,20 +132,15 @@ function Dashboard({ data, claims, faq }: { data: Data; claims: Awaited<ReturnTy
 }
 
 function ArtistSubmissions({ artists }: { artists: Data["artists"] }) {
-  const openFile = useServerFn(getArtistFile);
-  const [busy, setBusy] = useState<string | null>(null);
   return <div className="overflow-x-auto rounded-lg border-2 border-ink bg-card"><Table>
     <TableHeader><TableRow><TableHead>Date</TableHead><TableHead>Name</TableHead><TableHead>Contact</TableHead><TableHead>Note</TableHead><TableHead>Work examples</TableHead></TableRow></TableHeader>
     <TableBody>{artists.map(artist => <TableRow key={artist.id}>
       <TableCell className="whitespace-nowrap">{new Date(artist.created_at).toLocaleDateString()}</TableCell><TableCell>{artist.name}</TableCell><TableCell>{artist.contact}</TableCell><TableCell className="min-w-48 whitespace-pre-wrap">{artist.note}</TableCell>
       <TableCell className="min-w-48 space-y-2">
         {[artist.work_link, ...artist.additional_work_links].filter(Boolean).map((link, i) => <a key={`${link}-${i}`} href={link} target="_blank" rel="noopener noreferrer" className="block break-all text-ocean underline">Work link {i + 1}</a>)}
-        {artist.files.map(file => <Button key={file.path} size="sm" variant="outline" disabled={busy !== null} className="h-auto max-w-full whitespace-normal break-all" onClick={async () => {
-          setBusy(file.path);
-          try { const result = await openFile({ data: { id: artist.id, path: file.path } }); const a = document.createElement("a"); a.href = result.url; a.download = file.name; a.click(); }
-          catch { toast.error("Could not download file."); }
-          finally { setBusy(null); }
-        }}>{busy === file.path ? "Opening…" : file.name}</Button>)}
+        {artist.files.map(file => <Button asChild key={file.path} size="sm" variant="outline" className="h-auto max-w-full whitespace-normal break-all">
+          <a href={`/api/public/artist-download?${new URLSearchParams({ id: artist.id, path: file.path })}`} download={file.name}>{file.name}</a>
+        </Button>)}
       </TableCell>
     </TableRow>)}{!artists.length && <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground">No artist submissions yet.</TableCell></TableRow>}</TableBody>
   </Table></div>;

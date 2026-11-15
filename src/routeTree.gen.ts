@@ -16,6 +16,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as StewardRouteImport } from './routes/steward'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ThanksRouteImport } from './routes/thanks'
+import { Route as ApiPublicArtistDownloadRouteImport } from './routes/api/public/artist-download'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const ThanksRoute = ThanksRouteImport.update({
   path: '/thanks',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicArtistDownloadRoute = ApiPublicArtistDownloadRouteImport.update({
+  id: '/api/public/artist-download',
+  path: '/api/public/artist-download',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalPreviewRoute =
   LovableEmailTransactionalPreviewRouteImport.update({
     id: '/lovable/email/transactional/preview',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/steward': typeof StewardRoute
   '/terms': typeof TermsRoute
   '/thanks': typeof ThanksRoute
+  '/api/public/artist-download': typeof ApiPublicArtistDownloadRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/steward': typeof StewardRoute
   '/terms': typeof TermsRoute
   '/thanks': typeof ThanksRoute
+  '/api/public/artist-download': typeof ApiPublicArtistDownloadRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/steward': typeof StewardRoute
   '/terms': typeof TermsRoute
   '/thanks': typeof ThanksRoute
+  '/api/public/artist-download': typeof ApiPublicArtistDownloadRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/steward'
     | '/terms'
     | '/thanks'
+    | '/api/public/artist-download'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/steward'
     | '/terms'
     | '/thanks'
+    | '/api/public/artist-download'
     | '/lovable/email/transactional/preview'
   id:
     | '__root__'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/steward'
     | '/terms'
     | '/thanks'
+    | '/api/public/artist-download'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   StewardRoute: typeof StewardRoute
   TermsRoute: typeof TermsRoute
   ThanksRoute: typeof ThanksRoute
+  ApiPublicArtistDownloadRoute: typeof ApiPublicArtistDownloadRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThanksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/artist-download': {
+      id: '/api/public/artist-download'
+      path: '/api/public/artist-download'
+      fullPath: '/api/public/artist-download'
+      preLoaderRoute: typeof ApiPublicArtistDownloadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/preview': {
       id: '/lovable/email/transactional/preview'
       path: '/lovable/email/transactional/preview'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   StewardRoute: StewardRoute,
   TermsRoute: TermsRoute,
   ThanksRoute: ThanksRoute,
+  ApiPublicArtistDownloadRoute: ApiPublicArtistDownloadRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

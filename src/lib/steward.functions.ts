@@ -4,20 +4,9 @@ import { canReviewNote, forwardingKey, STEWARD_REPLY_TO, validateNoteHost, type 
 import { LOCATION_BY_ID } from "./hosting-locations";
 import { artistFileSchema } from "./artist-schema";
 
-type StewardSession = { unlocked?: boolean };
-
-function sessionConfig() {
-  return {
-    password: process.env["STEWARD_SESSION_SECRET"]!,
-    name: "steward",
-    maxAge: 60 * 60 * 24 * 14,
-    cookie: { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/" },
-  };
-}
-
 async function session() {
-  const { useSession } = await import("@tanstack/react-start/server");
-  return useSession<StewardSession>(sessionConfig());
+  const { stewardSession } = await import("./steward-session.server");
+  return stewardSession();
 }
 
 async function digest(s: string) {
@@ -31,8 +20,8 @@ async function matches(input: string, expected: string) {
 }
 
 async function requireSteward() {
-  const s = await session();
-  if (!s.data.unlocked) throw new Error("LOCKED");
+  const { requireStewardSession } = await import("./steward-session.server");
+  await requireStewardSession();
 }
 
 export const stewardStatus = createServerFn({ method: "GET" }).handler(async () => {
@@ -127,12 +116,7 @@ export const getArtistFile = createServerFn({ method: "POST" })
     const files = z.array(artistFileSchema).parse(row.data?.files ?? []);
     const file = files.find(f => f.path === data.path);
     if (!file) throw new Error("File not found");
-    const result = await supabaseAdmin.storage.from("artist-work").createSignedUrl(file.path, 300, { download: file.name });
-    if (result.error || !result.data) throw new Error("Could not open file");
-    const url = new URL(result.data.signedUrl);
-    const publicOrigin = process.env["VITE_SUPABASE_URL"];
-    if (!publicOrigin) throw new Error("Storage not configured");
-    return { url: `${publicOrigin.replace(/\/$/, "")}${url.pathname}${url.search}` };
+    return { url: `/api/public/artist-download?${new URLSearchParams({ id: data.id, path: file.path })}` };
   });
 
 const faqSchema = z.object({
