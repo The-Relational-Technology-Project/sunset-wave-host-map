@@ -1,4 +1,5 @@
 # Sunset Wave refinements
+- [x] Apply two clarified host locations, including an individually approved outside-catchment stretch; original offers preserved, review cleared, both public hands verified and 22 location tests passed.
 - [x] Add optional additional artist work links and strengthen the hidden bot trap; 12 tests pass, three submitted links read back in private review, filled bot trap saves nothing, and desktop/phone layouts verified.
 - [x] Update artist invitation, existing-work guidance and optional interest/Sunset-connections prompt in all four languages; verified desktop and phone layouts, language switching, optional note entry and 7 validation tests.
 - [x] Add a four-language artists invitation, optional private work uploads, owner notification and steward review; verified stored submission, owner email, private download, phone layout and 8 tests.

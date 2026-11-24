@@ -31,6 +31,10 @@ export const HOSTING_LOCATIONS: HostingLocation[] = [
   // Keep separate from the existing 19th Avenue block and ordinary matching.
   { id: "venue-19-irving-east", avenue: 19, north: "Irving", south: "Judah", col: -1, row: -1,
     position: [37.762279, -122.476694], kind: "venue" },
+  // Individually approved outside-catchment stretch: SF Public Works CNN 836000.
+  // Venue kind excludes it from automatic matching and unclaimed open dots.
+  { id: "venue-18-judah", avenue: 18, north: "Judah", south: "Kirkham", col: -1, row: -1,
+    position: [37.7608133, -122.4758603], kind: "venue" },
 ];
 export const LOCATION_BY_ID = new Map(HOSTING_LOCATIONS.map((b) => [b.id, b]));
 

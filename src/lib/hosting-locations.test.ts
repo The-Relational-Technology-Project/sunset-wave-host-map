@@ -5,6 +5,15 @@ import { validateNoteHost } from "./note-review";
 import streetCatalog from "./hosting-streets.json";
 
 describe("custom hosting locations", () => {
+  it("places the individually approved 18th Avenue Judah–Kirkham stretch without expanding automatic coverage", () => {
+    expect(LOCATION_BY_ID.get("venue-18-judah")).toMatchObject({ avenue: 18, north: "Judah", south: "Kirkham", kind: "venue", position: [37.7608133, -122.4758603] });
+    expect(submissionLocation("18th Ave between Judah and Kirkham", null)).toBeNull();
+    expect(LOCATION_BY_ID.has("18-judah")).toBe(false);
+  });
+  it("maps the clarified 47th Avenue Irving–Judah stretch to its existing pin", () => {
+    expect(submissionLocation("47th Ave between Irving and Judah", null)).toBe("47-irving");
+    expect(LOCATION_BY_ID.get("47-irving")?.position).toEqual(BLOCK_COORDINATES["47-irving"]);
+  });
   it("maps 22nd Avenue between Quintara and Rivera without adding a legacy open dot", () => {
     expect(submissionLocation("22nd Ave between Quintara and Rivera", null)).toBe("segment-1148000");
     expect(submissionLocation("22nd Ave between Rivera and Quintara", null)).toBe("segment-1148000");
